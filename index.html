@@ -121,12 +121,13 @@ body.calib .calbar{display:block}
 .calbtns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center}
 .calprog{height:5px;background:var(--line);border-radius:3px;margin-top:8px;overflow:hidden}
 .calprog i{display:block;height:100%;width:0;background:var(--moss);border-radius:3px;transition:width .3s}
-body.calib .hot{pointer-events:none;opacity:.25}
+body.placing .hot{pointer-events:none;opacity:.25}
 body.calib .mapwrap{cursor:crosshair}
 .dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--moss-d);border:1.5px solid var(--paper);transform:translate(-50%,-50%);z-index:3;pointer-events:none;padding:0}
 .dot.rare{background:var(--rare)}
 body.calib .dot{pointer-events:auto;cursor:pointer}
 body.calib .dot:hover{box-shadow:0 0 0 3px rgba(200,162,74,.6)}
+body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
 #cross{position:absolute;width:22px;height:22px;transform:translate(-50%,-50%);z-index:6;pointer-events:none;display:none}
 #cross::before,#cross::after{content:"";position:absolute;background:var(--gold)}
 #cross::before{left:50%;top:-5px;bottom:-5px;width:2px;transform:translateX(-50%)}
@@ -382,7 +383,7 @@ function rowAction(e){
   const row=e.target.closest('.tree'); if(!row)return;
   if(document.body.classList.contains('calib')){armTree(+row.dataset.i);return;}
   const t=TREES[+row.dataset.i], pos=getPos(t);
-  if(pos){showFocus(pos);
+  if(pos){clearPeek();showFocus(pos);
     const mw=document.getElementById('mapwrap');
     if(mw.scrollIntoView)mw.scrollIntoView({behavior:'smooth',block:'center'});
     return;}
@@ -431,14 +432,20 @@ const POS_KEY='assistens_pos_v1';
 let STORE={anchors:[],trees:{}};
 let FILEPOS={anchors:[],trees:{}};
 try{const s=JSON.parse(localStorage.getItem(POS_KEY)||'{}');STORE={anchors:s.anchors||[],trees:s.trees||{}};}catch(e){}
-function saveStore(){try{localStorage.setItem(POS_KEY,JSON.stringify(STORE));}catch(e){}}
+let saveWarned=false;
+function saveStore(){try{localStorage.setItem(POS_KEY,JSON.stringify(STORE));}
+  catch(e){if(!saveWarned){saveWarned=true;toast('⚠ Browseren kan ikke gemme lokalt — eksportér, før du lukker siden');}}}
 function getPos(t){const loc=STORE.trees[treeId(t)];
   if(loc)return loc.del?null:loc;
   return FILEPOS.trees[treeId(t)]||null;}
 let armed=null,cand=null,ankArm=false,TF=null;
-function allAnchors(){return SEED_ANCHORS.concat(FILEPOS.anchors||[],STORE.anchors||[]);}
+function allAnchors(){ // dedup: samme anker fra fil og lokalt lager tæller kun én gang; lokal kopi vinder, så den kan slettes
+  const m=new Map();
+  SEED_ANCHORS.concat(FILEPOS.anchors||[],STORE.anchors||[]).forEach(a=>m.set(a.navn+'|'+a.lat+'|'+a.lon,a));
+  return [...m.values()];
+}
 function fitAffine(){ // mindste kvadraters affine tilpasning (lon,lat) -> (fx,fy)
-  const A=allAnchors();
+  const A=allAnchors().filter(a=>[a.lat,a.lon,a.fx,a.fy].every(Number.isFinite));
   function lsq(get){
     const S=[[0,0,0,0],[0,0,0,0],[0,0,0,0]];
     A.forEach(p=>{const r=[p.lon-LON0,p.lat-LAT0,1],v=get(p);
@@ -493,22 +500,26 @@ function calMsg(m){document.getElementById('calmsg').textContent=m||'';}
 function setCalib(on){
   document.body.classList.toggle('calib',on);
   calBtn.classList.toggle('on',on);
-  if(!on){disarm();document.getElementById('anchorbox').classList.remove('open');ankArm=false;}
+  if(!on){ankArm=false;disarm();document.getElementById('anchorbox').classList.remove('open');document.body.classList.remove('placing');}
   syncHash();render();
 }
 calBtn.onclick=()=>setCalib(!document.body.classList.contains('calib'));
-function armTree(i){
-  armed=i;ankArm=false;
+function armTree(i,auto){
+  armed=i;ankArm=false;document.body.classList.add('placing');
   const t=TREES[i],p=getPos(t);
-  cand=p?{fx:p.fx,fy:p.fy,src:p.src}:null;
+  cand=p?Object.assign({},p):null; // fuld kopi, så lat/lon/acc følger med ved gen-gem
   document.getElementById('caltool').classList.add('open');
   document.getElementById('caltree').innerHTML='<b>'+esc(t.plot)+'</b> · <i>'+esc(t.sp)+'</i>'+
     (p?' — allerede placeret; tryk på kortet eller finjustér for at flytte':' — tryk på kortet, dér hvor træet står');
   calMsg('');updCross();render();
   const row=list.querySelector('.tree[data-i="'+i+'"]');
-  if(row&&row.scrollIntoView)row.scrollIntoView({block:'nearest'});
+  if(row){const lr=list.getBoundingClientRect(),rr=row.getBoundingClientRect();
+    if(rr.top<lr.top||rr.bottom>lr.bottom)list.scrollTop+=rr.top-lr.top-60;} // rul kun listens egen boks, aldrig siden
+  if(!auto){const ct=document.getElementById('caltool');
+    if(ct.scrollIntoView)ct.scrollIntoView({behavior:'smooth',block:'nearest'});}
 }
 function disarm(){armed=null;cand=null;
+  if(!ankArm)document.body.classList.remove('placing');
   document.getElementById('caltool').classList.remove('open');
   updCross();render();}
 function updCross(){
@@ -528,8 +539,8 @@ function drawLoupe(){
 }
 wrap.addEventListener('click',e=>{
   if(!document.body.classList.contains('calib'))return;
-  if(e.target.closest('.dot'))return;
-  const r=wrap.getBoundingClientRect();
+  if(e.target.closest('.dot')||e.target.closest('.hot'))return;
+  const r=document.getElementById('mapimg').getBoundingClientRect(); // billedets boks, ikke rammens — ellers forskyder 1px-borderen alt mod midten
   const fx=(e.clientX-r.left)/r.width,fy=(e.clientY-r.top)/r.height;
   if(ankArm){placeAnchor(fx,fy);return;}
   if(armed===null){toast('Vælg først et træ i listen');return;}
@@ -539,7 +550,7 @@ wrap.addEventListener('click',e=>{
 document.querySelectorAll('.nudge button').forEach(b=>{
   b.onclick=()=>{if(!cand)return;
     const d=b.dataset.n.split(',').map(Number);
-    cand.fx+=d[0]/IMGW;cand.fy+=d[1]/IMGH;updCross();};
+    cand.fx=Math.min(1,Math.max(0,cand.fx+d[0]/IMGW));cand.fy=Math.min(1,Math.max(0,cand.fy+d[1]/IMGH));updCross();};
 });
 function gpsOpts(){return {enableHighAccuracy:true,timeout:15000,maximumAge:0};}
 document.getElementById('calGPS').onclick=()=>{
@@ -548,7 +559,8 @@ document.getElementById('calGPS').onclick=()=>{
   navigator.geolocation.getCurrentPosition(pos=>{
     const c=pos.coords,f=llToFrac(c.latitude,c.longitude);
     let warn='';
-    if(f.fx<-0.02||f.fx>1.02||f.fy<-0.02||f.fy>1.02)warn=' — OBS: positionen ligger uden for kortet';
+    const dx=Math.max(0,-f.fx,f.fx-1)*IMGW,dy=Math.max(0,-f.fy,f.fy-1)*IMGH;
+    if(dx||dy)warn=' — OBS: '+Math.round(Math.hypot(dx,dy)*M_PER_PX)+' m uden for kortet; krydset er lagt på kanten';
     cand={fx:Math.min(1,Math.max(0,f.fx)),fy:Math.min(1,Math.max(0,f.fy)),
       lat:c.latitude,lon:c.longitude,acc:Math.round(c.accuracy),src:'gps'};
     updCross();
@@ -564,20 +576,21 @@ function nextUnplaced(after){
 }
 document.getElementById('calSave').onclick=()=>{
   if(armed===null||!cand){calMsg('Tryk på kortet først.');return;}
-  const t=TREES[armed];
+  const t=TREES[armed],prev=getPos(t);
   const rec={fx:+cand.fx.toFixed(5),fy:+cand.fy.toFixed(5),src:cand.src||'kort',ts:new Date().toISOString().slice(0,10)};
   if(cand.lat){rec.lat=+cand.lat.toFixed(6);rec.lon=+cand.lon.toFixed(6);rec.acc=cand.acc;}
+  if(prev&&prev.note)rec.note=prev.note;
   STORE.trees[treeId(t)]=rec;saveStore();buildDots();
   let a=0,b=0;TREES.forEach(x=>{if(x.sec===t.sec){b++;if(getPos(x))a++;}});
   if(a===b)toast('Afdeling '+t.sec+' fuldført ✓ ('+b+' træer)');
   else toast(t.plot+' placeret · '+placedCount()+' af '+TREES.length);
   const next=nextUnplaced(armed);
-  if(next!==null)armTree(next);else disarm();
+  if(next!==null)armTree(next,true);else disarm();
 };
 document.getElementById('calDel').onclick=()=>{
   if(armed===null)return;
   const t=TREES[armed],id=treeId(t);
-  if(FILEPOS.trees[id])STORE.trees[id]={del:1};else delete STORE.trees[id];
+  if(FILEPOS.trees[id])STORE.trees[id]={del:1,ts:new Date().toISOString().slice(0,10)};else delete STORE.trees[id];
   saveStore();buildDots();cand=null;updCross();
   toast(t.plot+': placering slettet');render();
 };
@@ -586,51 +599,64 @@ function mergedData(){
   const trees={};
   Object.keys(FILEPOS.trees||{}).forEach(k=>{trees[k]=FILEPOS.trees[k];});
   Object.keys(STORE.trees).forEach(k=>{
-    if(STORE.trees[k].del)delete trees[k];else trees[k]=STORE.trees[k];});
+    const v=STORE.trees[k],cur=trees[k];
+    if(cur&&cur.ts&&v.ts&&cur.ts>v.ts)return; // filens post er nyere end den lokale — behold filens
+    if(v.del)delete trees[k];else trees[k]=v;});
   const seenA={},anchors=[];
   (FILEPOS.anchors||[]).concat(STORE.anchors||[]).forEach(a=>{
     const k=a.navn+'|'+a.lat+'|'+a.lon;if(seenA[k])return;seenA[k]=1;anchors.push(a);});
   return {version:1,updated:new Date().toISOString().slice(0,10),anchors:anchors,trees:trees};
 }
 document.getElementById('calExport').onclick=async()=>{
+  await loadPositionsFile(); // hent nyeste committede fil først, så eksporten fletter oven på den og ikke et gammelt øjebliksbillede
   const txt=JSON.stringify(mergedData(),null,1);
   const file=new File([txt],'positions.json',{type:'application/json'});
   if(navigator.canShare&&navigator.canShare({files:[file]})){
-    try{await navigator.share({files:[file],title:'positions.json'});return;}catch(e){}}
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));
-  a.download='positions.json';a.click();URL.revokeObjectURL(a.href);
+    try{await navigator.share({files:[file],title:'positions.json'});return;}
+    catch(e){if(e&&e.name==='AbortError')return;}}
+  const a=document.createElement('a'),url=URL.createObjectURL(new Blob([txt],{type:'application/json'}));
+  a.href=url;a.download='positions.json';a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),10000);
 };
-document.getElementById('calCopy').onclick=()=>{
+document.getElementById('calCopy').onclick=async()=>{
+  await loadPositionsFile();
   const txt=JSON.stringify(mergedData(),null,1);
   if(navigator.clipboard)navigator.clipboard.writeText(txt).then(
     ()=>toast('JSON kopieret — gem som positions.json i repoet'),
     ()=>toast('Kunne ikke kopiere'));
+  else toast('Kopiering kræver HTTPS — brug ⬇ Eksportér i stedet');
 };
 document.getElementById('calImportBtn').onclick=()=>document.getElementById('calFile').click();
 document.getElementById('calFile').onchange=e=>{
   const f=e.target.files[0];if(!f)return;
   f.text().then(txt=>{
-    try{const d=JSON.parse(txt);
-      Object.assign(STORE.trees,d.trees||{});
-      (d.anchors||[]).forEach(a=>{
-        if(a.seed)return;
-        if(!STORE.anchors.some(b2=>b2.lat===a.lat&&b2.lon===a.lon&&b2.navn===a.navn))STORE.anchors.push(a);});
-      saveStore();fitAffine();buildDots();render();ankList();
-      toast('Importeret: '+Object.keys(d.trees||{}).length+' placeringer');
-    }catch(err){toast('Kunne ikke læse filen: '+err.message);}
-  });
+    const d=JSON.parse(txt);
+    let n=0;
+    Object.keys(d.trees||{}).forEach(k=>{
+      if(k==='__proto__'||k==='constructor'||k==='prototype')return;
+      const v=d.trees[k],cur=STORE.trees[k];
+      if(!v||(!v.del&&!(Number.isFinite(v.fx)&&Number.isFinite(v.fy))))return;
+      if(cur&&cur.ts&&v.ts&&cur.ts>v.ts)return; // den lokale post er nyere — behold den
+      STORE.trees[k]=v;n++;});
+    (d.anchors||[]).forEach(a=>{
+      if(a.seed||![a.lat,a.lon,a.fx,a.fy].every(Number.isFinite))return;
+      if(!allAnchors().some(b2=>b2.lat===a.lat&&b2.lon===a.lon&&b2.navn===a.navn))STORE.anchors.push(a);});
+    saveStore();fitAffine();buildDots();render();ankList();
+    toast('Importeret: '+n+' placeringer');
+  }).catch(err=>toast('Kunne ikke læse filen: '+err.message));
   e.target.value='';
 };
 document.getElementById('calAnchorBtn').onclick=()=>{
-  document.getElementById('anchorbox').classList.toggle('open');ankArm=false;ankList();};
+  document.getElementById('anchorbox').classList.toggle('open');ankArm=false;
+  if(armed===null)document.body.classList.remove('placing');
+  ankList();};
 document.getElementById('ankNew').onclick=()=>{
-  disarm();ankArm=true;
+  disarm();ankArm=true;document.body.classList.add('placing');
   document.getElementById('anchorbox').classList.add('open');
   toast('Tryk nu på kortet, dér hvor du står');
 };
 function placeAnchor(fx,fy){
-  ankArm=false;
+  ankArm=false;document.body.classList.remove('placing');
   if(!navigator.geolocation){toast('Din browser tilbyder ikke GPS');return;}
   toast('Henter GPS-position …');
   navigator.geolocation.getCurrentPosition(pos=>{
@@ -645,25 +671,38 @@ function placeAnchor(fx,fy){
 }
 function ankList(){
   const el=document.getElementById('anklist');
-  const base=SEED_ANCHORS.length+(FILEPOS.anchors||[]).length;
-  el.innerHTML=allAnchors().map((a,i)=>
-    '<div class="anchorrow"><span style="flex:1">'+(a.seed?'▪ ':'⚓ ')+esc(a.navn)+'</span>'+
-    '<span title="Afvigelse mellem kort og GPS efter tilpasning">±'+anchorErrM(a).toFixed(1)+' m</span>'+
-    (i>=base?'<button class="adel" data-a="'+(i-base)+'">slet</button>'
+  el.innerHTML=allAnchors().map(a=>{
+    const si=STORE.anchors.indexOf(a),err=anchorErrM(a);
+    return '<div class="anchorrow"><span style="flex:1">'+(a.seed?'▪ ':'⚓ ')+esc(a.navn)+'</span>'+
+    '<span title="Afvigelse mellem kort og GPS efter tilpasning">'+(Number.isFinite(err)?('±'+err.toFixed(1)+' m'):'ugyldigt anker')+'</span>'+
+    (si>=0?'<button class="adel" data-a="'+si+'">slet</button>'
       :'<span style="color:var(--faint)">'+(a.seed?'indbygget':'fra fil')+'</span>')+
-    '</div>').join('');
+    '</div>';}).join('');
   el.querySelectorAll('.adel').forEach(b=>{
     b.onclick=()=>{STORE.anchors.splice(+b.dataset.a,1);saveStore();fitAffine();ankList();};
   });
 }
 // progressbaren skal følge med, når filtre/afdeling ændrer sig
 const _render0=render;render=function(){_render0();updProgress();};
+function loadPositionsFile(){
+  return fetch('positions.json',{cache:'no-store'})
+    .then(r=>r.ok?r.text():null)
+    .then(txt=>{
+      if(txt===null)return;
+      let d;
+      try{d=JSON.parse(txt);}catch(e){toast('⚠ positions.json i repoet kunne ikke læses — tjek filen for JSON-fejl');return;}
+      FILEPOS={anchors:d.anchors||[],trees:d.trees||{}};
+      // ryd udtjente sletninger: er nøglen ude af filen (sletningen er publiceret), eller har filen en nyere post, fjernes tombstonen
+      Object.keys(STORE.trees).forEach(k=>{
+        const v=STORE.trees[k];
+        if(v&&v.del&&(!FILEPOS.trees[k]||(v.ts&&FILEPOS.trees[k].ts&&FILEPOS.trees[k].ts>v.ts)))delete STORE.trees[k];});
+      saveStore();
+      fitAffine();buildDots();render();ankList();
+    })
+    .catch(()=>{});
+}
 fitAffine();buildDots();ankList();
-fetch('positions.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{
-  if(!d)return;
-  FILEPOS={anchors:d.anchors||[],trees:d.trees||{}};
-  fitAffine();buildDots();render();ankList();
-}).catch(()=>{});
+loadPositionsFile();
 // Gendan tilstand fra URL-hash (delbare links, fx #afd=F&q=ginkgo — og #kal=1 for kalibrering)
 (function(){
   const p=new URLSearchParams(location.hash.slice(1));

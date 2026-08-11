@@ -37,7 +37,10 @@ brugte. De skal eksporteres for at blive fælles:
 1. Tryk **⬇ Eksportér** i kalibreringsbjælken. På telefonen åbner delearket,
    så du kan AirDrope eller maile filen `positions.json` til dig selv; på
    computeren downloades den. **📋 Kopiér** lægger i stedet indholdet på
-   udklipsholderen.
+   udklipsholderen. Eksporten henter først den nyeste committede fil og
+   fletter dine lokale ændringer oven på den, så en gammel fane eller to
+   personer i marken ikke overskriver hinandens arbejde; ved sammenfald på
+   samme træ vinder posten med nyeste dato.
 2. Læg filen som `positions.json` i repoets rod og commit.
 3. Når GitHub Pages har bygget, henter siden filen automatisk, og alle ser
    placeringerne.
@@ -56,8 +59,8 @@ Omregningen mellem GPS-koordinater og kortbilledet bygger på fire indbyggede
 ankre: kirkegårdens hjørner (Jagtvej/Hans Tavsens Gade, Hans Tavsens
 Gade/Kapelvej, Kapelvej/Nørrebrogade og Nørrebros Runddel), aflæst fra
 grænselinjen i `kort.png` og parret med OpenStreetMaps polygon for
-kirkegården (way 3099111). Efter tilpasningen afviger de fire ankre 0,9–1,5 m
-fra hinanden — kortet er altså pænt målfast.
+kirkegården (way 3099111). Efter tilpasningen afviger de fire ankre 0,9–1,6 m
+(RMS 1,2 m) — kortet er altså pænt målfast.
 
 Vil du forbedre omregningen: tryk **⚓ GPS-ankre**, stil dig et sted, du
 entydigt kan udpege på kortet (en låge, et hjørne), skriv et navn, tryk
@@ -92,8 +95,13 @@ GPS-aflæsning er let at spotte og slette igen.
   koordinater (`lat`, `lon`) og nøjagtigheden i meter (`acc`). De rå
   koordinater betyder, at placeringerne kan genberegnes, hvis
   kort-georeferencen forbedres senere — feltarbejdet skal ikke gøres om.
+- `fx`/`fy` er den gældende placering; `lat`/`lon` er den rå GPS-aflæsning
+  bag den. Finjustering med pilene ændrer kun `fx`/`fy`, mens den rå
+  aflæsning bliver stående som dokumentation.
 
 ## Begrænsning
 
 Rækker, der dækker flere gravsteder (fx “A-126 +1”), kan kun få én prik —
-placér den ved hovedtræet og nævn evt. resten i en kommentar i filen.
+placér den ved hovedtræet, og tilføj evt. et `"note"`-felt i postens JSON
+(JSON tillader ikke kommentarer; ekstra felter ignoreres af siden og
+bevares ved eksport).
