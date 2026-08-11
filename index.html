@@ -112,8 +112,51 @@ footer b{color:var(--bark)}
 .clearchip:hover{border-color:var(--ink);color:var(--ink)}
 .empty .resetf{display:block;margin:12px auto 0;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--bark);background:transparent;color:var(--bark);border-radius:3px;cursor:pointer}
 .empty .resetf:hover{background:var(--bark);color:var(--paper)}
+/* — Kalibrering: placér træerne præcist på kortet — */
+#calBtn{margin-left:8px}
+#calBtn.on{background:var(--moss-d);border-color:var(--moss-d);color:#fff}
+.calbar{display:none;margin:0 0 10px;padding:9px 12px;border:1.5px dashed var(--moss-d);border-radius:5px;background:var(--card-hover);font-family:'Spline Sans Mono',monospace;font-size:11.5px;line-height:1.55}
+body.calib .calbar{display:block}
+.calbar b{color:var(--moss-d)}
+.calbtns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center}
+.calprog{height:5px;background:var(--line);border-radius:3px;margin-top:8px;overflow:hidden}
+.calprog i{display:block;height:100%;width:0;background:var(--moss);border-radius:3px;transition:width .3s}
+body.calib .hot{pointer-events:none;opacity:.25}
+body.calib .mapwrap{cursor:crosshair}
+.dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--moss-d);border:1.5px solid var(--paper);transform:translate(-50%,-50%);z-index:3;pointer-events:none;padding:0}
+.dot.rare{background:var(--rare)}
+body.calib .dot{pointer-events:auto;cursor:pointer}
+body.calib .dot:hover{box-shadow:0 0 0 3px rgba(200,162,74,.6)}
+#cross{position:absolute;width:22px;height:22px;transform:translate(-50%,-50%);z-index:6;pointer-events:none;display:none}
+#cross::before,#cross::after{content:"";position:absolute;background:var(--gold)}
+#cross::before{left:50%;top:-5px;bottom:-5px;width:2px;transform:translateX(-50%)}
+#cross::after{top:50%;left:-5px;right:-5px;height:2px;transform:translateY(-50%)}
+#focusdot{position:absolute;width:14px;height:14px;border-radius:50%;background:var(--gold);border:2px solid var(--paper);transform:translate(-50%,-50%);z-index:6;pointer-events:none;display:none}
+#focusdot::before{content:"";position:absolute;left:50%;top:50%;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid var(--gold);animation:pulse 1.6s ease-out infinite}
+.caltool{display:none;margin-top:8px;padding:10px 12px;border:1px solid var(--line);border-radius:5px;background:var(--input-bg);font-family:'Spline Sans Mono',monospace;font-size:11px;line-height:1.5}
+.caltool.open{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.caltool canvas{border:1px solid var(--line);border-radius:4px;background:#eef1e3;flex:none}
+.nudge{display:grid;grid-template-columns:repeat(3,32px);grid-template-rows:repeat(2,32px);gap:3px;flex:none}
+.nudge button{font-size:12px;padding:0}
+.nudge button,.calbtn{font-family:'Spline Sans Mono',monospace;font-size:11px;border:1px solid var(--bark);background:transparent;color:var(--bark);border-radius:3px;cursor:pointer;padding:5px 10px}
+.nudge button:hover,.calbtn:hover{background:var(--bark);color:var(--paper)}
+.calbtn.go{border-color:var(--moss-d);color:var(--moss-d);font-weight:500}
+.calbtn.go:hover{background:var(--moss-d);color:#fff}
+.calbtn.warn{border-color:var(--rare);color:var(--rare)}
+.calbtn.warn:hover{background:var(--rare);color:#fff}
+#calmsg{margin-top:6px;color:var(--faint)}
+#anchorbox{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
+#anchorbox.open{display:block}
+#anchorbox input[type=text]{font-family:'Outfit';font-size:12px;padding:4px 8px;border:1px solid var(--line);border-radius:3px;background:var(--input-bg);color:var(--ink)}
+.anchorrow{display:flex;gap:8px;align-items:baseline;padding:3px 0;font-size:10.5px}
+.anchorrow .adel{border:none;background:none;color:var(--rare);cursor:pointer;font-family:inherit;font-size:10px;padding:0}
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(90px);background:var(--moss-d);color:#fff;font-family:'Spline Sans Mono',monospace;font-size:12px;padding:9px 16px;border-radius:5px;z-index:70;transition:transform .25s;max-width:88vw;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0)}
+.hot.done{border-color:var(--gold)}
+.hot.done::after{content:"✓";position:absolute;top:-8px;right:-8px;font-size:11px;color:var(--gold);font-weight:600}
+.tree.armed{background:rgba(200,162,74,.18);outline:2px solid var(--gold);outline-offset:-2px}
 @media (prefers-reduced-motion: reduce){
- .hot.active::before{animation:none}
+ .hot.active::before,#focusdot::before{animation:none}
  .panel,.scrim,.hot{transition:none}
 }
 </style></head>
@@ -125,10 +168,49 @@ footer b{color:var(--bark)}
 </header>
 <div class="layout">
 <section>
-<div class="panel-title"><span>Afdelingskort</span><span class="count" id="seccount"></span></div>
+<div class="panel-title"><span>Afdelingskort</span><span style="display:flex;align-items:baseline"><span class="count" id="seccount"></span><button class="filterbtn" id="calBtn" title="Placér træerne præcist på kortet">📍 Kalibrér</button></span></div>
+<div class="calbar" id="calbar">
+  <div id="calstatus"><b>Kalibrering.</b> Tryk på et træ i listen, og tryk derefter på kortet, dér hvor træet står. Eller stil dig ved træet og brug GPS-knappen.</div>
+  <div class="calprog"><i id="calprogfill"></i></div>
+  <div class="calbtns">
+    <button class="calbtn" id="calExport">⬇ Eksportér</button>
+    <button class="calbtn" id="calCopy">📋 Kopiér</button>
+    <button class="calbtn" id="calImportBtn">Importér…</button>
+    <button class="calbtn" id="calAnchorBtn">⚓ GPS-ankre</button>
+    <span class="count" id="calcount" style="margin-left:auto"></span>
+  </div>
+  <input type="file" id="calFile" accept="application/json,.json" style="display:none">
+  <div id="anchorbox">
+    <div style="margin-bottom:6px"><b>GPS-ankre</b> forbinder kortbilledet med virkelighedens koordinater. Fire hjørner er indbygget. Vil du forbedre præcisionen: stil dig et sted, du entydigt kan udpege på kortet (en låge, et hjørne), skriv et navn, tryk <b>Nyt anker</b> — og tryk så på kortet, dér hvor du står. GPS-positionen gemmes automatisk.</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+      <input type="text" id="ankNavn" placeholder="Navn på stedet…" size="18">
+      <button class="calbtn" id="ankNew">⚓ Nyt anker</button>
+    </div>
+    <div id="anklist" style="margin-top:6px"></div>
+  </div>
+</div>
 <div class="mapwrap" id="mapwrap">
   <img src="kort.png" width="1400" height="1216" decoding="async" alt="Kort over Assistens Kirkegård" id="mapimg">
+  <div id="cross"></div><div id="focusdot"></div>
 </div>
+<div class="caltool" id="caltool">
+  <canvas id="loupe" width="120" height="120"></canvas>
+  <div class="nudge">
+    <span></span><button type="button" data-n="0,-1" title="1 px op">▲</button><span></span>
+    <button type="button" data-n="-1,0" title="1 px venstre">◀</button><button type="button" data-n="0,1" title="1 px ned">▼</button><button type="button" data-n="1,0" title="1 px højre">▶</button>
+  </div>
+  <div style="flex:1;min-width:170px">
+    <div id="caltree" style="margin-bottom:7px"></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="calbtn go" id="calSave">✓ Gem</button>
+      <button class="calbtn" id="calGPS">📡 Brug GPS</button>
+      <button class="calbtn warn" id="calDel">Slet placering</button>
+      <button class="calbtn" id="calCancel">Annullér</button>
+    </div>
+    <div id="calmsg"></div>
+  </div>
+</div>
+<div id="toast"></div>
 <div class="legend">
   <span><span class="ringL"></span>Klikbar afdeling</span>
   <span><span class="dotL"></span>Indeholder sjælden art</span>
@@ -143,7 +225,7 @@ footer b{color:var(--bark)}
 <div class="list" id="list"></div>
 </section>
 </div>
-<footer><b>Kilde:</b> “Liste over mere specielle træer og buske på Assistens Kirkegård”, Morten Scheller Jensen, 2015. Grundkort: Københavns Kirkegårdes officielle oversigtskort.<br><b>I felten:</b> Find træ → noter afdeling + nummer → følg afdelingen på kortet. Inden for hver afdeling er gravstederne nummereret fortløbende. Røde markeringer = botanisk sjældne arter (bl.a. vingevalnød, tyrkisk hassel, tempeltræ).</footer>
+<footer><b>Kilde:</b> “Liste over mere specielle træer og buske på Assistens Kirkegård”, Morten Scheller Jensen, 2015. Grundkort: Københavns Kirkegårdes officielle oversigtskort.<br><b>I felten:</b> Find træ → noter afdeling + nummer → følg afdelingen på kortet. Inden for hver afdeling er gravstederne nummereret fortløbende. Røde markeringer = botanisk sjældne arter (bl.a. vingevalnød, tyrkisk hassel, tempeltræ).<br><b>Kalibrering:</b> Tryk “📍 Kalibrér” over kortet for at placere de enkelte træer præcist — på stedet med GPS eller med et tryk på kortet. Fremgangsmåden står i KALIBRERING.md i repoet.</footer>
 </div>
 <div class="scrim" id="scrim"></div>
 <div class="panel" id="panel">
@@ -241,6 +323,7 @@ function syncHash(){
   const p=new URLSearchParams();
   if(curSec)p.set('afd',curSec);
   if(q.value.trim())p.set('q',q.value.trim());
+  if(document.body.classList.contains('calib'))p.set('kal','1');
   const h=p.toString();
   history.replaceState(null,'',h?('#'+h):location.pathname+location.search);
 }
@@ -276,11 +359,11 @@ function render(){
     const extra=t.allplots.length>1?(' +'+(t.allplots.length-1)):'';
     const nowChip=(t._season&&!t._season.yr&&t._season.m.includes(NOW_MONTH))?'<span class="nowchip">★ nu</span>':'';
     const sc=isSeen(t)?' seenrow':'';
-    return '<div class="tree'+(t._rare?' rare':'')+sc+'" data-sec="'+esc(t.sec)+'" data-i="'+t._idx+'" tabindex="0" role="button" aria-label="'+esc(t.sp)+', afdeling '+esc(t.sec)+'">'+
+    return '<div class="tree'+(t._rare?' rare':'')+sc+(t._idx===armed?' armed':'')+'" data-sec="'+esc(t.sec)+'" data-i="'+t._idx+'" tabindex="0" role="button" aria-label="'+esc(t.sp)+', afdeling '+esc(t.sec)+'">'+
       '<button class="seen" data-seen="'+t._idx+'" title="Markér som set" aria-label="Markér som set"></button>'+
       '<div class="plot" title="'+esc(t.allplots.join(', '))+'">'+esc(t.plot)+extra+'</div>'+
       '<div><div class="sp">'+esc(t.sp)+nowChip+(t._rare?'<span class="tag">sjælden</span>':'')+(t._desc?'<button class="infobtn" data-info="'+t._idx+'">Sådan kender du den</button>':'')+'</div>'+dk+
-      '<div class="meta">Afd. '+esc(t.sec)+(yr?' · '+yr:'')+(t.nr?' · Nr '+esc(t.nr):'')+'</div></div></div>';
+      '<div class="meta">Afd. '+esc(t.sec)+(yr?' · '+yr:'')+(t.nr?' · Nr '+esc(t.nr):'')+(getPos(t)?' · <span title="Placeret præcist på kortet">📍</span>':'')+'</div></div></div>';
   }).join('');
 }
 function resetFilters(){
@@ -289,13 +372,20 @@ function resetFilters(){
   seenBtn.classList.remove('on');seenBtn.textContent='Skjul sete';
   if(curSec)selectSec(curSec);else{syncHash();render();}
 }
-// Click a tree row -> peek-highlight its section on the map (uden at ændre valgt afdeling); info button -> open panel
+// Click a tree row -> peek-highlight its section on the map (uden at ændre valgt afdeling); info button -> open panel.
+// I kalibreringstilstand vælger klikket i stedet træet til placering; har træet en præcis position, vises den.
 function rowAction(e){
   const sbtn=e.target.closest('.seen');
   if(sbtn){e.stopPropagation();toggleSeen(TREES[+sbtn.dataset.seen]);render();return;}
   const btn=e.target.closest('.infobtn');
   if(btn){e.stopPropagation();openPanel(+btn.dataset.info);return;}
   const row=e.target.closest('.tree'); if(!row)return;
+  if(document.body.classList.contains('calib')){armTree(+row.dataset.i);return;}
+  const t=TREES[+row.dataset.i], pos=getPos(t);
+  if(pos){showFocus(pos);
+    const mw=document.getElementById('mapwrap');
+    if(mw.scrollIntoView)mw.scrollIntoView({behavior:'smooth',block:'center'});
+    return;}
   const s=row.dataset.sec;
   const hot=document.querySelector('.hot[data-s="'+s+'"]');
   if(hot){clearPeek();
@@ -326,10 +416,259 @@ rareBtn.onclick=()=>{rareOnly=!rareOnly;rareBtn.classList.toggle('on',rareOnly);
 seasonBtn.textContent='★ Værd at se nu ('+MONTHS_DA[NOW_MONTH-1]+')';
 seasonBtn.onclick=()=>{seasonOnly=!seasonOnly;seasonBtn.classList.toggle('on',seasonOnly);render();};
 seenBtn.onclick=()=>{hideSeen=!hideSeen;seenBtn.classList.toggle('on',hideSeen);seenBtn.textContent=hideSeen?'Vis sete':'Skjul sete';render();};
-// Gendan tilstand fra URL-hash (delbare links, fx #afd=F&q=ginkgo)
+// ————— Kalibrering: præcise træplaceringer —————
+// Positioner gemmes som brøkdele af kortbilledet (fx,fy i 0-1) — samme system som FRACS.
+// Lokale ændringer ligger i localStorage; committes de eksporterede data som positions.json
+// i repo-roden, ser alle dem. GPS-omregningen bygger på fire indbyggede ankre: kirkegårdens
+// hjørner aflæst i kort.png og parret med OpenStreetMaps polygon (way 3099111).
+const IMGW=1400,IMGH=1216,M_PER_PX=0.46,LON0=12.55,LAT0=55.69;
+const SEED_ANCHORS=[
+ {lat:55.690688,lon:12.544873,fx:336/IMGW,fy:48/IMGH,navn:'Hjørnet Jagtvej / Hans Tavsens Gade',seed:1},
+ {lat:55.688026,lon:12.551794,fx:303/IMGW,fy:1186/IMGH,navn:'Hjørnet Hans Tavsens Gade / Kapelvej',seed:1},
+ {lat:55.690514,lon:12.554329,fx:1001/IMGW,fy:1146/IMGH,navn:'Hjørnet Kapelvej / Nørrebrogade',seed:1},
+ {lat:55.693494,lon:12.549890,fx:1272/IMGW,fy:252/IMGH,navn:'Hjørnet ved Nørrebros Runddel',seed:1}];
+const POS_KEY='assistens_pos_v1';
+let STORE={anchors:[],trees:{}};
+let FILEPOS={anchors:[],trees:{}};
+try{const s=JSON.parse(localStorage.getItem(POS_KEY)||'{}');STORE={anchors:s.anchors||[],trees:s.trees||{}};}catch(e){}
+function saveStore(){try{localStorage.setItem(POS_KEY,JSON.stringify(STORE));}catch(e){}}
+function getPos(t){const loc=STORE.trees[treeId(t)];
+  if(loc)return loc.del?null:loc;
+  return FILEPOS.trees[treeId(t)]||null;}
+let armed=null,cand=null,ankArm=false,TF=null;
+function allAnchors(){return SEED_ANCHORS.concat(FILEPOS.anchors||[],STORE.anchors||[]);}
+function fitAffine(){ // mindste kvadraters affine tilpasning (lon,lat) -> (fx,fy)
+  const A=allAnchors();
+  function lsq(get){
+    const S=[[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    A.forEach(p=>{const r=[p.lon-LON0,p.lat-LAT0,1],v=get(p);
+      for(let i=0;i<3;i++){for(let j=0;j<3;j++)S[i][j]+=r[i]*r[j];S[i][3]+=r[i]*v;}});
+    for(let i=0;i<3;i++){let m=i;for(let k=i+1;k<3;k++)if(Math.abs(S[k][i])>Math.abs(S[m][i]))m=k;
+      const t=S[i];S[i]=S[m];S[m]=t;
+      for(let k=i+1;k<3;k++){const f=S[k][i]/S[i][i];for(let j=i;j<4;j++)S[k][j]-=f*S[i][j];}}
+    const x=[0,0,0];
+    for(let i=2;i>=0;i--){x[i]=S[i][3];for(let j=i+1;j<3;j++)x[i]-=S[i][j]*x[j];x[i]/=S[i][i];}
+    return x;}
+  TF={fx:lsq(p=>p.fx),fy:lsq(p=>p.fy)};
+}
+function llToFrac(lat,lon){const u=lon-LON0,v=lat-LAT0;
+  return {fx:TF.fx[0]*u+TF.fx[1]*v+TF.fx[2],fy:TF.fy[0]*u+TF.fy[1]*v+TF.fy[2]};}
+function anchorErrM(p){const g=llToFrac(p.lat,p.lon);
+  return Math.hypot((g.fx-p.fx)*IMGW,(g.fy-p.fy)*IMGH)*M_PER_PX;}
+function placedCount(){let n=0;TREES.forEach(t=>{if(getPos(t))n++;});return n;}
+function updProgress(){
+  const n=placedCount();
+  document.getElementById('calprogfill').style.width=(n/TREES.length*100)+'%';
+  let txt=n+' af '+TREES.length+' placeret';
+  if(curSec){let a=0,b=0;TREES.forEach(t=>{if(t.sec===curSec){b++;if(getPos(t))a++;}});
+    txt+=' · Afd. '+curSec+': '+a+'/'+b;}
+  document.getElementById('calcount').textContent=txt;
+}
+function buildDots(){
+  document.querySelectorAll('#mapwrap .dot').forEach(el=>el.remove());
+  const done={};TREESECS.forEach(s=>done[s]=true);
+  TREES.forEach(t=>{
+    const p=getPos(t);
+    if(!p){done[t.sec]=false;return;}
+    const d=document.createElement('button');
+    d.type='button';d.className='dot'+(t._rare?' rare':'');d.tabIndex=-1;
+    d.style.left=(p.fx*100)+'%';d.style.top=(p.fy*100)+'%';
+    d.title=t.plot+' · '+t.sp;
+    d.onclick=ev=>{ev.stopPropagation();if(document.body.classList.contains('calib'))armTree(t._idx);};
+    wrap.appendChild(d);
+  });
+  document.querySelectorAll('.hot').forEach(h=>h.classList.toggle('done',!!done[h.dataset.s]));
+  updProgress();
+}
+let toastT=null;
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2600);}
+let focusT=null;
+function showFocus(p){const f=document.getElementById('focusdot');
+  f.style.left=(p.fx*100)+'%';f.style.top=(p.fy*100)+'%';f.style.display='block';
+  clearTimeout(focusT);focusT=setTimeout(()=>f.style.display='none',6000);}
+const calBtn=document.getElementById('calBtn'),crossEl=document.getElementById('cross'),
+      loupe=document.getElementById('loupe');
+function calMsg(m){document.getElementById('calmsg').textContent=m||'';}
+function setCalib(on){
+  document.body.classList.toggle('calib',on);
+  calBtn.classList.toggle('on',on);
+  if(!on){disarm();document.getElementById('anchorbox').classList.remove('open');ankArm=false;}
+  syncHash();render();
+}
+calBtn.onclick=()=>setCalib(!document.body.classList.contains('calib'));
+function armTree(i){
+  armed=i;ankArm=false;
+  const t=TREES[i],p=getPos(t);
+  cand=p?{fx:p.fx,fy:p.fy,src:p.src}:null;
+  document.getElementById('caltool').classList.add('open');
+  document.getElementById('caltree').innerHTML='<b>'+esc(t.plot)+'</b> · <i>'+esc(t.sp)+'</i>'+
+    (p?' — allerede placeret; tryk på kortet eller finjustér for at flytte':' — tryk på kortet, dér hvor træet står');
+  calMsg('');updCross();render();
+  const row=list.querySelector('.tree[data-i="'+i+'"]');
+  if(row&&row.scrollIntoView)row.scrollIntoView({block:'nearest'});
+}
+function disarm(){armed=null;cand=null;
+  document.getElementById('caltool').classList.remove('open');
+  updCross();render();}
+function updCross(){
+  if(cand){crossEl.style.left=(cand.fx*100)+'%';crossEl.style.top=(cand.fy*100)+'%';crossEl.style.display='block';}
+  else crossEl.style.display='none';
+  drawLoupe();
+}
+function drawLoupe(){
+  const ctx=loupe.getContext('2d');
+  ctx.clearRect(0,0,120,120);
+  if(!cand)return;
+  const img=document.getElementById('mapimg'),src=30; // 30 px af originalen = 4x zoom
+  ctx.imageSmoothingEnabled=false;
+  ctx.drawImage(img,cand.fx*IMGW-src/2,cand.fy*IMGH-src/2,src,src,0,0,120,120);
+  ctx.strokeStyle='#c8a24a';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(60,46);ctx.lineTo(60,74);ctx.moveTo(46,60);ctx.lineTo(74,60);ctx.stroke();
+}
+wrap.addEventListener('click',e=>{
+  if(!document.body.classList.contains('calib'))return;
+  if(e.target.closest('.dot'))return;
+  const r=wrap.getBoundingClientRect();
+  const fx=(e.clientX-r.left)/r.width,fy=(e.clientY-r.top)/r.height;
+  if(ankArm){placeAnchor(fx,fy);return;}
+  if(armed===null){toast('Vælg først et træ i listen');return;}
+  cand={fx:fx,fy:fy,src:'kort'};
+  updCross();calMsg('');
+});
+document.querySelectorAll('.nudge button').forEach(b=>{
+  b.onclick=()=>{if(!cand)return;
+    const d=b.dataset.n.split(',').map(Number);
+    cand.fx+=d[0]/IMGW;cand.fy+=d[1]/IMGH;updCross();};
+});
+function gpsOpts(){return {enableHighAccuracy:true,timeout:15000,maximumAge:0};}
+document.getElementById('calGPS').onclick=()=>{
+  if(!navigator.geolocation){calMsg('Din browser tilbyder ikke GPS.');return;}
+  calMsg('Henter GPS-position …');
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const c=pos.coords,f=llToFrac(c.latitude,c.longitude);
+    let warn='';
+    if(f.fx<-0.02||f.fx>1.02||f.fy<-0.02||f.fy>1.02)warn=' — OBS: positionen ligger uden for kortet';
+    cand={fx:Math.min(1,Math.max(0,f.fx)),fy:Math.min(1,Math.max(0,f.fy)),
+      lat:c.latitude,lon:c.longitude,acc:Math.round(c.accuracy),src:'gps'};
+    updCross();
+    calMsg('GPS: ±'+Math.round(c.accuracy)+' m'+warn+'. Stå stille og tryk igen for en ny aflæsning.');
+  },err=>calMsg('GPS-fejl: '+err.message),gpsOpts());
+};
+function nextUnplaced(after){
+  const rows=[...list.querySelectorAll('.tree')].map(el=>+el.dataset.i);
+  const start=rows.indexOf(after);
+  for(let k=1;k<=rows.length;k++){const i=rows[(start+k)%rows.length];
+    if(!getPos(TREES[i]))return i;}
+  return null;
+}
+document.getElementById('calSave').onclick=()=>{
+  if(armed===null||!cand){calMsg('Tryk på kortet først.');return;}
+  const t=TREES[armed];
+  const rec={fx:+cand.fx.toFixed(5),fy:+cand.fy.toFixed(5),src:cand.src||'kort',ts:new Date().toISOString().slice(0,10)};
+  if(cand.lat){rec.lat=+cand.lat.toFixed(6);rec.lon=+cand.lon.toFixed(6);rec.acc=cand.acc;}
+  STORE.trees[treeId(t)]=rec;saveStore();buildDots();
+  let a=0,b=0;TREES.forEach(x=>{if(x.sec===t.sec){b++;if(getPos(x))a++;}});
+  if(a===b)toast('Afdeling '+t.sec+' fuldført ✓ ('+b+' træer)');
+  else toast(t.plot+' placeret · '+placedCount()+' af '+TREES.length);
+  const next=nextUnplaced(armed);
+  if(next!==null)armTree(next);else disarm();
+};
+document.getElementById('calDel').onclick=()=>{
+  if(armed===null)return;
+  const t=TREES[armed],id=treeId(t);
+  if(FILEPOS.trees[id])STORE.trees[id]={del:1};else delete STORE.trees[id];
+  saveStore();buildDots();cand=null;updCross();
+  toast(t.plot+': placering slettet');render();
+};
+document.getElementById('calCancel').onclick=disarm;
+function mergedData(){
+  const trees={};
+  Object.keys(FILEPOS.trees||{}).forEach(k=>{trees[k]=FILEPOS.trees[k];});
+  Object.keys(STORE.trees).forEach(k=>{
+    if(STORE.trees[k].del)delete trees[k];else trees[k]=STORE.trees[k];});
+  const seenA={},anchors=[];
+  (FILEPOS.anchors||[]).concat(STORE.anchors||[]).forEach(a=>{
+    const k=a.navn+'|'+a.lat+'|'+a.lon;if(seenA[k])return;seenA[k]=1;anchors.push(a);});
+  return {version:1,updated:new Date().toISOString().slice(0,10),anchors:anchors,trees:trees};
+}
+document.getElementById('calExport').onclick=async()=>{
+  const txt=JSON.stringify(mergedData(),null,1);
+  const file=new File([txt],'positions.json',{type:'application/json'});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file],title:'positions.json'});return;}catch(e){}}
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));
+  a.download='positions.json';a.click();URL.revokeObjectURL(a.href);
+};
+document.getElementById('calCopy').onclick=()=>{
+  const txt=JSON.stringify(mergedData(),null,1);
+  if(navigator.clipboard)navigator.clipboard.writeText(txt).then(
+    ()=>toast('JSON kopieret — gem som positions.json i repoet'),
+    ()=>toast('Kunne ikke kopiere'));
+};
+document.getElementById('calImportBtn').onclick=()=>document.getElementById('calFile').click();
+document.getElementById('calFile').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  f.text().then(txt=>{
+    try{const d=JSON.parse(txt);
+      Object.assign(STORE.trees,d.trees||{});
+      (d.anchors||[]).forEach(a=>{
+        if(a.seed)return;
+        if(!STORE.anchors.some(b2=>b2.lat===a.lat&&b2.lon===a.lon&&b2.navn===a.navn))STORE.anchors.push(a);});
+      saveStore();fitAffine();buildDots();render();ankList();
+      toast('Importeret: '+Object.keys(d.trees||{}).length+' placeringer');
+    }catch(err){toast('Kunne ikke læse filen: '+err.message);}
+  });
+  e.target.value='';
+};
+document.getElementById('calAnchorBtn').onclick=()=>{
+  document.getElementById('anchorbox').classList.toggle('open');ankArm=false;ankList();};
+document.getElementById('ankNew').onclick=()=>{
+  disarm();ankArm=true;
+  document.getElementById('anchorbox').classList.add('open');
+  toast('Tryk nu på kortet, dér hvor du står');
+};
+function placeAnchor(fx,fy){
+  ankArm=false;
+  if(!navigator.geolocation){toast('Din browser tilbyder ikke GPS');return;}
+  toast('Henter GPS-position …');
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const c=pos.coords;
+    const navn=(document.getElementById('ankNavn').value.trim())||('Anker '+(STORE.anchors.length+1));
+    STORE.anchors.push({navn:navn,lat:+c.latitude.toFixed(6),lon:+c.longitude.toFixed(6),
+      acc:Math.round(c.accuracy),fx:+fx.toFixed(5),fy:+fy.toFixed(5)});
+    saveStore();fitAffine();ankList();
+    document.getElementById('ankNavn').value='';
+    toast('Anker gemt: '+navn+' (±'+Math.round(c.accuracy)+' m)');
+  },err=>toast('GPS-fejl: '+err.message),gpsOpts());
+}
+function ankList(){
+  const el=document.getElementById('anklist');
+  const base=SEED_ANCHORS.length+(FILEPOS.anchors||[]).length;
+  el.innerHTML=allAnchors().map((a,i)=>
+    '<div class="anchorrow"><span style="flex:1">'+(a.seed?'▪ ':'⚓ ')+esc(a.navn)+'</span>'+
+    '<span title="Afvigelse mellem kort og GPS efter tilpasning">±'+anchorErrM(a).toFixed(1)+' m</span>'+
+    (i>=base?'<button class="adel" data-a="'+(i-base)+'">slet</button>'
+      :'<span style="color:var(--faint)">'+(a.seed?'indbygget':'fra fil')+'</span>')+
+    '</div>').join('');
+  el.querySelectorAll('.adel').forEach(b=>{
+    b.onclick=()=>{STORE.anchors.splice(+b.dataset.a,1);saveStore();fitAffine();ankList();};
+  });
+}
+// progressbaren skal følge med, når filtre/afdeling ændrer sig
+const _render0=render;render=function(){_render0();updProgress();};
+fitAffine();buildDots();ankList();
+fetch('positions.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(d=>{
+  if(!d)return;
+  FILEPOS={anchors:d.anchors||[],trees:d.trees||{}};
+  fitAffine();buildDots();render();ankList();
+}).catch(()=>{});
+// Gendan tilstand fra URL-hash (delbare links, fx #afd=F&q=ginkgo — og #kal=1 for kalibrering)
 (function(){
   const p=new URLSearchParams(location.hash.slice(1));
   const term=p.get('q');if(term)q.value=term;
+  if(p.get('kal')==='1')setCalib(true);
   const afd=p.get('afd');
   if(afd&&TREESECS.includes(afd)){selectSec(afd);}else{render();}
 })();
