@@ -4,15 +4,13 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="googlebot" content="noindex, nofollow">
 <title>Assistens Kirkegård · Trækort</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="fonts.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Spline+Sans+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap');
-:root{--ink:#23271f;--paper:#f4f1e6;--moss:#5a7a4f;--moss-d:#3f5a37;--bark:#7a5c3e;--rare:#b5532a;--line:#c8c0a8;--gold:#c8a24a;
- --panel-bg:#f4f1e6;--input-bg:#fbf9f0;--mute:#555;--faint:#999;--card-hover:rgba(90,122,79,.05);--plot-text:#fff;--map-frame:#c8c0a8;--map-dim:1;}
+:root{--ink:#23271f;--paper:#f4f1e6;--moss:#5a7a4f;--moss-d:#3f5a37;--bark:#7a5c3e;--rare:#a04724;--line:#c8c0a8;--gold:#c8a24a;
+ --panel-bg:#f4f1e6;--input-bg:#fbf9f0;--mute:#555;--faint:#6f6a5c;--card-hover:rgba(90,122,79,.05);--plot-text:#fff;--map-frame:#c8c0a8;--map-dim:1;}
 @media (prefers-color-scheme: dark){
  :root{--ink:#e8e4d6;--paper:#1c1f1a;--moss:#7a9b6d;--moss-d:#9bbb8c;--bark:#c89a6a;--rare:#e08a5c;--line:#3a3f36;--gold:#d4b25e;
-  --panel-bg:#23271f;--input-bg:#262a22;--mute:#a8a496;--faint:#857f70;--card-hover:rgba(122,155,109,.12);--plot-text:#1c1f1a;--map-frame:#3a3f36;--map-dim:.88;}
+  --panel-bg:#23271f;--input-bg:#262a22;--mute:#a8a496;--faint:#9c9684;--card-hover:rgba(122,155,109,.12);--plot-text:#1c1f1a;--map-frame:#3a3f36;--map-dim:.88;}
  body{background-image:radial-gradient(circle at 15% 5%,rgba(122,155,109,.07),transparent 40%) !important;}
  .mapwrap img{filter:brightness(var(--map-dim)) saturate(.95);}
  #seasonBtn{color:var(--gold);}
@@ -61,7 +59,7 @@ input[type=search]{flex:1;font-family:'Outfit';font-size:14px;padding:9px 12px;b
 input[type=search]:focus{outline:none;border-color:var(--moss)}
 .filterbtn{font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--bark);background:transparent;color:var(--bark);border-radius:3px;cursor:pointer}
 .filterbtn.on{background:var(--rare);border-color:var(--rare);color:#fff}
-#seasonBtn{border-color:var(--gold);color:#9a7a1e}
+#seasonBtn{border-color:var(--gold);color:#7d6318}
 #seasonBtn.on{background:var(--gold);border-color:var(--gold);color:#3a2f0a}
 .count{font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--faint)}
 .list{max-height:560px;overflow-y:auto;padding-right:6px}
@@ -106,7 +104,7 @@ footer b{color:var(--bark)}
 .hot.active .hl{color:var(--paper)}
 .hot.peek{border-color:var(--gold);background:rgba(200,162,74,.18);width:40px;height:40px;z-index:4}
 .hot.peek .hl{font-size:14px;opacity:1;color:var(--ink)}
-.hot:focus-visible,.filterbtn:focus-visible,.seen:focus-visible,.infobtn:focus-visible,.pClose:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .tree:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
 .clearchip{font-family:'Spline Sans Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;background:transparent;border:1px solid var(--line);color:var(--mute);border-radius:3px;padding:1px 7px;margin-left:8px;cursor:pointer;vertical-align:middle}
 .clearchip:hover{border-color:var(--ink);color:var(--ink)}
@@ -212,7 +210,7 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
     <div id="calmsg"></div>
   </div>
 </div>
-<div id="toast"></div>
+<div id="toast" role="status"></div>
 <div class="legend">
   <span><span class="ringL"></span>Klikbar afdeling</span>
   <span><span class="dotL"></span>Indeholder sjælden art</span>
@@ -230,8 +228,8 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
 <footer><b>Kilde:</b> “Liste over mere specielle træer og buske på Assistens Kirkegård”, Morten Scheller Jensen, 2015. Fortegnelsen er ikke ajourført siden: enkelte træer kan være fældet og nye kommet til, og aldersangivelserne er 2015-tal. Åbenlyse stavefejl i artsnavnene er rettet i visningen; hvor det er sket, står kildens stavning ved træet. Grundkort: Københavns Kirkegårdes officielle oversigtskort.<br><b>I felten:</b> Find træ → noter afdeling + nummer → følg afdelingen på kortet. Inden for hver afdeling er gravstederne nummereret fortløbende. Røde markeringer = botanisk sjældne arter (bl.a. vingevalnød, tyrkisk hassel, tempeltræ).<br><b>Kalibrering:</b> Medarbejdere kan placere de enkelte træer præcist — på stedet med GPS eller med et tryk på kortet (fremgangsmåde: KALIBRERING.md i repoet). <button class="clearchip" id="toolsToggle">Vis værktøjet</button></footer>
 </div>
 <div class="scrim" id="scrim"></div>
-<div class="panel" id="panel">
-  <button class="pClose" id="pClose">×</button>
+<div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="pTitle">
+  <button class="pClose" id="pClose" aria-label="Luk">×</button>
   <div class="pKick">Sådan kender du den</div>
   <div id="pTitle"></div>
   <div id="pDk"></div>
@@ -447,8 +445,13 @@ function openPanel(i){
   document.getElementById('pMeta').textContent='Afd. '+t.sec+' · '+t.plot+(t.yr?' · pl. '+t.yr:(t.age?' · ca. '+t.age+' år (2015)':''))+(t._vis!==t.sp?' · kildens stavning: '+t.sp:'');
   document.getElementById('panel').classList.add('open');
   document.getElementById('scrim').classList.add('open');
+  panelOpener=document.activeElement; // tastaturbrugere: fokus ind i dialogen, og tilbage igen ved luk
+  document.getElementById('pClose').focus();
 }
-function closePanel(){document.getElementById('panel').classList.remove('open');document.getElementById('scrim').classList.remove('open');}
+let panelOpener=null;
+function closePanel(){document.getElementById('panel').classList.remove('open');document.getElementById('scrim').classList.remove('open');
+  if(panelOpener&&panelOpener.focus&&document.contains(panelOpener))panelOpener.focus();
+  panelOpener=null;}
 document.getElementById('pClose').onclick=closePanel;
 document.getElementById('scrim').onclick=closePanel;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closePanel();});
