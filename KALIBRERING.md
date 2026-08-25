@@ -8,8 +8,11 @@ telefonens GPS. Placeringerne kan bagefter gemmes i repoet, så alle ser dem.
 ## Sådan gør du i felten
 
 1. Åbn siden på telefonen: https://simon-jensen.github.io/assistens-traekort/
-2. Tryk på **📍 Kalibrér** over kortet (eller åbn linket med `#kal=1` i
-   adressen).
+2. Kalibreringsværktøjet er skjult for almindelige besøgende. Slå det til
+   nederst på siden: tryk **Vis værktøjet** under “Kalibrering” i sidefoden
+   (valget huskes på enheden). Tryk derefter på **📍 Kalibrér** over kortet.
+   Genvej: åbn linket med `#kal=1` i adressen, så starter kalibreringen
+   direkte — praktisk at dele med kolleger.
 3. Vælg evt. en afdeling på kortet først, så listen kun viser dens træer.
 4. Tryk på et træ i listen. Placér det så på én af to måder:
    - **GPS:** Stil dig ved træet og tryk **📡 Brug GPS**. Nøjagtigheden vises

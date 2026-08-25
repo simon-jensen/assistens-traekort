@@ -113,7 +113,8 @@ footer b{color:var(--bark)}
 .empty .resetf{display:block;margin:12px auto 0;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--bark);background:transparent;color:var(--bark);border-radius:3px;cursor:pointer}
 .empty .resetf:hover{background:var(--bark);color:var(--paper)}
 /* — Kalibrering: placér træerne præcist på kortet — */
-#calBtn{margin-left:8px}
+#calBtn{margin-left:8px;display:none}
+body.caltools #calBtn{display:inline-block}
 #calBtn.on{background:var(--moss-d);border-color:var(--moss-d);color:#fff}
 .calbar{display:none;margin:0 0 10px;padding:9px 12px;border:1.5px dashed var(--moss-d);border-radius:5px;background:var(--card-hover);font-family:'Spline Sans Mono',monospace;font-size:11.5px;line-height:1.55}
 body.calib .calbar{display:block}
@@ -226,7 +227,7 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
 <div class="list" id="list"></div>
 </section>
 </div>
-<footer><b>Kilde:</b> “Liste over mere specielle træer og buske på Assistens Kirkegård”, Morten Scheller Jensen, 2015. Grundkort: Københavns Kirkegårdes officielle oversigtskort.<br><b>I felten:</b> Find træ → noter afdeling + nummer → følg afdelingen på kortet. Inden for hver afdeling er gravstederne nummereret fortløbende. Røde markeringer = botanisk sjældne arter (bl.a. vingevalnød, tyrkisk hassel, tempeltræ).<br><b>Kalibrering:</b> Tryk “📍 Kalibrér” over kortet for at placere de enkelte træer præcist — på stedet med GPS eller med et tryk på kortet. Fremgangsmåden står i KALIBRERING.md i repoet.</footer>
+<footer><b>Kilde:</b> “Liste over mere specielle træer og buske på Assistens Kirkegård”, Morten Scheller Jensen, 2015. Grundkort: Københavns Kirkegårdes officielle oversigtskort.<br><b>I felten:</b> Find træ → noter afdeling + nummer → følg afdelingen på kortet. Inden for hver afdeling er gravstederne nummereret fortløbende. Røde markeringer = botanisk sjældne arter (bl.a. vingevalnød, tyrkisk hassel, tempeltræ).<br><b>Kalibrering:</b> Medarbejdere kan placere de enkelte træer præcist — på stedet med GPS eller med et tryk på kortet (fremgangsmåde: KALIBRERING.md i repoet). <button class="clearchip" id="toolsToggle">Vis værktøjet</button></footer>
 </div>
 <div class="scrim" id="scrim"></div>
 <div class="panel" id="panel">
@@ -498,6 +499,7 @@ const calBtn=document.getElementById('calBtn'),crossEl=document.getElementById('
       loupe=document.getElementById('loupe');
 function calMsg(m){document.getElementById('calmsg').textContent=m||'';}
 function setCalib(on){
+  if(on)setTools(true,false); // et #kal=1-link skal virke, selv om værktøjet er skjult — vis knappen uden at gemme valget
   document.body.classList.toggle('calib',on);
   calBtn.classList.toggle('on',on);
   if(!on){ankArm=false;disarm();document.getElementById('anchorbox').classList.remove('open');document.body.classList.remove('placing');}
@@ -701,6 +703,24 @@ function loadPositionsFile(){
     })
     .catch(()=>{});
 }
+// Kalibreringsværktøjet er til medarbejdere og er skjult for almindelige besøgende.
+// Det tændes med knappen i sidefoden (valget huskes i browseren) eller via et #kal=1-link.
+const TOOLS_KEY='assistens_tools_v1';
+const toolsToggle=document.getElementById('toolsToggle');
+function setTools(on,persist){
+  document.body.classList.toggle('caltools',on);
+  toolsToggle.textContent=on?'Skjul værktøjet':'Vis værktøjet';
+  if(persist!==false){try{localStorage.setItem(TOOLS_KEY,on?'1':'0');}catch(e){}}
+  if(!on&&document.body.classList.contains('calib'))setCalib(false);
+}
+toolsToggle.onclick=()=>{
+  const on=!document.body.classList.contains('caltools');
+  setTools(on);
+  if(on){toast('Kalibrér-knappen er nu synlig over kortet');
+    const mw=document.getElementById('mapwrap');
+    if(mw.scrollIntoView)mw.scrollIntoView({behavior:'smooth',block:'start'});}
+};
+try{if(localStorage.getItem(TOOLS_KEY)==='1')setTools(true,false);}catch(e){}
 fitAffine();buildDots();ankList();
 loadPositionsFile();
 // Gendan tilstand fra URL-hash (delbare links, fx #afd=F&q=ginkgo — og #kal=1 for kalibrering)
