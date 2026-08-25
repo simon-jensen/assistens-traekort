@@ -227,7 +227,7 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
 <div class="list" id="list"></div>
 </section>
 </div>
-<footer><b>Kilde:</b> “Liste over mere specielle træer og buske på Assistens Kirkegård”, Morten Scheller Jensen, 2015. Grundkort: Københavns Kirkegårdes officielle oversigtskort.<br><b>I felten:</b> Find træ → noter afdeling + nummer → følg afdelingen på kortet. Inden for hver afdeling er gravstederne nummereret fortløbende. Røde markeringer = botanisk sjældne arter (bl.a. vingevalnød, tyrkisk hassel, tempeltræ).<br><b>Kalibrering:</b> Medarbejdere kan placere de enkelte træer præcist — på stedet med GPS eller med et tryk på kortet (fremgangsmåde: KALIBRERING.md i repoet). <button class="clearchip" id="toolsToggle">Vis værktøjet</button></footer>
+<footer><b>Kilde:</b> “Liste over mere specielle træer og buske på Assistens Kirkegård”, Morten Scheller Jensen, 2015. Fortegnelsen er ikke ajourført siden: enkelte træer kan være fældet og nye kommet til, og aldersangivelserne er 2015-tal. Åbenlyse stavefejl i artsnavnene er rettet i visningen; hvor det er sket, står kildens stavning ved træet. Grundkort: Københavns Kirkegårdes officielle oversigtskort.<br><b>I felten:</b> Find træ → noter afdeling + nummer → følg afdelingen på kortet. Inden for hver afdeling er gravstederne nummereret fortløbende. Røde markeringer = botanisk sjældne arter (bl.a. vingevalnød, tyrkisk hassel, tempeltræ).<br><b>Kalibrering:</b> Medarbejdere kan placere de enkelte træer præcist — på stedet med GPS eller med et tryk på kortet (fremgangsmåde: KALIBRERING.md i repoet). <button class="clearchip" id="toolsToggle">Vis værktøjet</button></footer>
 </div>
 <div class="scrim" id="scrim"></div>
 <div class="panel" id="panel">
@@ -248,6 +248,45 @@ const TREESECS=["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "O",
 const META={"A": {"label": "A", "desc": "Ældste/museale del · hjørnet Kapelvej/Nørrebrogade"}, "B": {"label": "B", "desc": "Mindepark"}, "C": {"label": "C", "desc": "Mindepark"}, "D": {"label": "D", "desc": "Mindepark · mausoleum, katolsk/russisk"}, "E": {"label": "E", "desc": "Mindepark · genbegravede fra Runddel"}, "F": {"label": "F", "desc": "Mindepark · stor træsamling"}, "G": {"label": "G", "desc": "Parkdel · Malus-området nær"}, "H": {"label": "H", "desc": "Lokalkirkegård · langs Kapelvej"}, "J": {"label": "J", "desc": "Lokalkirkegård"}, "K": {"label": "K", "desc": "Lokalkirkegård"}, "L": {"label": "L", "desc": "Lokalkirkegård · Malus urnegrave"}, "M": {"label": "M", "desc": "Lokalkirkegård · Megaron, Gadens Folk"}, "N": {"label": "N", "desc": "Skovagtig · Iris, regnbuegravsted"}, "O": {"label": "O", "desc": "Parkdel"}, "P": {"label": "P", "desc": "Parkdel · H.C. Andersen"}, "Q": {"label": "Q", "desc": "Parkdel · Niels Bohr"}, "R": {"label": "R", "desc": "Parkdel · Ben Webster"}, "S": {"label": "S", "desc": "Parkdel"}, "T": {"label": "T", "desc": "Parkdel"}, "U": {"label": "U", "desc": "uV/uQ underafdelinger"}};
 function isRare(t){return RARE.some(r=>t.sp.toLowerCase().includes(r.toLowerCase()));}
 TREES.forEach(t=>t._rare=isRare(t));
+// Åbenlyse stavefejl i kildens artsnavne rettes i visningen (t._vis). Kildeteksten t.sp
+// står urørt — den bærer træ-id'erne ("set"-flueben, positions.json) og opslagene i
+// DESC/SEASON — og hvor visningen afviger, deklareres kildens stavning ved træet.
+// Kun bogstavfejl rettes; kildens store/små bogstaver og navneskik bevares.
+const SP_PAIR=[["\\bAcer japonica\\b","Acer japonicum"],["\\bSophora japonicum\\b","Sophora japonica"],
+ ["\\bEuonymus alata\\b","Euonymus alatus"],["\\bTsuga mertensia\\b","Tsuga mertensiana"],
+ ["\\bAcer glabra\\b","Acer glabrum"],["\\bAcer carpinifolia\\b","Acer carpinifolium"],
+ ["\\bAcer cissifolia\\b","Acer cissifolium"],["albo sinensis","albosinensis"],
+ ["\\bPoncirus trifoliatus\\b","Poncirus trifoliata"]];
+const SP_TOKEN={"amelancier":"Amelanchier","crytomeria":"Cryptomeria","forthergilla":"Fothergilla",
+ "hydranga":"Hydrangea","liquidambra":"Liquidambar","liriodendedron":"Liriodendron",
+ "metaesequoia":"Metasequoia","parottia":"Parrotia","physocarbus":"Physocarpus",
+ "psudolarix":"Pseudolarix","querscus":"Quercus","sophara":"Sophora","staphulea":"Staphylea",
+ "ptelia":"Ptelea","calicarpa":"Callicarpa",
+ "normanniana":"nordmanniana","pinsabo":"pinsapo","buergeranium":"buergerianum",
+ "cappadonicum":"cappadocicum","elegantuleum":"elegantulum","grisium":"griseum",
+ "platanoidees":"platanoides","psudoplatanus":"pseudoplatanus","rufinerva":"rufinerve",
+ "tatarricum":"tataricum","hippocastanium":"hippocastanum","utillis":"utilis",
+ "illioinensis":"illinoinensis","deodare":"deodara","libanii":"libani",
+ "contreversa":"controversa","lusidus":"lucidus","involucrate":"involucrata",
+ "europearus":"europaeus","europeaus":"europaeus","sachaliensis":"sachalinensis",
+ "tricanthos":"triacanthos","dioecus":"dioicus","deciduas":"decidua",
+ "styracifllua":"styraciflua","sieboldie":"sieboldii","sieboldiee":"sieboldii",
+ "meloncarpia":"melanocarpa","glyptroboides":"glyptostroboides","cerasiformes":"cerasiformis",
+ "omorica":"omorika","punges":"pungens","wallicchiana":"wallichiana","simmonii":"simonii",
+ "atropupurea":"Atropurpurea","acuparia":"aucuparia","comixsta":"commixta",
+ "potanani":"potaninii","potananii":"potaninii","vernciflua":"verniciflua",
+ "psudoacacia":"pseudoacacia","lancianata":"Laciniata","araliodes":"aralioides",
+ "dolobrata":"dolabrata","crus-calli":"crus-galli","rockhamton":"Rockhampton",
+ "ozakazuki":"Osakazuki","autum":"autumn","browers":"Brouwers","fassens":"Faassen's"};
+function fixSp(s){
+  SP_PAIR.forEach(p=>{s=s.replace(new RegExp(p[0]),p[1]);});
+  return s.replace(/[A-Za-zæøåÆØÅ'-]+/g,w=>{
+    const r=SP_TOKEN[w.toLowerCase()];
+    if(!r)return w;
+    return (w.charAt(0)===w.charAt(0).toLowerCase())?(r.charAt(0).toLowerCase()+r.slice(1)):r;
+  });
+}
+TREES.forEach(t=>{t._vis=fixSp(t.sp);});
 const DESC={"Araucaria araucana": {"dk": "Abeskræk / Andesgran", "id": "Helt umiskendelig: stive, skælagtige, skarpe, mørkegrønne blade dækker grenene tæt som reptilskæl. Grenene sidder i regelmæssige kranse og bøjer opad i enderne. Symmetrisk, paraply-agtig krone. Barken er grå og rynket som elefanthud.", "best": "Hele året (stedsegrøn)."}, "Calocedrus decurrens": {"dk": "Amerikansk flodceder / Kalifornisk liboceder", "id": "Smal, søjleformet stedsegrøn. Fladtrykte, skælklædte grenkviste i lodrette 'vifter', der dufter krydret-harpiksagtigt når man gnider dem. Rødbrun, fibret bark. Små, aflange kogler der åbner sig som andenæb.", "best": "Hele året; duften er stærkest i varme."}, "Carya illioinensis": {"dk": "Pekannød / Hickory", "id": "Stort løvtræ med sammensatte blade (9-17 spidse, let krumme småblade på en stilk). Grålig, furet bark der med alderen brækker i flade plader. Nødderne sidder i en glat, firkløftet skal.", "best": "Sommer (blade), efterår (nødder)."}, "Catalpa speciosa": {"dk": "Trompetkrone", "id": "Meget store, hjerteformede blade (op til 25-30 cm), lysegrønne. Spektakulære hvide, klokkeformede blomster med gule/purpur pletter i juni-juli. Derefter lange, tynde, bønneagtige frøkapsler (20-40 cm) der hænger hele vinteren.", "best": "Juni-juli (blomster); vinter (bælge er iøjnefaldende)."}, "Catalpa": {"dk": "Trompetkrone", "id": "Store hjerteformede blade og lange, smalle bønneagtige frøkapsler der hænger længe. Hvide klokkeblomster med plettet svælg om sommeren. Bred, åben krone.", "best": "Sommer (blomster), vinter (bælge)."}, "Cephalotaxus harringtonia": {"dk": "Blommetaks", "id": "Ligner en taks, men nålene er længere (3-5 cm), bredere og blødere, sat i to rækker. Mørkegrøn med to lyse bånd på undersiden. Frugten er olivenformet, grønlig-violet — som en lille blomme.", "best": "Hele året; frugt sensommer/efterår."}, "Cercidiphyllum japonica": {"dk": "Hjertetræ / Katsura", "id": "Runde til hjerteformede, fint takkede blade der sidder parvis modsat. Smukke høstfarver i gult/orange/rosa. Berømt kendetegn: nedfaldne blade dufter sødt af brændt sukker eller lakrids om efteråret.", "best": "Efterår — gå hen og duft til løvet!"}, "Cladrastis lutea": {"dk": "Gultræ (Kentucky yellowwood)", "id": "Sammensatte blade med afrundede småblade, frisk grønne. Glat, grå bark (lidt som bøg). Hængende klaser af hvide, duftende ærteblomster i forsommeren (ikke hvert år). Veddet er gult under barken.", "best": "Forsommer (blomster); efterår (klar gul høstfarve)."}, "Cunninghamia lanceolata": {"dk": "Kinesisk grantræ", "id": "Stive, flade, spydformede nåle (3-6 cm) med skarp spids og to hvide bånd under, spiralstillet rundt om kvisten. Brune, døde nåle bliver siddende indvendigt. Rødbrun, afskallende bark. Eksotisk, lidt 'forhistorisk' udseende.", "best": "Hele året (stedsegrøn)."}, "Davidia involucrata": {"dk": "Duetræ / Lommetørklædetræ", "id": "Hjerteformede, takkede blade. Det helt store kendetegn: i maj hænger to store, rene hvide højblade (10-20 cm) under hver blomst som lommetørklæder/duer i træet. Frugten er en grøn, valnød-stor kugle på lang stilk.", "best": "Maj — i blomst er det uforveksleligt."}, "Ginkgo biloba": {"dk": "Tempeltræ", "id": "Helt unikt: vifteformede blade, ofte med en kløft i midten, med stråleformede (ikke nettede) ribber. Klar, lysende gul høstfarve, og bladene falder næsten alle på én gang. Hanner/hunner adskilt; hunfrugter lugter ilde.", "best": "Efterår (spektakulær gul)."}, "Gymnocladus dioecus": {"dk": "Stennød / Kentucky coffeetree", "id": "Meget store, dobbelt sammensatte blade (kan blive 60-90 cm) med mange små blade — ligner næsten en hel gren. Står sent ud om foråret og taber tidligt. Grov, afskallende bark. Tykke, flade, hårde frøbælge.", "best": "Sommer (det enorme løv); vinter (kantede bælge)."}, "Halesia carolina": {"dk": "Sneklokketræ", "id": "Lille træ. Hvide, klokkeformede hængende blomster i maj — som store vintergækker langs grenene. Karakteristisk firevinget, brunlig frugt der hænger længe. Friskgrønne, spidse blade.", "best": "Maj (blomster); sensommer-vinter (vingede frugter)."}, "Koelreuteria paniculata": {"dk": "Kinesertræ / Sæbetræ", "id": "Store sammensatte blade. Luftige, store klaser af gule blomster midt om sommeren (sjældent for et træ). Derefter oppustede, papirsagtige, lanterneagtige frøkapsler der skifter fra grøn til rosa-brun.", "best": "Juli (gule blomster); sensommer (lanterne-frugter)."}, "Liquidambar styraciflua": {"dk": "Ambratræ / Amber", "id": "Stjerneformede, ahorn-lignende blade (5-7 spidse lapper) — men sat skiftevis, ikke modsat som ahorn. Spektakulær høstfarve i rødt/purpur/orange. Pigget, kugleformet frugt. Korkagtige lister på unge grene.", "best": "Efterår (intens høstfarve)."}, "Liriodendron tulipifera": {"dk": "Tulipantræ", "id": "Umiskendelige blade: firkantede med en 'afklippet' top, som en kattesilhuet. Tulipanformede, grøn-gule blomster med orange bånd højt i kronen (juni). Højt, ret træ. Klar gul høstfarve.", "best": "Juni (blomster); efterår (gul)."}, "Metasequoia glyptostroboides": {"dk": "Vandgran / Daggry-redwood", "id": "Løvfældende nåletræ! Bløde, friskgrønne nåle sat modsat parvis på kviste der falder af samlet om efteråret (kobberrød høstfarve). Rødbrun, fibret, dybt furet bark, ofte med kølle-agtig fod.", "best": "Forår (frisk udspring), efterår (rustrød)."}, "Nyssa sylvatica": {"dk": "Tupelo / Black gum", "id": "Glinsende, ovale, hele blade. Berømt for nogle af de tidligste og mest intense høstfarver — flammende rødt, skarlagen og orange, ofte flere farver i samme træ. Vandret-udstående grene.", "best": "Tidligt efterår (først til at lyse rødt)."}, "Parrotia persica": {"dk": "Papegøjebusk / Jerntræ", "id": "Bredt, ofte flerstammet. Glat bark der skaller af i plader (kamuflage-mønstret, som platan). Blade ligner elm/bøg, bølgede i kanten. Små røde edderkop-agtige blomster meget tidligt forår. Pragtfuld rød-orange-gul høst.", "best": "Efterår (høstfarve) og det skallede stammemønster hele året."}, "Paulownia tomentosa": {"dk": "Kejsertræ", "id": "Enorme, hjerteformede, lodne blade (på unge skud kæmpestore). Oprette klaser af store, lilla-blå, fingerbøl-agtige blomster i maj FØR løvet. Runde, spidse frøkapsler. Hurtig vækst, grov gren-struktur.", "best": "Maj (lilla blomster før løvspring)."}, "Phellodendron amurense": {"dk": "Amur-korktræ", "id": "Sammensatte blade (modsat-stillede), dufter af citrus/terpentin når de gnides. Voksne træer har dyb, korkagtig, blød furet bark man kan trykke i. Sorte, runde bær i klaser på hunner; bredt udladende krone.", "best": "Sommer (løv-duft); vinter (korkbarken ses tydeligt)."}, "Picea breweriana": {"dk": "Sørgegran", "id": "Umiskendelig gran: lange, tynde, gardin-agtige hængende kviste der drapperer ned fra grenene som et vandfald. Fladt, mørkegrønne nåle. Langsom, elegant, melankolsk silhuet.", "best": "Hele året (de hængende slør ses bedst på ældre træer)."}, "Pseudolarix": {"dk": "Guldlærk", "id": "Løvfældende nåletræ som ægte lærk, men nåle er bredere, blødere og sat i tætte roset-dusk på korte skud. Spektakulær gylden-orange høstfarve (deraf navnet). Kogler der ligner små artiskokker.", "best": "Efterår (gylden)."}, "Pterocarya fraxinifolia": {"dk": "Kaukasisk vingevalnød", "id": "Stort, ofte flerstammet/bredt træ. Lange sammensatte blade (som ask/valnød, 11-25 småblade). Det signaturkendetegn: lange (op til 30-50 cm) hængende kæder af små grøn-vingede nødder, som perlesnore i træet om sommeren.", "best": "Sommer-sensommer (de hængende vingede frugtkæder)."}, "Pterocarya rhoifolia": {"dk": "Japansk / rhusbladet vingevalnød", "id": "Som kaukasisk vingevalnød: sammensatte blade og lange hængende kæder af grøn-vingede nødder. Lidt slankere blade. Glat-grålig ung bark der furer med alderen.", "best": "Sommer-sensommer (frugtkæder)."}, "Sciadopitys verticillata": {"dk": "Parasoltræ (japansk)", "id": "Helt særegne nåle: tykke, blanke, dybgrønne, sat i kranse som egerne i en paraply/hjul yderst på skuddene. Smal, kegleformet, tæt form. Rødbrun, strimlet bark. En levende fossil-art.", "best": "Hele året (stedsegrøn, nålerosetterne er uforvekslelige)."}, "Sequoia sempervirens": {"dk": "Kystredwood / Rødtræ", "id": "Flade, mørkegrønne nåle i to rækker (lidt som taks). Tyk, blød, fibret, rød-brun bark man kan trykke i. Bliver meget højt og lige. Små æg-formede kogler. Skyder ofte friske grønne skud fra stammefoden.", "best": "Hele året; den bløde røde bark er signaturen."}, "Sequoiadendron giganteum": {"dk": "Mammuttræ", "id": "Massiv, koglevoksende stamme med tyk, svampet, dybt furet rød-brun bark. Skælagtige, syl-formede blågrønne nåle der dækker kvistene (ikke flade rækker som redwood). Bredt udhængende, lidt hængende grene. Enorm skala.", "best": "Hele året; stamme og bark er kendetegnet."}, "Sophora japonica": {"dk": "Pagodetræ", "id": "Sammensatte blade med mange små afrundede blade, mørkegrønne. Cremehvide ærteblomster i store luftige klaser sidst på sommeren (august — sent for et træ). Frugt: oppustede, perlesnor-indsnørede grønne bælge. Grøn ung bark.", "best": "August (sen blomstring); efterår (perleagtige bælge)."}, "Staphylea colchica": {"dk": "Kaukasisk blærenød", "id": "Busk/lille træ. Sammensatte blade (3-5 småblade). Hvide, duftende blomster i oprette klaser om foråret. Signatur: oppustede, papirsagtige, blære-/lampion-agtige frøkapsler man kan klemme.", "best": "Forår (blomster); sommer (de oppustede 'blærer')."}, "Thujopsis dolobrata": {"dk": "Hønsebenstræ", "id": "Fladtrykte grenkviste med store, skælagtige blade — blanke mørkegrønne over, med markante, kridhvide, økseblad-formede tegninger under (meget karakteristisk). Tæt, mørk, frodig form.", "best": "Hele året; vend en kvist og se de hvide undersider."}, "Torreya californica": {"dk": "Kalifornisk nøddetaks", "id": "Taks-lignende, men nålene er længere (3-6 cm), stive og meget skarpt-spidse (stikker!), mørkegrønne med to lyse bånd under. Dufter aromatisk når de knuses. Frugt grøn-purpur, olivenstor.", "best": "Hele året (stedsegrøn); pas på de stikkende nåle."}, "Torreya nucifera": {"dk": "Japansk nøddetaks", "id": "Som den kaliforniske: stive, skarpe, spidse nåle i to rækker, mørkegrønne med lyse striber under, aromatiske ved knusning. Lidt mere kompakt. Olivenformet grøn frugt.", "best": "Hele året (stedsegrøn)."}, "Trochodendron aralioides": {"dk": "Hjultræ", "id": "Stedsegrøn med læderagtige, blanke, ovale blade samlet i kranse yderst på skuddene. Særegne grønne blomster uden kronblade, med støvdragere arrangeret som egerne i et hjul. Eksotisk, frodigt udseende.", "best": "Forår-forsommer (de hjul-agtige blomster)."}, "Zanthoxylum simulans": {"dk": "Tandpinetræ / Szechuan-peber", "id": "Lille træ/busk med torne. Sammensatte blade med små blanke blade, citrus-aromatiske ved knusning. Stammen har ofte karakteristiske korkede, vortede torne-knuder. Røde frøkapsler = Szechuan-peber.", "best": "Sommer (aromatisk løv); efterår (røde frugter)."}, "Zelkova serrata": {"dk": "Japansk zelkova", "id": "Slægtning til elm. Smukt vase-/paraplyformet krone med opadstræbende grene. Smalle, spidse, skarpt-savtakkede blade i pæn fjer-stilling. Glat grå bark der med alderen skaller i orange pletter. Fin rød-bronze høst.", "best": "Efterår (høstfarve); vase-formen ses bedst om vinteren."}};
 // Normalize a species name to a canonical "Genus species" key matching DESC
 const CANON={'liriodendedron':'liriodendron','liquidambra':'liquidambar','metaesequoia':'metasequoia',
@@ -346,7 +385,7 @@ function render(){
     if(rareOnly&&!t._rare)return false;
     if(seasonOnly){if(!t._season||t._season.yr||!t._season.m.includes(NOW_MONTH))return false;}
     if(hideSeen&&isSeen(t))return false;
-    if(term)return (t.sp+' '+t.note+' '+t.plot+' '+t.nr).toLowerCase().includes(term);
+    if(term)return (t.sp+' '+t._vis+' '+t.note+' '+t.plot+' '+t.nr).toLowerCase().includes(term);
     return true;
   });
   rows.sort((a,b)=>{if(a.sec!==b.sec)return a.sec.localeCompare(b.sec);
@@ -357,15 +396,15 @@ function render(){
     document.getElementById('resetF').onclick=resetFilters;return;}
   list.innerHTML=rows.map(t=>{
     const dk=t.note&&t.note.length>1?('<div class="dk">'+esc(t.note)+'</div>'):'';
-    const yr=t.yr?('pl. '+esc(t.yr)):(t.age?('ca. '+esc(t.age)+' år'):'');
+    const yr=t.yr?('pl. '+esc(t.yr)):(t.age?('ca. '+esc(t.age)+' år (2015)'):'');
     const extra=t.allplots.length>1?(' +'+(t.allplots.length-1)):'';
     const nowChip=(t._season&&!t._season.yr&&t._season.m.includes(NOW_MONTH))?'<span class="nowchip">★ nu</span>':'';
     const sc=isSeen(t)?' seenrow':'';
-    return '<div class="tree'+(t._rare?' rare':'')+sc+(t._idx===armed?' armed':'')+'" data-sec="'+esc(t.sec)+'" data-i="'+t._idx+'" tabindex="0" role="button" aria-label="'+esc(t.sp)+', afdeling '+esc(t.sec)+'">'+
+    return '<div class="tree'+(t._rare?' rare':'')+sc+(t._idx===armed?' armed':'')+'" data-sec="'+esc(t.sec)+'" data-i="'+t._idx+'" tabindex="0" role="button" aria-label="'+esc(t._vis)+', afdeling '+esc(t.sec)+'">'+
       '<button class="seen" data-seen="'+t._idx+'" title="Markér som set" aria-label="Markér som set"></button>'+
       '<div class="plot" title="'+esc(t.allplots.join(', '))+'">'+esc(t.plot)+extra+'</div>'+
-      '<div><div class="sp">'+esc(t.sp)+nowChip+(t._rare?'<span class="tag">sjælden</span>':'')+(t._desc?'<button class="infobtn" data-info="'+t._idx+'">Sådan kender du den</button>':'')+'</div>'+dk+
-      '<div class="meta">Afd. '+esc(t.sec)+(yr?' · '+yr:'')+(t.nr?' · Nr '+esc(t.nr):'')+(getPos(t)?' · <span title="Placeret præcist på kortet">📍</span>':'')+'</div></div></div>';
+      '<div><div class="sp">'+esc(t._vis)+nowChip+(t._rare?'<span class="tag">sjælden</span>':'')+(t._desc?'<button class="infobtn" data-info="'+t._idx+'">Sådan kender du den</button>':'')+'</div>'+dk+
+      '<div class="meta">Afd. '+esc(t.sec)+(yr?' · '+yr:'')+(t.nr?' · Nr '+esc(t.nr):'')+(getPos(t)?' · <span title="Placeret præcist på kortet">📍</span>':'')+(t._vis!==t.sp?' · kildens stavning: '+esc(t.sp):'')+'</div></div></div>';
   }).join('');
 }
 function resetFilters(){
@@ -401,11 +440,11 @@ list.addEventListener('keydown',e=>{
 function openPanel(i){
   const t=TREES[i]; if(!t||!t._desc)return;
   const d=t._desc;
-  document.getElementById('pTitle').innerHTML='<i>'+t.sp+'</i>';
+  document.getElementById('pTitle').innerHTML='<i>'+esc(t._vis)+'</i>';
   document.getElementById('pDk').textContent=d.dk||'';
   document.getElementById('pId').textContent=d.id||'';
   document.getElementById('pBest').textContent=d.best?('Bedste tid: '+d.best):'';
-  document.getElementById('pMeta').textContent='Afd. '+t.sec+' · '+t.plot+(t.yr?' · pl. '+t.yr:(t.age?' · ca. '+t.age+' år':''));
+  document.getElementById('pMeta').textContent='Afd. '+t.sec+' · '+t.plot+(t.yr?' · pl. '+t.yr:(t.age?' · ca. '+t.age+' år (2015)':''))+(t._vis!==t.sp?' · kildens stavning: '+t.sp:'');
   document.getElementById('panel').classList.add('open');
   document.getElementById('scrim').classList.add('open');
 }
@@ -481,7 +520,7 @@ function buildDots(){
     const d=document.createElement('button');
     d.type='button';d.className='dot'+(t._rare?' rare':'');d.tabIndex=-1;
     d.style.left=(p.fx*100)+'%';d.style.top=(p.fy*100)+'%';
-    d.title=t.plot+' · '+t.sp;
+    d.title=t.plot+' · '+t._vis;
     d.onclick=ev=>{ev.stopPropagation();if(document.body.classList.contains('calib'))armTree(t._idx);};
     wrap.appendChild(d);
   });
@@ -511,7 +550,7 @@ function armTree(i,auto){
   const t=TREES[i],p=getPos(t);
   cand=p?Object.assign({},p):null; // fuld kopi, så lat/lon/acc følger med ved gen-gem
   document.getElementById('caltool').classList.add('open');
-  document.getElementById('caltree').innerHTML='<b>'+esc(t.plot)+'</b> · <i>'+esc(t.sp)+'</i>'+
+  document.getElementById('caltree').innerHTML='<b>'+esc(t.plot)+'</b> · <i>'+esc(t._vis)+'</i>'+
     (p?' — allerede placeret; tryk på kortet eller finjustér for at flytte':' — tryk på kortet, dér hvor træet står');
   calMsg('');updCross();render();
   const row=list.querySelector('.tree[data-i="'+i+'"]');
