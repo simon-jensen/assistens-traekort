@@ -43,20 +43,37 @@ brugte. De skal eksporteres for at blive fælles:
    udklipsholderen. Eksporten henter først den nyeste committede fil og
    fletter dine lokale ændringer oven på den, så en gammel fane eller to
    personer i marken ikke overskriver hinandens arbejde; ved sammenfald på
-   samme træ vinder posten med nyeste dato.
+   samme træ vinder posten med nyeste tidsstempel. **Eksporten kræver
+   forbindelse:** kan den nyeste fil ikke hentes, afbrydes eksporten med en
+   advarsel, for ellers ville filen kun indeholde dine egne placeringer, og
+   alle andres ville forsvinde, når den blev committet.
 2. Læg filen som `positions.json` i repoets rod og commit.
 3. Når GitHub Pages har bygget, henter siden filen automatisk, og alle ser
    placeringerne.
 
 **Importér…** kan flette en eksporteret fil ind på en anden enhed, hvis I er
-flere, der kalibrerer, eller du skifter telefon undervejs. Lokale ændringer
-har forrang over den committede fil, indtil de eksporteres igen.
+flere, der kalibrerer, eller du skifter telefon undervejs. Ved sammenfald på
+samme træ vinder posten med nyeste tidsstempel, både på kortet og i eksporten.
+Sletninger følger med som poster med `"del": 1`, så et træ, en kollega har
+slettet, ikke dukker op igen fra en gammel telefon.
+
+**Pas på browserens lager.** Placeringerne ligger i localStorage, indtil de er
+eksporteret. Safari kan slette lageret for en side, der ikke har været brugt i
+7 dage, og en genvej på hjemmeskærmen har sit *eget* lager adskilt fra Safari.
+Eksportér derfor, inden du holder pause i længere tid eller skifter mellem
+Safari og hjemmeskærms-genvejen.
 
 ## GPS-nøjagtighed og GPS-ankre
 
 Telefon-GPS rammer typisk inden for 3–10 m i det fri og dårligere under tætte
 trækroner. Til “hvilket træ i rækken er det?” er det som regel nok; vil du
-tættere på, så brug GPS til det grove og kortet+luppen til det fine.
+tættere på, så brug GPS til det grove og kortet+luppen til det fine. Ligger
+GPS-positionen mere end ca. 30 m uden for kortet (du står fx på kontoret),
+sættes ingen placering.
+
+**Koordinaterne bliver offentlige.** De rå GPS-aflæsninger (`lat`/`lon`) og
+tidsstemplerne eksporteres til `positions.json`, som ligger i et offentligt
+repo. Brug kun GPS-knappen, når du faktisk står ved træet.
 
 Omregningen mellem GPS-koordinater og kortbilledet bygger på fire indbyggede
 ankre: kirkegårdens hjørner (Jagtvej/Hans Tavsens Gade, Hans Tavsens
@@ -86,7 +103,9 @@ GPS-aflæsning er let at spotte og slette igen.
  ],
  "trees": {
   "A|A-135|Liriodendedron tulipifera":
-   {"fx": 0.55918, "fy": 0.39225, "src": "kort", "ts": "2026-08-11"}
+   {"fx": 0.55918, "fy": 0.39225, "src": "kort", "ts": "2026-08-11T09:42:17.000Z"},
+  "A|A-160|Ginkgo biloba":
+   {"del": 1, "ts": "2026-08-12T14:03:55.000Z"}
  }
 }
 ```
@@ -101,6 +120,13 @@ GPS-aflæsning er let at spotte og slette igen.
 - `fx`/`fy` er den gældende placering; `lat`/`lon` er den rå GPS-aflæsning
   bag den. Finjustering med pilene ændrer kun `fx`/`fy`, mens den rå
   aflæsning bliver stående som dokumentation.
+- `ts` er tidspunktet for placeringen (ISO 8601, UTC). Ældre poster med kun
+  en dato (`"2026-08-11"`) forstås stadig.
+- En post med `"del": 1` er en sletning: træet vises uden placering, og
+  posten bliver stående, så sletningen også når frem til andre enheder.
+- Nøgler, der ikke matcher et træ, og koordinater uden for 0–1 ignoreres.
+  `scripts/check_positions.py` (kører i GitHub Actions) fanger den slags,
+  før filen når siden.
 
 ## Begrænsning
 
