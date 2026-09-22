@@ -4,8 +4,197 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="googlebot" content="noindex, nofollow">
 <title>Assistens Kirkegård · Trækort</title>
-<link rel="stylesheet" href="fonts.css">
+<meta name="theme-color" content="#5a7a4f" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1c1f1a" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preload" href="fonts/Outfit-normal-300-latin-5.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Fraunces-normal-400-latin-3.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Fraunces-italic-400-latin-1.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+/* Selv-hostede skrifttyper (hentet fra Google Fonts 2026-08-25, OFL-licens).
+ * Kun latin/latin-ext-subsets; dansk (æøå) ligger i latin. */
+
+/* latin-ext */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/Fraunces-italic-400-latin-ext-0.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/Fraunces-italic-400-latin-1.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/Fraunces-normal-400-latin-ext-2.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/Fraunces-normal-400-latin-3.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/Fraunces-normal-400-latin-ext-2.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/Fraunces-normal-400-latin-3.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(fonts/Outfit-normal-300-latin-ext-4.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(fonts/Outfit-normal-300-latin-5.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/Outfit-normal-300-latin-ext-4.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/Outfit-normal-300-latin-5.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/Outfit-normal-300-latin-ext-4.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/Outfit-normal-300-latin-5.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/Outfit-normal-300-latin-ext-4.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(fonts/Outfit-normal-300-latin-5.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/SplineSansMono-normal-400-latin-ext-6.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(fonts/SplineSansMono-normal-400-latin-7.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/SplineSansMono-normal-400-latin-ext-6.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Spline Sans Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(fonts/SplineSansMono-normal-400-latin-7.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 :root{--ink:#23271f;--paper:#f4f1e6;--moss:#5a7a4f;--moss-d:#3f5a37;--bark:#7a5c3e;--rare:#a04724;--line:#c8c0a8;--gold:#c8a24a;
  --panel-bg:#f4f1e6;--input-bg:#fbf9f0;--mute:#555;--faint:#6f6a5c;--card-hover:rgba(90,122,79,.05);--plot-text:#fff;--map-frame:#c8c0a8;--map-dim:1;}
 @media (prefers-color-scheme: dark){
@@ -30,28 +219,41 @@ h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(26px,4.5vw,42px)
 .sub{font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;color:var(--mute);max-width:64ch}
 .layout{display:grid;grid-template-columns:1.15fr .85fr;gap:22px}
 @media(max-width:900px){.layout{grid-template-columns:1fr}}
-.panel-title{font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bark);margin-bottom:9px;display:flex;justify-content:space-between;align-items:baseline}
+.panel-title{font-family:'Spline Sans Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bark);margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
 .mapwrap{position:relative;border:1px solid var(--map-frame);border-radius:5px;overflow:hidden;box-shadow:0 8px 26px -18px rgba(0,0,0,.5);background:#eef1e3;line-height:0}
+.mapinner{position:relative;width:100%} /* markører, prikker og kryds ligger her, så de følger med ved beskæring og forstørrelse */
+.mapinner picture{display:block}
 .mapwrap img{width:100%;height:auto;display:block}
+@media(max-width:900px){ /* på telefon beskæres park og afskårne signaturcirkler væk (x 280–1290 af 1400): kortet bliver ca. 38 % større */
+ .mapinner{width:calc(100% * 1400 / 1010);margin-left:calc(-100% * 280 / 1010)}
+}
+.mapwrap.zoom{overflow:auto;max-height:78vh;-webkit-overflow-scrolling:touch;cursor:grab}
+.mapwrap.zoom .mapinner{width:250%;margin-left:0}
+.maptools{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+#hereBtn.on{background:#2b6cd9;border-color:#2b6cd9;color:#fff}
+#zoomBtn.on{background:var(--bark);border-color:var(--bark);color:var(--paper)}
+#youdot{position:absolute;width:14px;height:14px;border-radius:50%;background:#2b6cd9;border:2px solid #fff;box-shadow:0 0 0 2px rgba(43,108,217,.45);transform:translate(-50%,-50%);z-index:6;pointer-events:none}
+#youdot[hidden]{display:none}
+#youdot i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:rgba(43,108,217,.14);border:1px solid rgba(43,108,217,.55)} /* GPS-usikkerhed */
 .hot{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;
- background:rgba(63,90,55,.0);border:2px solid rgba(63,90,55,.0);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;z-index:2}
-.hot:hover{background:rgba(90,122,79,.28);border-color:var(--moss-d)}
+ background:rgba(244,241,230,.86);border:2px solid #3f5a37;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;z-index:2}
+.hot:hover{background:#fff;border-color:var(--moss)}
 .hot.active{background:var(--moss-d);border-color:#fff;box-shadow:0 0 0 2px var(--gold);width:40px;height:40px;z-index:5}
 .hot.active::before{content:"";position:absolute;left:50%;top:50%;width:40px;height:40px;border-radius:50%;
  transform:translate(-50%,-50%);border:2px solid var(--gold);animation:pulse 1.6s ease-out infinite;pointer-events:none}
 @keyframes pulse{0%{width:40px;height:40px;opacity:.9}100%{width:120px;height:120px;opacity:0}}
 .hot.active .hl{color:#fff;opacity:1}
-.hot .hl{font-family:'Fraunces',serif;font-weight:600;font-size:0;opacity:0}
+.hot .hl{font-family:'Fraunces',serif;font-weight:600;font-size:12px;line-height:1;opacity:1;color:#3f5a37} /* bogstavet vises altid: kortets egne bogstaver er 5-6 px på en telefon */
 .hot.active .hl{font-size:14px}
 .hot .rdot{position:absolute;top:-1px;right:-1px;width:8px;height:8px;border-radius:50%;background:var(--rare);border:1.5px solid #fff;opacity:0}
 .hot.has-rare .rdot{opacity:1}
-.hot.has-rare{background:rgba(181,83,42,.10);border-color:rgba(181,83,42,.55)}
-.hot.has-rare:hover{background:rgba(181,83,42,.30)}
+.hot.has-rare{border-color:#a04724}
+.hot.has-rare:hover{background:#fff}
 .maphint{font-family:'Spline Sans Mono',monospace;font-size:10px;color:var(--faint);margin-top:7px;letter-spacing:.04em}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--mute);margin-top:6px;font-family:'Spline Sans Mono',monospace;align-items:center}
 .legend span{display:flex;align-items:center;gap:5px}
 .dotL{width:9px;height:9px;border-radius:50%;background:var(--rare);display:inline-block}
-.ringL{width:13px;height:13px;border-radius:50%;border:2px solid var(--moss-d);display:inline-block}
+.ringL{width:13px;height:13px;border-radius:50%;border:2px solid #3f5a37;background:rgba(244,241,230,.86);display:inline-block}
 .controls{display:flex;gap:8px;margin-bottom:11px}
 .controls2{margin-top:-4px;align-items:center;flex-wrap:wrap}
 .seencount{font-family:'Spline Sans Mono',monospace;font-size:10px;color:var(--faint);margin-left:auto}
@@ -108,8 +310,8 @@ footer a{color:var(--bark)}
 #pMeta{font-family:'Spline Sans Mono',monospace;font-size:10px;color:var(--faint);margin-top:18px;border-top:1px solid var(--line);padding-top:10px}
 .hot{font:inherit;padding:0}
 .hot.active .hl{color:var(--paper)}
-.hot.peek{border-color:var(--gold);background:rgba(200,162,74,.18);width:40px;height:40px;z-index:4}
-.hot.peek .hl{font-size:14px;opacity:1;color:var(--ink)}
+.hot.peek{border-color:var(--gold);background:rgba(200,162,74,.92);width:40px;height:40px;z-index:4}
+.hot.peek .hl{font-size:14px;opacity:1;color:#23271f}
 button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .spbtn:focus-visible,.lookup:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .clearchip{font-family:'Spline Sans Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:transparent;border:1px solid var(--line);color:var(--mute);border-radius:3px;padding:1px 7px;margin-left:8px;cursor:pointer;vertical-align:middle}
@@ -117,7 +319,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-o
 .empty .resetf{display:block;margin:12px auto 0;font-family:'Spline Sans Mono',monospace;font-style:normal;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--bark);background:transparent;color:var(--bark);border-radius:3px;cursor:pointer}
 .empty .resetf:hover{background:var(--bark);color:var(--paper)}
 /* — Kalibrering: placér træerne præcist på kortet — */
-#calBtn{margin-left:8px;display:none}
+#calBtn{display:none}
 body.caltools #calBtn{display:inline-block}
 #calBtn.on{background:var(--moss-d);border-color:var(--moss-d);color:#fff}
 .calbar{display:none;margin:0 0 10px;padding:9px 12px;border:1.5px dashed var(--moss-d);border-radius:5px;background:var(--card-hover);font-family:'Spline Sans Mono',monospace;font-size:11.5px;line-height:1.55}
@@ -178,7 +380,7 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
 </header>
 <div class="layout">
 <section>
-<div class="panel-title"><span>Afdelingskort</span><span style="display:flex;align-items:baseline"><span class="count" id="seccount"></span><button class="filterbtn" id="calBtn" title="Placér træerne præcist på kortet" aria-pressed="false">📍 Kalibrér</button></span></div>
+<div class="panel-title"><span>Afdelingskort</span><span class="maptools"><span class="count" id="seccount"></span><button class="filterbtn" id="hereBtn" title="Vis din GPS-position på kortet" aria-pressed="false">🧭 Hvor er jeg?</button><button class="filterbtn" id="zoomBtn" title="Forstør kortet — træk for at panorere" aria-pressed="false">🔍 Forstør</button><button class="filterbtn" id="calBtn" title="Placér træerne præcist på kortet" aria-pressed="false">📍 Kalibrér</button></span></div>
 <div class="calbar" id="calbar">
   <div id="calstatus"><b>Kalibrering.</b> Tryk på et træ i listen, og tryk derefter på kortet, dér hvor træet står. Eller stil dig ved træet og brug GPS-knappen.</div>
   <div class="calprog"><i id="calprogfill"></i></div>
@@ -200,8 +402,14 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
   </div>
 </div>
 <div class="mapwrap" id="mapwrap">
-  <img src="kort.png" width="1400" height="1216" decoding="async" alt="Kort over Assistens Kirkegård" id="mapimg">
-  <div id="cross"></div><div id="focusdot"></div>
+ <div class="mapinner" id="mapinner">
+  <picture>
+   <source srcset="kort.avif" type="image/avif">
+   <source srcset="kort.webp" type="image/webp">
+   <img src="kort.png" width="1400" height="1216" decoding="async" fetchpriority="high" alt="Kort over Assistens Kirkegård" id="mapimg">
+  </picture>
+  <div id="cross"></div><div id="focusdot"></div><div id="youdot" hidden aria-label="Din position"><i></i></div>
+ </div>
 </div>
 <div class="caltool" id="caltool">
   <canvas id="loupe" width="120" height="120"></canvas>
@@ -353,7 +561,7 @@ TREES.forEach(t=>{counts[t.sec]=(counts[t.sec]||0)+1;if(t._rare)rareSec[t.sec]=t
 document.getElementById('seccount').textContent=TREESECS.length+' afdelinger · '+TREES.length+' træer';
 
 // Place hotspots only for sections that have trees
-const wrap=document.getElementById('mapwrap');
+const wrap=document.getElementById('mapinner'),mapwrapEl=document.getElementById('mapwrap'); // markører m.m. ligger i .mapinner (beskæres/forstørres), .mapwrap er rammen der ruller
 let curSec=null;
 TREESECS.forEach(s=>{
   const f=FRACS[s]; if(!f) return;
@@ -397,6 +605,7 @@ function selectSec(s){
   head.innerHTML=curSec?('Afdeling '+esc(curSec)+(META[curSec]?' · '+esc(META[curSec].desc):'')+' <button class="clearchip" id="clearSec">× vis alle</button>'):'Alle afdelinger';
   const cc=document.getElementById('clearSec');
   if(cc)cc.onclick=()=>selectSec(curSec);
+  if(curSec)centerMap(FRACS[curSec]);
   syncHash();
   render();
 }
@@ -569,7 +778,8 @@ const calBtn=document.getElementById('calBtn'),crossEl=document.getElementById('
       loupe=document.getElementById('loupe');
 function calMsg(m){document.getElementById('calmsg').textContent=m||'';}
 function setCalib(on){
-  if(on)setTools(true,false); // et #kal=1-link skal virke, selv om værktøjet er skjult — vis knappen uden at gemme valget
+  if(on)setTools(true,false);
+  if(on&&navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{}); // bed browseren om ikke at rydde lageret med placeringerne // et #kal=1-link skal virke, selv om værktøjet er skjult — vis knappen uden at gemme valget
   document.body.classList.toggle('calib',on);
   calBtn.classList.toggle('on',on);calBtn.setAttribute('aria-pressed',on);
   if(!on){ankArm=false;disarm();document.getElementById('anchorbox').classList.remove('open');document.body.classList.remove('placing');}
@@ -687,7 +897,7 @@ function mergedData(){
 }
 document.getElementById('calExport').onclick=async()=>{
   const st=await loadPositionsFile(); // hent nyeste committede fil først, så eksporten fletter oven på den og ikke et gammelt øjebliksbillede
-  if(st==='neterr'){toast('⚠ Ingen forbindelse — eksportér, når du har net, ellers kan andres placeringer gå tabt');return;}
+  if(st==='neterr'||st==='stale'){toast('⚠ Ingen forbindelse — eksportér, når du har net, ellers kan andres placeringer gå tabt');return;}
   if(st==='badjson'){toast('⚠ Ret positions.json i repoet, før du eksporterer');return;}
   const txt=JSON.stringify(mergedData(),null,1);
   const file=new File([txt],'positions.json',{type:'application/json'});
@@ -701,9 +911,9 @@ document.getElementById('calExport').onclick=async()=>{
 document.getElementById('calCopy').onclick=()=>{
   if(!navigator.clipboard){toast('Kopiering kræver HTTPS — brug ⬇ Eksportér i stedet');return;}
   let st=null;
-  const data=loadPositionsFile().then(s=>{st=s;if(s==='neterr'||s==='badjson')throw new Error(s);return JSON.stringify(mergedData(),null,1);});
+  const data=loadPositionsFile().then(s=>{st=s;if(s==='neterr'||s==='stale'||s==='badjson')throw new Error(s);return JSON.stringify(mergedData(),null,1);});
   const done=()=>toast('JSON kopieret — gem som positions.json i repoet');
-  const fail=()=>toast(st==='neterr'?'⚠ Ingen forbindelse — prøv igen med net':(st==='badjson'?'⚠ Ret positions.json i repoet først':'Kunne ikke kopiere'));
+  const fail=()=>toast((st==='neterr'||st==='stale')?'⚠ Ingen forbindelse — prøv igen med net':(st==='badjson'?'⚠ Ret positions.json i repoet først':'Kunne ikke kopiere'));
   // iOS Safari kræver, at klippebordet skrives i samme brugerhandling som klikket; et løfte i ClipboardItem bevarer den, mens filen hentes
   if(window.ClipboardItem&&navigator.clipboard.write){
     navigator.clipboard.write([new ClipboardItem({'text/plain':data.then(t=>new Blob([t],{type:'text/plain'}))})])
@@ -767,9 +977,10 @@ function ankList(){
 }
 // progressbaren skal følge med, når filtre/afdeling ændrer sig
 const _render0=render;render=function(){_render0();updProgress();};
-function loadPositionsFile(){ // giver 'ok' | 'none' (ingen fil endnu) | 'neterr' | 'badjson' — eksporten må ikke fortsætte på de to sidste
+function loadPositionsFile(){ // giver 'ok' | 'stale' (offline-kopi fra service workeren) | 'none' (ingen fil endnu) | 'neterr' | 'badjson'
+  let stale=false;                // — eksporten må kun fortsætte ved 'ok' og 'none'
   return fetch('positions.json?t='+Date.now(),{cache:'no-store'}) // ?t= omgår også GitHub Pages' CDN-cache (10 min)
-    .then(r=>r.ok?r.text():(r.status===404?null:Promise.reject(r.status)))
+    .then(r=>{if(!r.ok)return r.status===404?null:Promise.reject(r.status);stale=!!r.headers.get('X-Offline-Cache');return r.text();})
     .then(txt=>{
       if(txt===null)return 'none';
       let d;
@@ -788,10 +999,53 @@ function loadPositionsFile(){ // giver 'ok' | 'none' (ingen fil endnu) | 'neterr
       });
       saveStore();
       fitAffine();buildDots();render();ankList();
-      return 'ok';
+      return stale?'stale':'ok';
     })
     .catch(()=>'neterr');
 }
+// ————— Forstør kortet (panorering i rammen) —————
+const zoomBtn=document.getElementById('zoomBtn');
+function centerMap(f,smooth){ // rul rammen, så punktet (fx,fy) står midt i den — kun når kortet er forstørret
+  if(!mapwrapEl.classList.contains('zoom')||!f)return;
+  const W=mapwrapEl.scrollWidth,H=mapwrapEl.scrollHeight;
+  const left=f[0]*W-mapwrapEl.clientWidth/2,top=f[1]*H-mapwrapEl.clientHeight/2;
+  if(smooth&&mapwrapEl.scrollTo)mapwrapEl.scrollTo({left:left,top:top,behavior:SB});else{mapwrapEl.scrollLeft=left;mapwrapEl.scrollTop=top;}
+}
+zoomBtn.onclick=()=>{
+  const on=!mapwrapEl.classList.contains('zoom');
+  mapwrapEl.classList.toggle('zoom',on);zoomBtn.classList.toggle('on',on);zoomBtn.setAttribute('aria-pressed',on);
+  if(on)centerMap(curSec&&FRACS[curSec]?FRACS[curSec]:[0.55,0.5]);
+};
+// ————— Hvor er jeg? GPS-position for besøgende (samme omregning som kalibreringen) —————
+let hereWatch=null;
+const hereBtn=document.getElementById('hereBtn'),youEl=document.getElementById('youdot');
+function nearestSec(fx,fy){let best=null,bd=Infinity;
+  for(const k in FRACS){const f=FRACS[k],d=Math.hypot((f[0]-fx)*IMGW,(f[1]-fy)*IMGH);if(d<bd){bd=d;best=k;}}
+  return {sec:best,m:bd*M_PER_PX};}
+function stopHere(){
+  if(hereWatch!==null&&navigator.geolocation)navigator.geolocation.clearWatch(hereWatch);
+  hereWatch=null;youEl.hidden=true;hereBtn.classList.remove('on');hereBtn.setAttribute('aria-pressed','false');
+}
+hereBtn.onclick=()=>{
+  if(hereWatch!==null){stopHere();return;}
+  if(!navigator.geolocation){toast('Din browser tilbyder ikke GPS');return;}
+  hereBtn.classList.add('on');hereBtn.setAttribute('aria-pressed','true');toast('Henter din position …');
+  let told=false;
+  hereWatch=navigator.geolocation.watchPosition(pos=>{
+    const c=pos.coords,f=llToFrac(c.latitude,c.longitude);
+    const dx=Math.max(0,-f.fx,f.fx-1)*IMGW,dy=Math.max(0,-f.fy,f.fy-1)*IMGH,ud=Math.hypot(dx,dy)*M_PER_PX;
+    if(ud>60){youEl.hidden=true;if(!told){told=true;toast('Du er ca. '+Math.round(ud)+' m uden for kortet');}return;}
+    const fx=Math.min(1,Math.max(0,f.fx)),fy=Math.min(1,Math.max(0,f.fy));
+    youEl.style.left=(fx*100)+'%';youEl.style.top=(fy*100)+'%';
+    const rpx=c.accuracy/M_PER_PX; // usikkerhedsradius i billedpixels → procent af bredde/højde (diameter = 2r)
+    youEl.firstElementChild.style.width=(rpx/IMGW*200)+'%';youEl.firstElementChild.style.height=(rpx/IMGH*200)+'%';
+    youEl.hidden=false;
+    if(!told){told=true;const n=nearestSec(fx,fy);
+      toast('Du står nærmest afd. '+n.sec+' (±'+Math.round(c.accuracy)+' m)');
+      centerMap([fx,fy],true);
+      if(mapwrapEl.scrollIntoView)mapwrapEl.scrollIntoView({behavior:SB,block:'center'});}
+  },err=>{stopHere();toast('GPS-fejl: '+err.message);},{enableHighAccuracy:true,timeout:20000,maximumAge:5000});
+};
 // Kalibreringsværktøjet er til medarbejdere og er skjult for almindelige besøgende.
 // Det tændes med knappen i sidefoden (valget huskes i browseren) eller via et #kal=1-link.
 const TOOLS_KEY='assistens_tools_v1';
@@ -820,4 +1074,6 @@ loadPositionsFile();
   const afd=p.get('afd');
   if(afd&&TREESECS.includes(afd)){selectSec(afd);}else{render();}
 })();
+// Offline: service workeren (sw.js) cacher siden, kortet og fontene; positions.json hentes altid over nettet, når det er muligt.
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
 </script></body></html>
