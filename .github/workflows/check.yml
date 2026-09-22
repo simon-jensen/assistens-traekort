@@ -1,0 +1,9 @@
+# Stopper en fejlbehæftet positions.json eller et ødelagt datablok i index.html, før det når GitHub Pages.
+name: Tjek data
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check_positions.py
