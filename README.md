@@ -42,10 +42,26 @@ data (fx CC BY 4.0). Indtil da gælder almindelig ophavsret.
 
 ## Udvikling
 
-Der er intet byggetrin. `index.html` indeholder CSS, HTML, data og JavaScript;
-`fonts.css` og `fonts/` er skrifttyperne. Åbn filen lokalt, eller kør
-`python3 -m http.server` i mappen (GPS og udklipsholder kræver HTTPS eller
-localhost).
+Der er intet byggetrin. `index.html` indeholder CSS (inkl. `@font-face`),
+HTML, data og JavaScript; `fonts/` er skrifttyperne. Kør
+`python3 -m http.server` i mappen og åbn `http://localhost:8000/` (GPS,
+udklipsholder og service worker kræver HTTPS eller localhost).
+
+**Offline:** `sw.js` cacher siden, kortet og fontene, så den virker uden
+dækning på kirkegården; `positions.json` hentes altid over nettet, når det
+er muligt. **Bump `VERSION` i `sw.js` ved hvert deploy**, der ændrer
+`index.html`, kortet, fontene eller ikonerne, ellers kan gamle besøgende
+hænge fast i den gamle udgave. `manifest.webmanifest` og `icon-*.png` gør,
+at siden kan lægges på hjemmeskærmen.
+
+**Kortet** ligger som `kort.png` (kilde), `kort.webp` og `kort.avif`
+(hentes af moderne browsere). Ændres kilden, genskab de to andre, i samme
+størrelse (1400×1216, ellers rammer luppen og markørerne forkert):
+
+```
+avifenc -q 75 -s 4 kort.png kort.avif
+cwebp -q 85 -m 6 kort.png -o kort.webp
+```
 
 `scripts/check_positions.py` tjekker datablokkene i `index.html` og
 `positions.json`. Den kører automatisk i GitHub Actions ved push og pull
