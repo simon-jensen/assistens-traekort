@@ -1,4 +1,5 @@
-# Stopper en fejlbehæftet positions.json eller et ødelagt datablok i index.html, før det når GitHub Pages.
+# Stopper en fejlbehæftet positions.json eller et ødelagt datablok i index.html, før det når GitHub Pages,
+# og fejler, hvis cachede filer er ændret uden at VERSION i sw.js er bumpet (se CLAUDE.md).
 name: Tjek data
 on: [push, pull_request]
 jobs:
@@ -6,4 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 scripts/check_positions.py
+        with:
+          fetch-depth: 0
+      - name: Datablokke og positions.json
+        run: python3 scripts/check_positions.py
+      - name: VERSION i sw.js skal bumpes, når cachede filer ændres
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            python3 scripts/check_sw_version.py "origin/${{ github.base_ref }}" HEAD
+          else
+            python3 scripts/check_sw_version.py "${{ github.event.before }}" "${{ github.sha }}"
+          fi
