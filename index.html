@@ -390,6 +390,17 @@ body.calib .stopdot{display:flex;align-items:center;justify-content:center}
 #stopbox.open{display:block}
 #stopsel{display:none;margin-top:6px;padding:6px 8px;border:1px solid #2b6cd9;border-radius:4px}
 #stopsel.open{display:block}
+/* — Kommunens data i kalibreringstilstand: ortofoto som lag og træregistret som punkter (data/README.md) — */
+#orto{position:absolute;left:0;top:0;width:100%;height:100%;display:none;pointer-events:none;z-index:1;opacity:.7}
+body.orto #orto{display:block}
+#ortoOp{width:90px;vertical-align:middle}
+#ortoOp[hidden]{display:none}
+.kkdot{position:absolute;display:none;transform:translate(-50%,-50%);z-index:3;padding:0;border:0;cursor:pointer}
+.kkdot.reg{width:9px;height:9px;border-radius:2px;background:#1f6fd6;border:1px solid #fff}
+.kkdot.reg.anon{background:rgba(31,111,214,.25);border-color:#1f6fd6} /* registertræ uden art */
+.kkdot.det{width:5px;height:5px;border-radius:50%;background:rgba(40,40,40,.5);pointer-events:none}
+body.calib.kkl .kkdot{display:block}
+body.calib.kkl .kkdot.reg:hover{box-shadow:0 0 0 3px rgba(200,162,74,.7);z-index:5}
 @media (prefers-color-scheme: dark){ /* hvid tekst på de lyse mørk-tilstands-farver giver for lav kontrast */
  .filterbtn.on,#calBtn.on,#toast,.calbtn.go:hover,.calbtn.warn:hover,.infobtn:hover,.lookup:hover,#turStop,#turTree{color:var(--plot-text)}
 }
@@ -417,6 +428,8 @@ body.calib .stopdot{display:flex;align-items:center;justify-content:center}
     <button class="calbtn" id="calAnchorBtn">⚓ GPS-ankre</button>
     <button class="calbtn" id="calStopBtn">⏺ Stop</button>
     <button class="calbtn" id="calTurBtn" aria-pressed="false">🚶 Omvisning</button>
+    <button class="calbtn" id="calOrtoBtn" aria-pressed="false" title="Luftfoto forår 2025 lagt oven på kortet">🛰 Ortofoto</button><input type="range" id="ortoOp" min="0" max="100" value="70" aria-label="Ortofotoets synlighed" hidden>
+    <button class="calbtn" id="calKKBtn" aria-pressed="false" title="Kommunens træregister og LiDAR-detekterede træer som punkter">🌳 KK-træer</button>
     <span class="count" id="calcount" style="margin-left:auto"></span>
   </div>
   <input type="file" id="calFile" accept="application/json,.json" style="display:none">
@@ -441,6 +454,7 @@ body.calib .stopdot{display:flex;align-items:center;justify-content:center}
    <source srcset="kort.webp" type="image/webp">
    <img src="kort.png" width="1400" height="1216" decoding="async" fetchpriority="high" alt="Kort over Assistens Kirkegård" id="mapimg">
   </picture>
+  <img id="orto" alt="" decoding="async">
   <div id="cross"></div><div id="focusdot"></div><div id="youdot" hidden aria-label="Din position"><i></i></div>
  </div>
 </div>
@@ -679,7 +693,7 @@ function render(){
       '<button class="seen" data-seen="'+t._idx+'" title="Markér som set" aria-label="Markér som set" aria-pressed="'+(isSeen(t)?'true':'false')+'"></button>'+
       '<div class="plot" title="'+esc(t.allplots.join(', '))+'">'+esc(t.plot)+extra+'</div>'+
       '<div><div class="sp"><button type="button" class="spbtn" aria-label="'+esc(t._vis)+', afdeling '+esc(t.sec)+' – vis på kortet">'+esc(t._vis)+'</button>'+nowChip+(t._rare?'<span class="tag">sjælden</span>':'')+(t._desc?'<button class="infobtn" data-info="'+t._idx+'">Sådan kender du den</button>':lookup)+'</div>'+dk+
-      '<div class="meta">Afd. '+esc(t.sec)+(yr?' · '+yr:'')+(t.nr?' · Nr '+esc(t.nr):'')+(getPos(t)?' · <span title="Placeret præcist på kortet">📍</span>':'')+(t._vis!==t.sp?' · kildens stavning: '+esc(t.sp):'')+'</div></div></div>';
+      '<div class="meta">Afd. '+esc(t.sec)+(yr?' · '+yr:'')+(t.nr?' · Nr '+esc(t.nr):'')+(getPos(t)?' · <span title="Placeret præcist på kortet ('+esc(getPos(t).src||'kort')+')">📍</span>':'')+(t._vis!==t.sp?' · kildens stavning: '+esc(t.sp):'')+'</div></div></div>';
   }).join('');
 }
 function resetFilters(){
@@ -833,7 +847,8 @@ function armTree(i,auto){
   cand=p?Object.assign({},p):null; // fuld kopi, så lat/lon/acc følger med ved gen-gem
   document.getElementById('caltool').classList.add('open');
   document.getElementById('caltree').innerHTML='<b>'+esc(t.plot)+'</b> · <i>'+esc(t._vis)+'</i>'+
-    (p?' — allerede placeret; tryk på kortet eller finjustér for at flytte':' — tryk på kortet, dér hvor træet står');
+    (p?' — allerede placeret ('+esc(p.src||'kort')+(p.acc?' ±'+p.acc+' m':'')+'); tryk på kortet eller finjustér for at flytte':' — tryk på kortet, dér hvor træet står')+
+    (p&&p.note?'<div style="color:var(--faint);margin-top:3px">'+esc(p.note)+'</div>':'');
   calMsg('');updCross();render();
   const row=list.querySelector('.tree[data-i="'+i+'"]');
   if(row){const lr=list.getBoundingClientRect(),rr=row.getBoundingClientRect();
@@ -906,7 +921,8 @@ document.getElementById('calSave').onclick=()=>{
   const t=TREES[armed],prev=getPos(t);
   const rec={fx:+cand.fx.toFixed(5),fy:+cand.fy.toFixed(5),src:cand.src||'kort',ts:nowTs()};
   if(cand.lat){rec.lat=+cand.lat.toFixed(6);rec.lon=+cand.lon.toFixed(6);rec.acc=cand.acc;}
-  if(prev&&prev.note)rec.note=prev.note;
+  if(cand.note)rec.note=cand.note;
+  else if(prev&&prev.note&&!(prev.note.startsWith('KK ')&&rec.src!=='kk'))rec.note=prev.note; // scriptets forklaring passer ikke længere, når et menneske flytter træet
   STORE.trees[treeId(t)]=rec;saveStore();buildDots();
   let a=0,b=0;TREES.forEach(x=>{if(x.sec===t.sec){b++;if(getPos(x))a++;}});
   if(a===b)toast('Afdeling '+t.sec+' fuldført ✓ ('+b+' træer)');
@@ -1020,6 +1036,7 @@ function ankList(){
   el.querySelectorAll('.adel').forEach(b=>{
     b.onclick=()=>{STORE.anchors.splice(+b.dataset.a,1);saveStore();fitAffine();ankList();};
   });
+  kkDots(); // omregningen kan have ændret sig
 }
 // progressbaren og omvisningsbjælken skal følge med, når filtre/afdeling/valgt træ ændrer sig
 const _render0=render;render=function(){_render0();updProgress();turSync();};
@@ -1260,6 +1277,46 @@ function stopList(){
   document.getElementById('calStopBtn').textContent='⏺ Stop ('+STORE.stops.length+')';
 }
 document.getElementById('calStopBtn').onclick=()=>{document.getElementById('stopbox').classList.toggle('open');stopList();};
+// ————— Kommunens data: ortofoto som lag og træregistret som punkter (kun i kalibreringstilstand; se data/README.md) —————
+// Ortofotoet (GeoDanmark forår 2025, CC BY 4.0) er forvrænget ind i kort.png's pixelnet med scripts/orto_warp.mjs,
+// så det lægges 1:1 oven på kortet. Punkterne (Københavns Kommune, CC BY 4.0) omregnes med samme ankre som GPS.
+const ortoEl=document.getElementById('orto'),ortoOp=document.getElementById('ortoOp');
+function setOrto(on){
+  if(on&&!ortoEl.getAttribute('src'))ortoEl.src='data/orto_kort_2025.jpg'; // 1,5 MB: hentes først, når laget tændes
+  document.body.classList.toggle('orto',on);
+  const b=document.getElementById('calOrtoBtn');b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);
+  ortoOp.hidden=!on;
+}
+document.getElementById('calOrtoBtn').onclick=()=>setOrto(!document.body.classList.contains('orto'));
+ortoOp.oninput=()=>{ortoEl.style.opacity=ortoOp.value/100;};
+let KK=null; // {reg:[[id,traeart,dansk_navn,planteaar,kronediameter,lon,lat]…], det:[[lon,lat,hoejde,kroneareal]…]}
+function kkDots(){
+  document.querySelectorAll('#mapwrap .kkdot').forEach(el=>el.remove());
+  if(!KK)return;
+  const frag=document.createDocumentFragment(),inside=f=>f.fx>=0&&f.fx<=1&&f.fy>=0&&f.fy<=1;
+  KK.det.forEach(r=>{const f=llToFrac(r[1],r[0]);if(!inside(f))return;
+    const d=document.createElement('i');d.className='kkdot det';d.style.left=(f.fx*100)+'%';d.style.top=(f.fy*100)+'%';
+    d.title='Detekteret træ · '+r[2]+' m højt · krone '+Math.round(r[3])+' m²';frag.appendChild(d);});
+  KK.reg.forEach(r=>{const f=llToFrac(r[6],r[5]);if(!inside(f))return;
+    const d=document.createElement('button');d.type='button';d.className='kkdot reg'+(r[1]?'':' anon');d.tabIndex=-1;
+    d.style.left=(f.fx*100)+'%';d.style.top=(f.fy*100)+'%';
+    d.title='KK #'+r[0]+(r[1]?' · '+r[1]:' · (art ikke registreret)')+(r[2]?' · '+r[2]:'')+(r[3]?' · plantet '+r[3]:'')+(r[4]?' · krone '+r[4]+' m':'');
+    d.onclick=ev=>{ev.stopPropagation();
+      if(armed===null){toast(d.title);return;} // uden valgt træ: vis blot, hvad punktet er
+      cand={fx:f.fx,fy:f.fy,lat:r[6],lon:r[5],acc:1,src:'kk',note:'KK registertræ #'+r[0]+' valgt i værktøjet'};updCross();
+      calMsg('Kommunens registertræ #'+r[0]+(r[1]?' «'+r[1]+'»':'')+' valgt — tryk ✓ Gem');};
+    frag.appendChild(d);});
+  wrap.appendChild(frag);
+}
+function setKK(on){
+  document.body.classList.toggle('kkl',on);
+  const b=document.getElementById('calKKBtn');b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);
+  if(on&&!KK){calMsg('Henter kommunens data …');
+    Promise.all(['data/kk_traeer.json','data/kk_detekterede.json'].map(u=>fetch(u).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();})))
+      .then(([a,c])=>{KK={reg:a.rows,det:c.rows};kkDots();calMsg('');toast(KK.reg.length+' registertræer og '+KK.det.length+' detekterede træer vist — tryk på et blåt punkt for at bruge det');})
+      .catch(()=>{calMsg('');toast('⚠ Kunne ikke hente data/kk_*.json');setKK(false);});}
+}
+document.getElementById('calKKBtn').onclick=()=>setKK(!document.body.classList.contains('kkl'));
 // Kalibreringsværktøjet er til medarbejdere og er skjult for almindelige besøgende.
 // Det tændes med knappen i sidefoden (valget huskes i browseren) eller via et #kal=1-link.
 const TOOLS_KEY='assistens_tools_v1';
