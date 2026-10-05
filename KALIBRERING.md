@@ -195,7 +195,8 @@ bjælke nederst med to store knapper, der kan rammes uden at kigge.
   i bjælken, skriv fx “ginkgo”, tryk på artsnavnet). Ét tryk gemmer træet som
   GPS-placering (`src: gps`) og nulstiller valget, så næste tryk ikke kan
   lande på et forkert træ. Svaret lander altid på det træ, du trykkede for,
-  også hvis du når at vælge et andet imens.
+  også hvis du når at vælge et andet imens. Valgte du en række bare for at
+  læse: tryk på den igen, eller på **✕ træ** i bjælken, så er den fravalgt.
 - Tilstanden holder GPS’en kørende i baggrunden, så første tryk allerede har
   en frisk aflæsning. Posten gemmes straks og forbedres stille i op til 8
   sekunder, hvis en mere præcis aflæsning kommer; telefonen må gerne i
@@ -203,8 +204,13 @@ bjælke nederst med to store knapper, der kan rammes uden at kigge.
   (Android) en kort vibration — én for stop, tre for træ.
 - **↶ fortryd** tager seneste fangst tilbage; **✎ note** sætter en kort note
   på den (“ved kapellet”, “guiden sagde *Zelkova*”). **✕** afslutter.
-- Tilstanden huskes på enheden, fordi en genvej på hjemmeskærmen åbner siden
-  uden `#`-del. Sluk den med **✕**, når du er færdig.
+- Tilstanden huskes på enheden, når du selv tænder den med knappen, fordi
+  en genvej på hjemmeskærmen åbner siden uden `#`-del. Et delt
+  `#kal=1&tur=1`-link tænder den kun for den ene indlæsning. Sluk med
+  **✕**, når du er færdig.
+- Et stop, der ligger mere end 30 m uden for kortet (et prøvetryk hjemme),
+  gemmes lokalt, men kommer ikke med i eksporten. Parring af stop er slået
+  fra, mens omvisningen er tændt; det hører til computeren.
 
 **Dagen før**
 1. Åbn siden på telefonen *med net*, så service workeren cacher den, og læg
@@ -212,10 +218,9 @@ bjælke nederst med to store knapper, der kan rammes uden at kigge.
    tryk **Vis værktøjet** i sidefoden, **📍 Kalibrér** og **🚶 Omvisning**.
 2. Giv GPS-tilladelse, når browseren spørger (vælg “tillad”, ikke “kun denne
    gang”, hvis muligt). Vent, til bjælken viser “GPS ±… m”.
-3. Test ét tryk på **⏺ Stop her** i gaden: toast + blink, og **⏺ Stop (1)**
-   i kalibreringsbjælken. Slet det igen (**⏺ Stop** → *slet*), eller lad det
-   stå og slet det hjemme; et stop uden for kortet kan ikke parres og giver
-   fejl i check-scriptet, hvis det committes.
+3. Test ét tryk på **⏺ Stop her**: toast + blink, og **⏺ Stop (1)** i
+   kalibreringsbjælken. Slet det igen (**⏺ Stop** → *slet*), eller lad det
+   stå; et stop uden for kortet eksporteres ikke.
 4. Slå flytilstand til et øjeblik og genindlæs: siden skal stadig vise sig
    (offline). Oplad telefonen; GPS i baggrunden i to timer koster batteri.
    Lad tilstanden stå tændt.
@@ -243,7 +248,9 @@ bjælke nederst med to store knapper, der kan rammes uden at kigge.
 3. Parr: tryk på et stop (ruden eller *vælg* i listen), derefter på træet i
    listen — eller træet først og så ruden. Træet får stoppets GPS-position
    som `src: gps`, stoppet forsvinder, og noten følger med. Fortrudt?
-   **↶ Fortryd seneste parring** i stop-boksen.
+   **↶ Fortryd seneste parring** i stop-boksen. Når filen er committet,
+   forsvinder de parrede stop også fra telefonen af sig selv (posten bærer
+   stoppets tidsstempel som `obs`), så de ikke parres igen ved næste eksport.
 4. Finjustér: tryk på træets prik, flyt med kortet/luppen/pilene, **✓ Gem**.
    Den rå GPS-aflæsning bliver stående i posten som dokumentation.
 5. Slet stop, der ikke kan parres, **⬇ Eksportér** igen, læg filen som
