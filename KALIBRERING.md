@@ -62,7 +62,10 @@ samme træ vinder posten med nyeste tidsstempel, både på kortet og i eksporten
 Sletninger følger med som poster med `"del": 1`, så et træ, en kollega har
 slettet, ikke dukker op igen fra en gammel telefon. Uparrede stop fra en
 omvisning følger også med (feltet `stops`), så de kan parres på computeren;
-ved import springes stop, enheden allerede kender (samme `ts`), over.
+ved import springes stop over, som enheden allerede kender (samme `ts`), som
+allerede er parret (lokalt, i den committede fil eller i den importerede
+fil), eller som er slettet på denne enhed. Et stop, der slettes på
+computeren, vender altså ikke tilbage fra telefonens næste eksport.
 
 **Pas på browserens lager.** Placeringerne ligger i localStorage, indtil de er
 eksporteret. Safari kan slette lageret for en side, der ikke har været brugt i
@@ -78,9 +81,10 @@ tættere på, så brug GPS til det grove og kortet+luppen til det fine. Ligger
 GPS-positionen mere end ca. 30 m uden for kortet (du står fx på kontoret),
 sættes ingen placering.
 
-**Koordinaterne bliver offentlige.** De rå GPS-aflæsninger (`lat`/`lon`) og
-tidsstemplerne eksporteres til `positions.json`, som ligger i et offentligt
-repo. Brug kun GPS-knappen, når du faktisk står ved træet.
+**Koordinaterne bliver offentlige.** De rå GPS-aflæsninger (`lat`/`lon`),
+tidsstemplerne og noterne eksporteres ordret til `positions.json`, som ligger
+i et offentligt repo. Brug kun GPS-knappen, når du faktisk står ved træet, og
+skriv ikke noget i en note, der ikke tåler at blive læst af alle.
 
 Omregningen mellem GPS-koordinater og kortbilledet bygger på fire indbyggede
 ankre: kirkegårdens hjørner (Jagtvej/Hans Tavsens Gade, Hans Tavsens
@@ -160,19 +164,30 @@ bjælke nederst med to store knapper, der kan rammes uden at kigge.
   også hvis du når at vælge et andet imens. Valgte du en række bare for at
   læse: tryk på den igen, eller på **✕ træ** i bjælken, så er den fravalgt.
 - Tilstanden holder GPS’en kørende i baggrunden, så første tryk allerede har
-  en frisk aflæsning. Posten gemmes straks og forbedres stille i op til 8
-  sekunder, hvis en mere præcis aflæsning kommer; telefonen må gerne i
-  lommen med det samme. Bekræftelse: toast, et gyldent blink i bjælken og
-  (Android) en kort vibration — én for stop, tre for træ.
-- **↶ fortryd** tager seneste fangst tilbage; **✎ note** sætter en kort note
-  på den (“ved kapellet”, “guiden sagde *Zelkova*”). **✕** afslutter.
+  en frisk aflæsning (fra de seneste 4 sekunder). Et stop gemmes straks, om
+  nødvendigt kun med tidspunktet, og forbedres stille i op til 8 sekunder,
+  hvis en mere præcis aflæsning kommer (20 sekunder, hvis der ingen frisk
+  aflæsning var). Et træ gemmes ved første brugbare aflæsning inden for
+  kortet; kommer der ingen inden for 20 sekunder, gemmes i stedet et stop med
+  træets navn som note, så intet forsvinder stille. Vinduet lukker, når
+  skærmen låses eller telefonen lægges i lommen, så en aflæsning efter
+  oplåsning aldrig flytter en gammel fangst hen til det næste træ, og kun én
+  fangst ad gangen er åben. Bekræftelse: toast, et gyldent blink i bjælken og
+  (Android) en kort vibration, når en aflæsning er landet — én for stop, tre
+  for træ.
+- **↶ fortryd** tager seneste fangst tilbage, også en træfangst, der stadig
+  venter på GPS; **✎ note** sætter en kort note på den (“ved kapellet”,
+  “guiden sagde *Zelkova*”); noten bliver offentlig. **✕ afslut** spørger
+  først og slukker så tilstanden.
 - Tilstanden huskes på enheden, når du selv tænder den med knappen, fordi
   en genvej på hjemmeskærmen åbner siden uden `#`-del. Et delt
-  `#kal=1&tur=1`-link tænder den kun for den ene indlæsning. Sluk med
-  **✕**, når du er færdig.
+  `#kal=1&tur=1`-link tænder den kun i den fane (en genindlæsning af fanen
+  tænder igen, men der gemmes intet på enheden). Sluk med **✕ afslut**, når
+  du er færdig.
 - Et stop, der ligger mere end 30 m uden for kortet (et prøvetryk hjemme),
-  gemmes lokalt, men kommer ikke med i eksporten. Parring af stop er slået
-  fra, mens omvisningen er tændt; det hører til computeren.
+  gemmes lokalt, men kommer ikke med i eksporten; et træ gemmes slet ikke på
+  en aflæsning uden for kortet. Parring af stop er slået fra i begge
+  rækkefølger, mens omvisningen er tændt; det hører til computeren.
 
 **Dagen før**
 1. Åbn siden på telefonen *med net*, så service workeren cacher den, og læg
@@ -214,8 +229,11 @@ bjælke nederst med to store knapper, der kan rammes uden at kigge.
    forsvinder de parrede stop også fra telefonen af sig selv (posten bærer
    stoppets tidsstempel som `obs`), så de ikke parres igen ved næste eksport.
 4. Finjustér: tryk på træets prik, flyt med kortet/luppen/pilene, **✓ Gem**.
-   Den rå GPS-aflæsning bliver stående i posten som dokumentation.
-5. Slet stop, der ikke kan parres, **⬇ Eksportér** igen, læg filen som
+   Den rå GPS-aflæsning (`lat`/`lon`/`acc`) og stoppets tidsstempel (`obs`)
+   bliver stående i posten som dokumentation, også efter et tryk på kortet
+   (posten får så `src: kort`).
+5. Slet stop, der ikke kan parres (sletningen huskes på computeren, så de
+   ikke kommer igen fra telefonen), **⬇ Eksportér** igen, læg filen som
    `positions.json` i repo-roden og kør `python3 scripts/check_positions.py`,
    før du committer. Tryk **✕**/**🚶 Omvisning** på telefonen, så tilstanden
    (og GPS’en) ikke bliver ved med at køre.

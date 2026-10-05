@@ -23,7 +23,7 @@ Træerne kan placeres præcist på kortet, på stedet med GPS eller med et tryk 
 kortet; **🚶 Omvisning** gemmer et træ eller et stop med ét tryk, når der
 ikke er tid til mere. Fremgangsmåde og dataformat: [KALIBRERING.md](KALIBRERING.md).
 Placeringerne deles via filen `positions.json` i repoets rod. **Bemærk:** rå
-GPS-koordinater og tidsstempler i den fil bliver offentlige.
+GPS-koordinater, tidsstempler og noter i den fil bliver offentlige.
 
 ## Data og rettigheder
 
