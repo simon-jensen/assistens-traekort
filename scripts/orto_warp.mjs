@@ -1,7 +1,7 @@
 // Forvrænger et ortofoto (WMS GetMap i EPSG:3857 med kendt bbox) ind i kort.png's pixelnet,
 // så det kan lægges 1:1 oven på kortet som data/orto_kort_2025.jpg. Se data/README.md.
 //
-// Kør:  node scripts/orto_warp.mjs orto_assistens_2025.jpg data/orto_kort_2025.jpg
+// Kør:  node scripts/orto_warp.mjs data/raw/orto_assistens_2025.jpg data/orto_kort_2025.jpg
 // Kræver Node og Playwright med Chromium (tegningen sker i et canvas i headless Chromium).
 //
 // Afbildningen er den samme som sidens GPS-omregning: en affin mindste-kvadraters tilpasning

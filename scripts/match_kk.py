@@ -13,8 +13,17 @@ Tre kilder, i prioriteret rækkefølge:
   3. LiDAR-detekterede træer (kk_detekterede.json): et detekteret træ tæt på gravstedet "snapper" punktet.
 
 Hvert forslag får en sikkerhed: 'høj' og 'middel' skrives til positions.json (src "kk", acc = anslået
-usikkerhed i meter), 'lav' kommer kun i gennemgangslisten. Scriptet overskriver aldrig en placering,
-et menneske har lavet (src "kort"/"gps"), kun sine egne gamle kk-poster. t.sp røres ikke.
+usikkerhed i meter), 'lav' kommer kun i gennemgangslisten. 'Høj' kræver et registertræ af arten (slægt + art)
+inden for 12 m af et gravsted, der er fundet direkte eller anslået mellem naboer højst 15 m fra hinanden,
+eller et LiDAR-detekteret træ tæt på et direkte fundet gravsted. Gravstedsnumre med flere led ("D-1-2-2/7",
+"K1-1-4") kan ikke slås op entydigt og går altid til gennemgang.
+
+Scriptet rører kun sine egne poster: src "kk" med en note, der begynder med "KK høj:"/"KK middel:".
+Menneskers placeringer (kort/gps, også et kommunepunkt valgt i værktøjet) og sletninger bevares altid.
+Et uændret forslag beholder sit tidsstempel; nye eller ændrede forslag stemples med datafilens hentedato
+kl. 00:00Z, aldrig kørselstidspunktet, så et forslag aldrig er "nyere" end feltarbejde (siden sletter
+lokale poster, som filen har indhentet). Egne forslag, der er trukket tilbage, fjernes fra filen.
+Andre topniveau-felter i positions.json (fx "stops") bevares. t.sp røres ikke.
 """
 import json, math, os, re, sys
 from datetime import datetime, timezone
@@ -142,7 +151,7 @@ def main(argv):
             return None
         if (n, suf) in d:
             return d[(n, suf)], 1.5, "gravsted direkte"
-        if (n, "") in d:
+        if (n, "") in d and suf:
             return d[(n, "")], 2.0, "gravsted direkte (uden bogstav)"
         nums = sorted({k[0] for k in d})
         lo = max((k for k in nums if k < n), default=None)
@@ -167,14 +176,21 @@ def main(argv):
             R.append(dict(id=rid, art=art, tk=toks(art), pt=(lon, lat), sec=section_of(afd, (lon, lat))))
     D = [(lon, lat) for lon, lat, h, k in det]
 
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+    # Tidsstempel: datafilens hentedato kl. 00:00Z — aldrig kørselstidspunktet (se docstring). Kun nye/ændrede poster får det.
+    hentet = jload("kk_traeer.json").get("hentet") or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    stamp = hentet + "T00:00:00.000Z"
+    if old.get("anchors"):
+        print(f"ADVARSEL: positions.json har {len(old['anchors'])} GPS-ankre ud over de indbyggede; de ændrer omregningen for alle forslag, "
+              "og ortofotoet (orto_warp.mjs) bygger kun på de indbyggede.")
     stats, review, out = {}, [], {}
     for t in TREES:
         tid = f"{t['sec']}|{t['plot']}|{t['sp']}"
         q = toks(t["sp"])
-        m = re.match(r"([A-ZÆØÅ]+\d?)-(\d+)([A-Z]?)", t["plot"].replace(" ", ""))
+        plot = t["plot"].replace(" ", "")
+        m = re.fullmatch(r"([A-ZÆØÅ]+\d?)-(\d+)([A-Z]?)", plot)
         sec = t["sec"].upper()
         g = None
+        flerled = not m and bool(re.match(r"[A-ZÆØÅ]+\d?-\d", plot))  # "D-1-2-2/7", "E-59/60", "K1-1-4": første led er ikke gravstedet
         if m:
             a = m.group(1).upper() if m.group(1).upper() in gsec else sec
             g = grav_pos(a, int(m.group(2)), m.group(3))
@@ -193,20 +209,20 @@ def main(argv):
             why.append(how)
             near = sorted((dist_m(r["pt"], gpt), r) for r in cands)
             near = [(d, r) for d, r in near if d <= (12 if gacc <= 3 else 15)]
-            if near:  # registret kender selve træet; et løst anslået gravsted giver kun 'middel'
+            if near:  # registret kender selve træet — men hvilket individ af arten, hvis gravstedet er løst anslået?
                 d, r = near[0]
-                pos, acc = r["pt"], 1.0
-                why.append(f"registertræ #{r['id']} «{r['art']}» {d:.0f} m fra gravstedet")
-                konf = "høj" if gacc <= 8 else "middel"
+                pos, acc = r["pt"], 1.0 if gacc <= 3 else 3.0
+                why.append(f"registertræ #{r['id']} «{r['art']}» {d:.0f} m fra gravstedet" + ("" if strong else " (kun slægten matcher)"))
+                konf = "høj" if (gacc <= 3 and strong) else "middel"  # høj: direkte eller tæt anslået gravsted, stærk artsmatch
             else:
                 dd = sorted((dist_m(p, gpt), p) for p in D)
                 if dd and dd[0][0] <= max(6, gacc):
                     pos, acc = dd[0][1], max(2.0, gacc * 0.6)
                     why.append(f"detekteret træ {dd[0][0]:.0f} m fra gravstedet")
                     konf = "høj" if gacc <= 2 else ("middel" if gacc <= 8 else "lav")
-                else:
-                    pos, acc = gpt, gacc
-                    konf = "høj" if gacc <= 2 else ("middel" if gacc <= 3 else "lav")
+                else:  # et gravsted uden registreret eller detekteret træ er kun et bud på rækken
+                    pos, acc = gpt, max(gacc, 3.0)
+                    konf = "middel" if gacc <= 3 else "lav"
             if konf == "lav" and len(in_sec) == 1 and strong:
                 pos, acc, konf = in_sec[0]["pt"], 3.0, "middel"
                 why.append(f"eneste «{in_sec[0]['art']}» i afdelingen: registertræ #{in_sec[0]['id']}")
@@ -220,6 +236,9 @@ def main(argv):
             why.append(f"intet gravsted; arten findes kun i afd. {', '.join(secs)} i registret")
         else:
             why.append("intet gravsted og ingen art i registret")
+        if flerled:  # første talled er ikke gravstedet, og to sådanne numre kan ikke skelnes — altid til gennemgang
+            konf = "lav"
+            why.insert(0, f"gravstedsnummer med flere led ({t['plot']}) kan ikke slås op entydigt")
 
         stats[konf] = stats.get(konf, 0) + 1
         line = f"{t['plot']} · {t['_vis'] if '_vis' in t else t['sp']} — {konf}: " + "; ".join(why)
@@ -229,7 +248,7 @@ def main(argv):
                 review.append((sec, line + " (uden for kortet!)"))
                 continue
             out[tid] = {"fx": round(min(1, max(0, fx)), 5), "fy": round(min(1, max(0, fy)), 5), "src": "kk",
-                        "lat": round(pos[1], 6), "lon": round(pos[0], 6), "acc": acc, "ts": now,
+                        "lat": round(pos[1], 6), "lon": round(pos[0], 6), "acc": acc, "ts": stamp,
                         "note": "KK " + konf + ": " + "; ".join(why)}
         else:
             if pos:
@@ -242,27 +261,43 @@ def main(argv):
     if dry:
         return 0
 
-    # flet: menneskers placeringer (kort/gps) og nyere poster bevares; egne gamle kk-poster erstattes
+    # flet: scriptet rører kun sine egne poster; menneskers placeringer og sletninger bevares; uændrede forslag beholder ts
+    def own(v):
+        return isinstance(v, dict) and v.get("src") == "kk" and str(v.get("note", "")).startswith(("KK høj:", "KK middel:"))
     trees = dict(old.get("trees", {}))
-    kept = 0
+    kept = same = changed = added = removed = 0
     for k, v in out.items():
         cur = trees.get(k)
-        if cur and not cur.get("del") and cur.get("src") in ("kort", "gps"):
-            kept += 1
-            continue
-        if cur and cur.get("del") and cur.get("ts", "") > "2026-10-05":
-            kept += 1  # en sletning nyere end denne kørsel: respekteret
-            continue
-        trees[k] = v
-    new = {"version": 1, "updated": now[:10], "anchors": old.get("anchors", []), "trees": trees}
+        if cur is None:
+            trees[k] = v
+            added += 1
+        elif not own(cur):
+            kept += 1  # menneskets placering, et kommunepunkt valgt i værktøjet eller en sletning
+        elif all(cur.get(f) == v.get(f) for f in ("fx", "fy", "lat", "lon", "acc", "note")):
+            v["ts"] = cur["ts"]  # uændret: ingen ny "nyere" post
+            trees[k] = v
+            same += 1
+        else:
+            trees[k] = v
+            changed += 1
+    for k in [k for k, v in trees.items() if own(v) and k not in out]:
+        del trees[k]  # eget forslag trukket tilbage (fx nu 'lav')
+        removed += 1
+    new = dict(old)  # ukendte topniveau-felter (fx "stops") bevares
+    new.update({"version": 1, "anchors": old.get("anchors", []), "trees": trees})
+    if added or changed or removed:
+        new["updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    elif "updated" not in new:
+        new["updated"] = hentet
     with open(pp, "w", encoding="utf-8") as f:
         json.dump(new, f, ensure_ascii=False, indent=1)
-    print(f"positions.json: {sum(1 for v in trees.values() if not v.get('del'))} placeringer ({kept} menneskelige bevaret)")
+    print(f"positions.json: {sum(1 for v in trees.values() if not v.get('del'))} placeringer — "
+          f"{added} nye, {changed} ændrede, {same} uændrede (beholder ts), {removed} trukket tilbage, {kept} menneskelige bevaret")
 
     review.sort()
     with open(os.path.join(DATA, "kk_gennemgang.md"), "w", encoding="utf-8") as f:
         f.write("# Træer til gennemgang efter match_kk.py\n\n")
-        f.write(f"Genereret {now[:10]}. Disse {len(review)} træer fik ingen placering med sikkerhed 'høj' eller 'middel'. ")
+        f.write(f"Genereret ud fra kommunens data hentet {hentet}. Disse {len(review)} træer fik ingen placering med sikkerhed 'høj' eller 'middel'. ")
         f.write("Placér dem i kalibreringstilstanden med ortofoto og KK-lag slået til (se KALIBRERING.md).\n\n")
         cur = None
         for sec, line in review:

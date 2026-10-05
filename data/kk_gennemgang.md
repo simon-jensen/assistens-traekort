@@ -1,11 +1,20 @@
 # Træer til gennemgang efter match_kk.py
 
-Genereret 2026-10-05. Disse 22 træer fik ingen placering med sikkerhed 'høj' eller 'middel'. Placér dem i kalibreringstilstanden med ortofoto og KK-lag slået til (se KALIBRERING.md).
+Genereret ud fra kommunens data hentet 2026-10-05. Disse 26 træer fik ingen placering med sikkerhed 'høj' eller 'middel'. Placér dem i kalibreringstilstanden med ortofoto og KK-lag slået til (se KALIBRERING.md).
 
 
 ## Afdeling A
 
 - A-384 · Euonymus alata — lav: anslået mellem A-377 og A-400 (45 m fra hinanden); detekteret træ 4 m fra gravstedet → forslag fx=0.5929 fy=0.8525
+
+## Afdeling D
+
+- D-1-2-2/7 · Cydonia oblonga — lav: gravstedsnummer med flere led (D-1-2-2/7) kan ikke slås op entydigt; intet gravsted; eneste «Cydónia oblónga» i afd. D: registertræ #116916 → forslag fx=0.5774 fy=0.5266
+- D-2-7-7/8 · Torreya nucifera — lav: gravstedsnummer med flere led (D-2-7-7/8) kan ikke slås op entydigt; intet gravsted; eneste «Torreya nucifera» i afd. D: registertræ #114515 → forslag fx=0.5579 fy=0.5079
+
+## Afdeling E
+
+- E-59/60 · Parrotia persica — lav: gravstedsnummer med flere led (E-59/60) kan ikke slås op entydigt; intet gravsted; eneste «Parrotia persica» i afd. E: registertræ #115113 → forslag fx=0.7663 fy=0.4596
 
 ## Afdeling F
 
@@ -18,10 +27,11 @@ Genereret 2026-10-05. Disse 22 træer fik ingen placering med sikkerhed 'høj' e
 
 ## Afdeling H
 
-- H-2-5-7 · Liquidambar styraciflua 3 Stk — lav: intet gravsted; 3 registertræer af arten i afd. H: #114582, #114583, #114584
+- H-2-5-7 · Liquidambar styraciflua 3 Stk — lav: gravstedsnummer med flere led (H-2-5-7) kan ikke slås op entydigt; intet gravsted; 3 registertræer af arten i afd. H: #114582, #114583, #114584
 
 ## Afdeling K
 
+- K1-1-4 · Betula utillis — lav: gravstedsnummer med flere led (K1-1-4) kan ikke slås op entydigt; intet gravsted; eneste «Betula utilis» i afd. K: registertræ #117062 → forslag fx=0.4281 fy=0.5645
 - K1-131 · Acer japonicum Aconitifolium — lav: intet gravsted; arten findes kun i afd. M, N, O i registret
 
 ## Afdeling L

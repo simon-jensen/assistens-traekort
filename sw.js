@@ -42,6 +42,15 @@ self.addEventListener('fetch', e => {
     return;
   }
 
+  // Kommunens data (data/): netværk først, så en genskabt fil ikke vises gammel; offline gives sidst kendte kopi.
+  if (key.includes('/data/')) {
+    e.respondWith(
+      fetch(req).then(r => { if (r.ok) caches.open(CACHE).then(c => c.put(key, r.clone())); return r; })
+        .catch(() => caches.match(key).then(hit => hit || Promise.reject(new Error('offline'))))
+    );
+    return;
+  }
+
   // Alt andet: cache først, opdatér i baggrunden (stale-while-revalidate).
   e.respondWith(
     caches.open(CACHE).then(c => c.match(req, { ignoreSearch: true }).then(hit => {

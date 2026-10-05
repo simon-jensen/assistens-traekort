@@ -10,7 +10,7 @@
    "lat": 55.690005,
    "lon": 12.552354,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem A-132 og A-136 (10 m fra hinanden); registertræ #115109 «Liriodéndron tulipífera» 3 m fra gravstedet"
   },
   "A|A-160|Ginkgo biloba": {
@@ -19,9 +19,9 @@
    "src": "kk",
    "lat": 55.689642,
    "lon": 12.553277,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "A|A-72|Magnolia x Soulangiana": {
    "fx": 0.51691,
@@ -30,7 +30,7 @@
    "lat": 55.689867,
    "lon": 12.552396,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115108 «Magnolia x Soulangiana» 1 m fra gravstedet"
   },
   "A|A-129|Rhododendron souliei Syn williamsii": {
@@ -40,7 +40,7 @@
    "lat": 55.690047,
    "lon": 12.552184,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem A-128 og A-130 (8 m fra hinanden)"
   },
   "A|A-400|Mespilus germanica": {
@@ -49,9 +49,9 @@
    "src": "kk",
    "lat": 55.69,
    "lon": 12.553363,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "A|A-246|Cunninghamia lanceolata": {
    "fx": 0.55996,
@@ -59,9 +59,9 @@
    "src": "kk",
    "lat": 55.690101,
    "lon": 12.552569,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem A-244 og A-249 (16 m fra hinanden); registertræ #115341 «Cunninghamia lanceolata» 1 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem A-244 og A-249 (16 m fra hinanden); registertræ #115341 «Cunninghamia lanceolata» 1 m fra gravstedet"
   },
   "A|A-651|Abies concolor": {
    "fx": 0.64821,
@@ -70,7 +70,7 @@
    "lat": 55.690291,
    "lon": 12.553719,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem A-649 og A-654 (12 m fra hinanden); registertræ #116907 «Abies concolor» 1 m fra gravstedet"
   },
   "A|A-250|Laburnocytisus adami": {
@@ -80,7 +80,7 @@
    "lat": 55.690001,
    "lon": 12.552656,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem A-249 og A-256 (24 m fra hinanden); detekteret træ 6 m fra gravstedet"
   },
   "A|A-300|Cornus kousa": {
@@ -90,7 +90,7 @@
    "lat": 55.690192,
    "lon": 12.552625,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem A-298 og A-304 (11 m fra hinanden)"
   },
   "A|A-337|Quercus robur Atropurpurea": {
@@ -100,7 +100,7 @@
    "lat": 55.689823,
    "lon": 12.553531,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 5 m fra gravstedet"
   },
   "A|A-423|Araucaria araucana": {
@@ -110,7 +110,7 @@
    "lat": 55.690235,
    "lon": 12.552886,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem A-420 og A-425 (6 m fra hinanden); registertræ #116321 «Araucaria araucana» 5 m fra gravstedet"
   },
   "A|A-380|Poncirus trifoliatus": {
@@ -119,8 +119,8 @@
    "src": "kk",
    "lat": 55.690194,
    "lon": 12.552906,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem A-377 og A-400 (45 m fra hinanden); registertræ #116888 «Poncirus trifoliatus» 4 m fra gravstedet"
   },
   "A|A-455|Hamamelis “Ruby Glow”": {
@@ -130,7 +130,7 @@
    "lat": 55.690233,
    "lon": 12.553043,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem A-453 og A-463 (30 m fra hinanden); detekteret træ 1 m fra gravstedet"
   },
   "A|A-456|Magnolia x thompsoniana": {
@@ -139,9 +139,9 @@
    "src": "kk",
    "lat": 55.690234,
    "lon": 12.553057,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem A-453 og A-463 (30 m fra hinanden); registertræ #116322 «Magnolia x thompsoniana» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem A-453 og A-463 (30 m fra hinanden); registertræ #116322 «Magnolia x thompsoniana» 3 m fra gravstedet"
   },
   "A|A-449|Davidia involucrate": {
    "fx": 0.59943,
@@ -150,7 +150,7 @@
    "lat": 55.690314,
    "lon": 12.552732,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem A-448 og A-450 (8 m fra hinanden); detekteret træ 5 m fra gravstedet"
   },
   "A|A-253|Acer Tataricum": {
@@ -159,9 +159,9 @@
    "src": "kk",
    "lat": 55.690013,
    "lon": 12.552842,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem A-249 og A-256 (24 m fra hinanden); registertræ #114482 «Ácer tatáricum» 5 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem A-249 og A-256 (24 m fra hinanden); registertræ #114482 «Ácer tatáricum» 5 m fra gravstedet"
   },
   "A|A-126|Phillyrea vilmoriniana": {
    "fx": 0.53129,
@@ -169,9 +169,9 @@
    "src": "kk",
    "lat": 55.690034,
    "lon": 12.55221,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem A-121 og A-128 (26 m fra hinanden); registertræ #114481 «Phillyrea vilmoriniana» 9 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem A-121 og A-128 (26 m fra hinanden); registertræ #114481 «Phillyrea vilmoriniana» 9 m fra gravstedet"
   },
   "A|A-452|Calocedrus decurrens": {
    "fx": 0.60978,
@@ -180,7 +180,7 @@
    "lat": 55.690298,
    "lon": 12.552972,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem A-450 og A-453 (10 m fra hinanden); registertræ #116890 «Calocedrus decurrens» 2 m fra gravstedet"
   },
   "A|A-564|Cotinus coggygria": {
@@ -189,9 +189,9 @@
    "src": "kk",
    "lat": 55.690414,
    "lon": 12.553016,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem A-560 og A-565 (21 m fra hinanden); registertræ #115634 «Cotinus coggygria» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem A-560 og A-565 (21 m fra hinanden); registertræ #115634 «Cotinus coggygria» 3 m fra gravstedet"
   },
   "A|A-433|Tsuga mertensiana": {
    "fx": 0.59799,
@@ -200,7 +200,7 @@
    "lat": 55.690307,
    "lon": 12.552724,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem A-432 og A-434 (5 m fra hinanden); registertræ #116893 «Tsuga mertensiana» 4 m fra gravstedet"
   },
   "A|A-601|Trochodendron araliodes": {
@@ -209,9 +209,9 @@
    "src": "kk",
    "lat": 55.690355,
    "lon": 12.553387,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem A-600 og A-605 (22 m fra hinanden); registertræ #115835 «Trochodendron araliodes» 7 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem A-600 og A-605 (22 m fra hinanden); registertræ #115835 «Trochodendron araliodes» 7 m fra gravstedet"
   },
   "A|A-557|Metaesequoia Glyptroboides": {
    "fx": 0.61116,
@@ -220,7 +220,7 @@
    "lat": 55.690443,
    "lon": 12.5526,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 4 m fra gravstedet"
   },
   "A|A-575|Phellodendron amurense": {
@@ -230,7 +230,7 @@
    "lat": 55.690329,
    "lon": 12.553288,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115132 «Phellodendron amurense» 4 m fra gravstedet"
   },
   "A|A-760|Viburnum henryi": {
@@ -240,7 +240,7 @@
    "lat": 55.690466,
    "lon": 12.553607,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem A-759 og A-761 (10 m fra hinanden)"
   },
   "A|A-811|Aesculus flava": {
@@ -250,7 +250,7 @@
    "lat": 55.690666,
    "lon": 12.553478,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem A-807 og A-813 (8 m fra hinanden); registertræ #115889 «Aesculus flava» 3 m fra gravstedet"
   },
   "A|A-921|Aesculus glabra": {
@@ -260,7 +260,7 @@
    "lat": 55.690852,
    "lon": 12.553448,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem A-920 og A-922 (7 m fra hinanden); registertræ #114488 «Aesculus glabra» 1 m fra gravstedet"
   },
   "A|A-757|Quercus palustris": {
@@ -270,7 +270,7 @@
    "lat": 55.690566,
    "lon": 12.553596,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem A-756 og A-758 (3 m fra hinanden); registertræ #114489 «Quercus palustris» 9 m fra gravstedet"
   },
   "A|A-127|Rhododendron williamsianum": {
@@ -279,9 +279,9 @@
    "src": "kk",
    "lat": 55.690039,
    "lon": 12.552252,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem A-121 og A-128 (26 m fra hinanden); registertræ #115660 «Rhododendron williamsianum» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem A-121 og A-128 (26 m fra hinanden); registertræ #115660 «Rhododendron williamsianum» 4 m fra gravstedet"
   },
   "A|A-825|Sophora japonicum": {
    "fx": 0.689,
@@ -289,9 +289,9 @@
    "src": "kk",
    "lat": 55.690516,
    "lon": 12.553874,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "A|A-1012|Pinus ponderosa": {
    "fx": 0.74583,
@@ -300,7 +300,7 @@
    "lat": 55.690996,
    "lon": 12.553633,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem A-1011 og A-1013 (6 m fra hinanden); registertræ #116976 «Pinus ponderosa» 1 m fra gravstedet"
   },
   "A|A-1020|Pinus nigra": {
@@ -310,7 +310,7 @@
    "lat": 55.690813,
    "lon": 12.5539,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem A-1019 og A-1021 (6 m fra hinanden); registertræ #115590 «Pinus nigra» 4 m fra gravstedet"
   },
   "B|B-129|Amelancier laevis": {
@@ -319,9 +319,9 @@
    "src": "kk",
    "lat": 55.69008,
    "lon": 12.551788,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "B|B-228|Liquidambar styraciflua": {
    "fx": 0.56541,
@@ -329,9 +329,9 @@
    "src": "kk",
    "lat": 55.690374,
    "lon": 12.551923,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-218 og B-229 (25 m fra hinanden); registertræ #115633 «Liquidámbar styracíflua» 0 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-218 og B-229 (25 m fra hinanden); registertræ #115633 «Liquidámbar styracíflua» 0 m fra gravstedet"
   },
   "B|B-264|Morus alba": {
    "fx": 0.58983,
@@ -339,9 +339,9 @@
    "src": "kk",
    "lat": 55.690494,
    "lon": 12.552056,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-257 og B-267 (26 m fra hinanden); registertræ #115629 «Mórus álba» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-257 og B-267 (26 m fra hinanden); registertræ #115629 «Mórus álba» 3 m fra gravstedet"
   },
   "B|B-414|Gymnocladus dioecus": {
    "fx": 0.61311,
@@ -349,9 +349,9 @@
    "src": "kk",
    "lat": 55.690698,
    "lon": 12.551937,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-411 og B-416 (24 m fra hinanden); registertræ #115008 «Gymnocladus dioicus» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-411 og B-416 (24 m fra hinanden); registertræ #115008 «Gymnocladus dioicus» 3 m fra gravstedet"
   },
   "B|B-279|Halesia carolina": {
    "fx": 0.51857,
@@ -360,7 +360,7 @@
    "lat": 55.690167,
    "lon": 12.551604,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem B-274 og B-284 (29 m fra hinanden); detekteret træ 5 m fra gravstedet"
   },
   "B|B-622|Quercus pontica": {
@@ -370,7 +370,7 @@
    "lat": 55.690851,
    "lon": 12.551889,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem B-621 og B-628 (14 m fra hinanden); detekteret træ 2 m fra gravstedet"
   },
   "B|B-731|Cedrus libanii": {
@@ -380,7 +380,7 @@
    "lat": 55.690925,
    "lon": 12.551895,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115483 «Cedrús líbani» 5 m fra gravstedet"
   },
   "B|B-843|Sequoia sempervirens": {
@@ -389,8 +389,8 @@
    "src": "kk",
    "lat": 55.69093,
    "lon": 12.551483,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem B-826 og B-851 (51 m fra hinanden); registertræ #114960 «Sequoia sempervirens» 10 m fra gravstedet"
   },
   "B|B-866|Pinus peuce": {
@@ -400,7 +400,7 @@
    "lat": 55.69099,
    "lon": 12.551684,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114493 «Pinus peuce» 3 m fra gravstedet"
   },
   "B|B-616|Ailanthus altissima": {
@@ -410,7 +410,7 @@
    "lat": 55.690762,
    "lon": 12.551765,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem B-614 og B-617 (7 m fra hinanden)"
   },
   "B|B-303|Staphylea colchica": {
@@ -419,9 +419,9 @@
    "src": "kk",
    "lat": 55.690501,
    "lon": 12.55192,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-302 og B-311 (25 m fra hinanden); registertræ #114490 «Staphylea colchica» 1 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-302 og B-311 (25 m fra hinanden); registertræ #114490 «Staphylea colchica» 1 m fra gravstedet"
   },
   "B|B-339|Robinia psudoacacia": {
    "fx": 0.59504,
@@ -429,9 +429,9 @@
    "src": "kk",
    "lat": 55.690573,
    "lon": 12.551938,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-335 og B-346 (28 m fra hinanden); registertræ #115632 «Robinia pseudoacacia» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-335 og B-346 (28 m fra hinanden); registertræ #115632 «Robinia pseudoacacia» 4 m fra gravstedet"
   },
   "B|B-609|Sorbaria arborea": {
    "fx": 0.58501,
@@ -439,9 +439,9 @@
    "src": "kk",
    "lat": 55.690648,
    "lon": 12.551542,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-604 og B-614 (25 m fra hinanden); registertræ #116266 «Sorbaria arborea 'Vilmorini'» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-604 og B-614 (25 m fra hinanden); registertræ #116266 «Sorbaria arborea 'Vilmorini'» 3 m fra gravstedet"
   },
   "B|B-331|Castanea sativa": {
    "fx": 0.6305,
@@ -449,9 +449,9 @@
    "src": "kk",
    "lat": 55.690751,
    "lon": 12.552121,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-323 og B-333 (23 m fra hinanden); registertræ #115741 «Castanea sativa» 1 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-323 og B-333 (23 m fra hinanden); registertræ #115741 «Castanea sativa» 1 m fra gravstedet"
   },
   "B|B-1162|Catalpa X erubescens": {
    "fx": 0.60906,
@@ -460,7 +460,7 @@
    "lat": 55.690944,
    "lon": 12.551185,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem B-1157 og B-1163 (5 m fra hinanden); registertræ #115662 «Catalpa X erubescens» 11 m fra gravstedet"
   },
   "B|B-1201|Aesculus glabra": {
@@ -469,8 +469,8 @@
    "src": "kk",
    "lat": 55.690914,
    "lon": 12.550961,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem B-1198 og B-1230 (49 m fra hinanden); registertræ #115890 «Aesculus glabra» 2 m fra gravstedet"
   },
   "B|B-1280|Cladrastis lutea": {
@@ -480,7 +480,7 @@
    "lat": 55.690855,
    "lon": 12.550826,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem B-1277 og B-1281 (7 m fra hinanden); registertræ #114497 «Cladrastis lutea» 2 m fra gravstedet"
   },
   "B|B-1238|Sophora japonica": {
@@ -489,9 +489,9 @@
    "src": "kk",
    "lat": 55.690673,
    "lon": 12.550529,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-1235 og B-1249 (15 m fra hinanden); registertræ #116198 «Sophora japonica (Styphnolobium japonica)» 5 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-1235 og B-1249 (15 m fra hinanden); registertræ #116198 «Sophora japonica (Styphnolobium japonica)» 5 m fra gravstedet"
   },
   "B|B-1192|Prunus cerasifera Atropupurea": {
    "fx": 0.64824,
@@ -499,9 +499,9 @@
    "src": "kk",
    "lat": 55.69112,
    "lon": 12.551444,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-1191 og B-1198 (33 m fra hinanden); registertræ #116368 «Prunus cerasifera 'Atropupurea'» 5 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-1191 og B-1198 (33 m fra hinanden); registertræ #116368 «Prunus cerasifera 'Atropupurea'» 5 m fra gravstedet"
   },
   "B|B-1180|Cornus mas": {
    "fx": 0.68248,
@@ -509,9 +509,9 @@
    "src": "kk",
    "lat": 55.691251,
    "lon": 12.551733,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-1171 og B-1181 (23 m fra hinanden); registertræ #116385 «Cornus mas» 2 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-1171 og B-1181 (23 m fra hinanden); registertræ #116385 «Cornus mas» 2 m fra gravstedet"
   },
   "B|B-1189|Malus tschonoskii": {
    "fx": 0.6599,
@@ -520,7 +520,7 @@
    "lat": 55.691167,
    "lon": 12.551536,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem B-1181 og B-1191 (24 m fra hinanden); detekteret træ 3 m fra gravstedet"
   },
   "B|B-1194|Sorbus comixsta “Dodong”": {
@@ -529,9 +529,9 @@
    "src": "kk",
    "lat": 55.691082,
    "lon": 12.55126,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-1191 og B-1198 (33 m fra hinanden); registertræ #116371 «Sórbus commixta 'Dodong'» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-1191 og B-1198 (33 m fra hinanden); registertræ #116371 «Sórbus commixta 'Dodong'» 3 m fra gravstedet"
   },
   "B|B-1195|Acer glabra": {
    "fx": 0.61576,
@@ -540,7 +540,7 @@
    "lat": 55.691007,
    "lon": 12.551139,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem B-1191 og B-1198 (33 m fra hinanden); detekteret træ 4 m fra gravstedet"
   },
   "B|B-1195|Acer palmatum ”Ozakazuki”": {
@@ -549,9 +549,9 @@
    "src": "kk",
    "lat": 55.691047,
    "lon": 12.551356,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-1191 og B-1198 (33 m fra hinanden); registertræ #114498 «Acer palmatum  'Ozakazaku'» 11 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-1191 og B-1198 (33 m fra hinanden); registertræ #114498 «Acer palmatum  'Ozakazaku'» 11 m fra gravstedet"
   },
   "B|B-1297|Ulmus minor ”Suberosa”": {
    "fx": 0.60621,
@@ -559,9 +559,9 @@
    "src": "kk",
    "lat": 55.690971,
    "lon": 12.551057,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-1282 og B-1300 (39 m fra hinanden); registertræ #116343 «Ulmus minor  ”Suberosa”» 11 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-1282 og B-1300 (39 m fra hinanden); registertræ #116343 «Ulmus minor  ”Suberosa”» 11 m fra gravstedet"
   },
   "B|B-1451|Prunus sargentii": {
    "fx": 0.6494,
@@ -570,7 +570,7 @@
    "lat": 55.691206,
    "lon": 12.55123,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114499 «Prunus sargentii» 5 m fra gravstedet"
   },
   "B|B-1444|Evodia hupehensis": {
@@ -580,7 +580,7 @@
    "lat": 55.691079,
    "lon": 12.55113,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem B-1440 og B-1451 (27 m fra hinanden); detekteret træ 6 m fra gravstedet"
   },
   "B|B-1486|Acer ginnala": {
@@ -590,7 +590,7 @@
    "lat": 55.69095,
    "lon": 12.550625,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem B-1478 og B-1491 (30 m fra hinanden); detekteret træ 2 m fra gravstedet"
   },
   "B|B-1375|Quercus robur ”Fastigiata”": {
@@ -599,9 +599,9 @@
    "src": "kk",
    "lat": 55.690796,
    "lon": 12.55048,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-1349 og B-1376 (24 m fra hinanden); registertræ #116197 «Quercus robur 'Fastigiata'» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-1349 og B-1376 (24 m fra hinanden); registertræ #116197 «Quercus robur 'Fastigiata'» 4 m fra gravstedet"
   },
   "B|B-1418|Rhus potanani": {
    "fx": 0.52559,
@@ -609,9 +609,9 @@
    "src": "kk",
    "lat": 55.690665,
    "lon": 12.55037,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-1416 og B-1423 (17 m fra hinanden); registertræ #114500 «Rhus potanínii» 7 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-1416 og B-1423 (17 m fra hinanden); registertræ #114500 «Rhus potanínii» 7 m fra gravstedet"
   },
   "B|B-1418|Rhus glabra “lancianata”": {
    "fx": 0.53546,
@@ -619,9 +619,9 @@
    "src": "kk",
    "lat": 55.690732,
    "lon": 12.550373,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem B-1416 og B-1423 (17 m fra hinanden); registertræ #114501 «Rhus glabra 'lancianata'» 5 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem B-1416 og B-1423 (17 m fra hinanden); registertræ #114501 «Rhus glabra 'lancianata'» 5 m fra gravstedet"
   },
   "B|B-1501|Zelkova serrata": {
    "fx": 0.53665,
@@ -630,7 +630,7 @@
    "lat": 55.690769,
    "lon": 12.550294,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem B-1497 og B-1505 (13 m fra hinanden); registertræ #114502 «Zelkóva serráta» 5 m fra gravstedet"
   },
   "B|B-1497|Pinus parviflora": {
@@ -640,7 +640,7 @@
    "lat": 55.69086,
    "lon": 12.55033,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 2 m fra gravstedet"
   },
   "B|B-1500|Liquidambra styracifllua": {
@@ -650,7 +650,7 @@
    "lat": 55.690866,
    "lon": 12.550348,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem B-1497 og B-1505 (13 m fra hinanden); registertræ #116344 «Liquidámbar styracíflua» 6 m fra gravstedet"
   },
   "C|C-13|Betula albo sinensis": {
@@ -660,7 +660,7 @@
    "lat": 55.690959,
    "lon": 12.55312,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116437 «Betula albo sinensis» 1 m fra gravstedet"
   },
   "C|C-35|Calicarpa bodinieri": {
@@ -670,7 +670,7 @@
    "lat": 55.69082,
    "lon": 12.552937,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 6 m fra gravstedet"
   },
   "C|C-64|Cornus mas": {
@@ -680,7 +680,7 @@
    "lat": 55.691227,
    "lon": 12.553239,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116423 «Cornus mas» 3 m fra gravstedet"
   },
   "C|C-73|Salix alba ”tristis”": {
@@ -690,7 +690,7 @@
    "lat": 55.690895,
    "lon": 12.55285,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem C-72 og C-75 (6 m fra hinanden); registertræ #115110 «Salix alba 'Tristis'» 6 m fra gravstedet"
   },
   "C|C-145|Prunus serrula": {
@@ -700,7 +700,7 @@
    "lat": 55.691275,
    "lon": 12.55308,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem C-144 og C-146 (6 m fra hinanden); registertræ #115119 «Prúnus sérrula» 2 m fra gravstedet"
   },
   "C|C-200|Ostrya carpinifolia": {
@@ -710,7 +710,7 @@
    "lat": 55.691347,
    "lon": 12.552895,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem C-198 og C-203 (5 m fra hinanden); registertræ #115120 «Ostrya carpinifolia» 5 m fra gravstedet"
   },
   "C|C-311|Pseudotsuga menziesii": {
@@ -720,7 +720,7 @@
    "lat": 55.691161,
    "lon": 12.552363,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem C-306 og C-325 (21 m fra hinanden); detekteret træ 3 m fra gravstedet"
   },
   "C|C-293|Pinus peuce": {
@@ -729,9 +729,9 @@
    "src": "kk",
    "lat": 55.691382,
    "lon": 12.552728,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem C-292 og C-300 (21 m fra hinanden); registertræ #115067 «Pinus peuce» 5 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem C-292 og C-300 (21 m fra hinanden); registertræ #115067 «Pinus peuce» 5 m fra gravstedet"
   },
   "C|C-195|Pinus cembra": {
    "fx": 0.7596,
@@ -740,7 +740,7 @@
    "lat": 55.691283,
    "lon": 12.553106,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 4 m fra gravstedet"
   },
   "C|C-204|Davidia involucrate": {
@@ -750,7 +750,7 @@
    "lat": 55.691268,
    "lon": 12.552832,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem C-203 og C-206 (6 m fra hinanden)"
   },
   "C|C-245|Acer saccharinum “Wieri”": {
@@ -759,9 +759,9 @@
    "src": "kk",
    "lat": 55.691349,
    "lon": 12.552769,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem C-240 og C-248 (29 m fra hinanden); registertræ #114504 «Acer saccharinum 'Wieri'» 6 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem C-240 og C-248 (29 m fra hinanden); registertræ #114504 «Acer saccharinum 'Wieri'» 6 m fra gravstedet"
   },
   "C|C-256|Sophora japonica": {
    "fx": 0.72808,
@@ -770,7 +770,7 @@
    "lat": 55.691244,
    "lon": 12.552616,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem C-254 og C-257 (11 m fra hinanden); registertræ #115118 «Sophora japonica (Styphnolobium japonica)» 2 m fra gravstedet"
   },
   "C|C-284|Liquidambar styraciflua": {
@@ -780,7 +780,7 @@
    "lat": 55.691292,
    "lon": 12.552654,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem C-280 og C-285 (15 m fra hinanden)"
   },
   "C|C-421|Picea omorica": {
@@ -790,7 +790,7 @@
    "lat": 55.691459,
    "lon": 12.55237,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115795 «Picea omorika» 3 m fra gravstedet"
   },
   "C|C-514|Picea sitchensis": {
@@ -800,7 +800,7 @@
    "lat": 55.6916,
    "lon": 12.552403,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 1 m fra gravstedet"
   },
   "C|C-525|Fraxinus ornus": {
@@ -809,9 +809,9 @@
    "src": "kk",
    "lat": 55.691582,
    "lon": 12.552187,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem C-522 og C-529 (20 m fra hinanden); registertræ #116428 «Fraxinus ornus» 0 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem C-522 og C-529 (20 m fra hinanden); registertræ #116428 «Fraxinus ornus» 0 m fra gravstedet"
   },
   "C|C-564|Rhamnus imeritinus": {
    "fx": 0.75466,
@@ -820,7 +820,7 @@
    "lat": 55.691654,
    "lon": 12.551994,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem C-563 og C-567 (14 m fra hinanden); registertræ #114505 «Rhamnus imeritinus» 9 m fra gravstedet"
   },
   "C|C-590|Cedrus deodare 3 Stk omkring": {
@@ -830,7 +830,7 @@
    "lat": 55.691564,
    "lon": 12.551698,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116936 «Cedrus deodara» 4 m fra gravstedet"
   },
   "C|C-668|Crataegus prunifolia": {
@@ -840,7 +840,7 @@
    "lat": 55.691671,
    "lon": 12.551281,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116935 «Crataegus prunifolia» 7 m fra gravstedet"
   },
   "C|C-779|Picea glauca": {
@@ -850,7 +850,7 @@
    "lat": 55.691975,
    "lon": 12.551645,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114507 «Picea glauca» 5 m fra gravstedet"
   },
   "C|C-865|Gleditsia tricanthos": {
@@ -859,9 +859,9 @@
    "src": "kk",
    "lat": 55.692006,
    "lon": 12.551437,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem C-863 og C-868 (17 m fra hinanden); registertræ #114508 «Gleditsia triacanthos» 7 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem C-863 og C-868 (17 m fra hinanden); registertræ #114508 «Gleditsia triacanthos» 7 m fra gravstedet"
   },
   "C|C-868|Abies procera": {
    "fx": 0.79538,
@@ -870,7 +870,7 @@
    "lat": 55.692084,
    "lon": 12.551585,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114509 «Abies procera» 7 m fra gravstedet"
   },
   "C|C-805|Crataegus submollis": {
@@ -880,7 +880,7 @@
    "lat": 55.691883,
    "lon": 12.551272,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116400 «Crataegus submollis» 4 m fra gravstedet"
   },
   "C|C-750|Tsuga diversifolia": {
@@ -890,7 +890,7 @@
    "lat": 55.691801,
    "lon": 12.551506,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114510 «Tsuga diversifolia» 1 m fra gravstedet"
   },
   "D|D-24|Picea punges ”Argenta”": {
@@ -900,7 +900,7 @@
    "lat": 55.691657,
    "lon": 12.551063,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem D-21 og D-26 (13 m fra hinanden); registertræ #116934 «Picea punges 'Argenta'» 3 m fra gravstedet"
   },
   "D|D-31|Picea orientalis": {
@@ -910,7 +910,7 @@
    "lat": 55.691484,
    "lon": 12.551355,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem D-30 og D-35 (7 m fra hinanden); registertræ #116933 «Picea orientalis» 3 m fra gravstedet"
   },
   "D|D-29|Picea abies": {
@@ -920,7 +920,7 @@
    "lat": 55.691571,
    "lon": 12.551238,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem D-28 og D-30 (12 m fra hinanden); detekteret træ 2 m fra gravstedet"
   },
   "D|D-43|Phellodendron amurense": {
@@ -929,9 +929,9 @@
    "src": "kk",
    "lat": 55.691607,
    "lon": 12.551088,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem D-39 og D-44 (18 m fra hinanden); registertræ #114511 «Phellodendron amurense» 1 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem D-39 og D-44 (18 m fra hinanden); registertræ #114511 «Phellodendron amurense» 1 m fra gravstedet"
   },
   "D|D-39|Acer Saccharum": {
    "fx": 0.69008,
@@ -940,7 +940,7 @@
    "lat": 55.691514,
    "lon": 12.551155,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114512 «Acer saccharum» 5 m fra gravstedet"
   },
   "D|D-49|Pterocarya rhoifolia": {
@@ -950,7 +950,7 @@
    "lat": 55.691774,
    "lon": 12.550816,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem D-48 og D-51 (8 m fra hinanden); registertræ #114513 «Pterocarya rhoifolia» 1 m fra gravstedet"
   },
   "D|D-93|Quercus robur “fastigiata”": {
@@ -960,7 +960,7 @@
    "lat": 55.691612,
    "lon": 12.550928,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115116 «Quercus robur 'Fastigiata'» 0 m fra gravstedet"
   },
   "D|D-131|Euonymus europeaus": {
@@ -970,18 +970,8 @@
    "lat": 55.691495,
    "lon": 12.55103,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem D-129 og D-133 (14 m fra hinanden); registertræ #114514 «Euonymus europaeus» 5 m fra gravstedet"
-  },
-  "D|D-2-7-7/8|Torreya nucifera": {
-   "fx": 0.69782,
-   "fy": 0.58032,
-   "src": "kk",
-   "lat": 55.691437,
-   "lon": 12.551513,
-   "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK middel: anslået mellem D-1 og D-8 (23 m fra hinanden); detekteret træ 5 m fra gravstedet"
   },
   "D|D-227|Prunus sargentii": {
    "fx": 0.64245,
@@ -990,18 +980,8 @@
    "lat": 55.691275,
    "lon": 12.550909,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 4 m fra gravstedet"
-  },
-  "D|D-1-2-2/7|Cydonia oblonga": {
-   "fx": 0.69782,
-   "fy": 0.58032,
-   "src": "kk",
-   "lat": 55.691437,
-   "lon": 12.551513,
-   "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte; detekteret træ 2 m fra gravstedet"
   },
   "D|D-472|Cephalotaxus harringtonia": {
    "fx": 0.55581,
@@ -1009,9 +989,9 @@
    "src": "kk",
    "lat": 55.690915,
    "lon": 12.550256,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem D-471 og D-478 (19 m fra hinanden); registertræ #116915 «Cephalotaxus harringtonia» 2 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem D-471 og D-478 (19 m fra hinanden); registertræ #116915 «Cephalotaxus harringtonia» 2 m fra gravstedet"
   },
   "D|D-513|Acer saccharinum": {
    "fx": 0.5494,
@@ -1020,7 +1000,7 @@
    "lat": 55.691065,
    "lon": 12.549723,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116142 «Acer saccharinum» 1 m fra gravstedet"
   },
   "D|D-532|Cornus controversa": {
@@ -1030,7 +1010,7 @@
    "lat": 55.690823,
    "lon": 12.55004,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 4 m fra gravstedet"
   },
   "D|D-556|Acer negundo “Variegatum”": {
@@ -1040,7 +1020,7 @@
    "lat": 55.690964,
    "lon": 12.549543,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 1 m fra gravstedet"
   },
   "D|D-581|Acer pseudoplatanus": {
@@ -1050,7 +1030,7 @@
    "lat": 55.690821,
    "lon": 12.549672,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114976 «Acer pseudoplatanus» 8 m fra gravstedet"
   },
   "E|E-449|Magnolia X soulangiana": {
@@ -1059,19 +1039,9 @@
    "src": "kk",
    "lat": 55.692179,
    "lon": 12.550489,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
-  },
-  "E|E-59/60|Parrotia persica": {
-   "fx": 0.76633,
-   "fy": 0.45958,
-   "src": "kk",
-   "lat": 55.692101,
-   "lon": 12.550988,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem E-51 og E-60 (18 m fra hinanden); registertræ #115113 «Parrotia persica» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "E|E-107|Gleditsia tricanthos": {
    "fx": 0.75753,
@@ -1079,9 +1049,9 @@
    "src": "kk",
    "lat": 55.692068,
    "lon": 12.550912,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem E-104 og E-110 (26 m fra hinanden); registertræ #116352 «Gleditsia triacanthos» 2 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem E-104 og E-110 (26 m fra hinanden); registertræ #116352 «Gleditsia triacanthos» 2 m fra gravstedet"
   },
   "E|E-334|Abies normanniana": {
    "fx": 0.76293,
@@ -1089,9 +1059,9 @@
    "src": "kk",
    "lat": 55.692173,
    "lon": 12.550726,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem E-332 og E-338 (17 m fra hinanden); registertræ #116941 «Abies nordmanniana» 2 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem E-332 og E-338 (17 m fra hinanden); registertræ #116941 «Abies nordmanniana» 2 m fra gravstedet"
   },
   "E|E-214|Robinia pseudoacacia": {
    "fx": 0.78175,
@@ -1100,7 +1070,7 @@
    "lat": 55.692214,
    "lon": 12.55097,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem E-213 og E-215 (5 m fra hinanden); registertræ #115114 «Robinia pseudoacacia» 3 m fra gravstedet"
   },
   "E|E-231|Euonymus europeaus": {
@@ -1109,9 +1079,9 @@
    "src": "kk",
    "lat": 55.692414,
    "lon": 12.551253,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "E|E-441|Acer platanoidees “ Fassens Black”": {
    "fx": 0.78053,
@@ -1119,9 +1089,9 @@
    "src": "kk",
    "lat": 55.692305,
    "lon": 12.550697,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "E|E-485|Sorbus scalaris": {
    "fx": 0.65605,
@@ -1130,7 +1100,7 @@
    "lat": 55.691802,
    "lon": 12.54972,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem E-483 og E-486 (10 m fra hinanden)"
   },
   "E|E-444|Amelanchier laevis": {
@@ -1139,9 +1109,9 @@
    "src": "kk",
    "lat": 55.692257,
    "lon": 12.550626,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "E|E-439|Euonymus sachaliensis": {
    "fx": 0.77994,
@@ -1150,7 +1120,7 @@
    "lat": 55.692294,
    "lon": 12.550716,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem E-438 og E-440 (9 m fra hinanden); registertræ #114521 «Euonymus sachaliensis» 7 m fra gravstedet"
   },
   "E|E-511|Prunus sargentii": {
@@ -1160,7 +1130,7 @@
    "lat": 55.692302,
    "lon": 12.550525,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 6 m fra gravstedet"
   },
   "E|E-517|Pinus peuce": {
@@ -1170,7 +1140,7 @@
    "lat": 55.692338,
    "lon": 12.550737,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116946 «Pinus peuce» 6 m fra gravstedet"
   },
   "E|E-519|Pinus wallicchiana": {
@@ -1180,7 +1150,7 @@
    "lat": 55.692409,
    "lon": 12.550759,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem E-517 og E-520 (7 m fra hinanden); registertræ #116353 «Pinus wallichiana» 5 m fra gravstedet"
   },
   "E|E-176|Aesculus parviflora": {
@@ -1190,7 +1160,7 @@
    "lat": 55.691646,
    "lon": 12.549876,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 4 m fra gravstedet"
   },
   "E|E-197|Malus sieboldie ”Browers beauty”": {
@@ -1200,7 +1170,7 @@
    "lat": 55.691942,
    "lon": 12.55052,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114726 «Malus sieboldie  'Browers beauty'» 1 m fra gravstedet"
   },
   "E|E-550|Liquidambar styraciflua": {
@@ -1210,7 +1180,7 @@
    "lat": 55.692263,
    "lon": 12.550441,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116351 «Liquidámbar styracíflua» 4 m fra gravstedet"
   },
   "E|E-576|Ginkgo biloba": {
@@ -1220,7 +1190,7 @@
    "lat": 55.691816,
    "lon": 12.549605,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem E-574 og E-577 (12 m fra hinanden); detekteret træ 3 m fra gravstedet"
   },
   "E|E-703|Larix leptolepis": {
@@ -1229,9 +1199,9 @@
    "src": "kk",
    "lat": 55.692321,
    "lon": 12.550279,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem E-702 og E-707 (17 m fra hinanden); registertræ #115791 «Larix leptolepis» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem E-702 og E-707 (17 m fra hinanden); registertræ #115791 «Larix leptolepis» 3 m fra gravstedet"
   },
   "E|E-587|Larix decidua Pl 2007": {
    "fx": 0.6946,
@@ -1240,7 +1210,7 @@
    "lat": 55.692005,
    "lon": 12.549893,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 2 m fra gravstedet"
   },
   "E|E-834|Crytomeria japonica": {
@@ -1249,9 +1219,9 @@
    "src": "kk",
    "lat": 55.692322,
    "lon": 12.550111,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem E-822 og E-835 (22 m fra hinanden); registertræ #116346 «Crytomeria japonica» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem E-822 og E-835 (22 m fra hinanden); registertræ #116346 «Crytomeria japonica» 4 m fra gravstedet"
   },
   "E|E-818|Pinus strobus": {
    "fx": 0.72658,
@@ -1260,7 +1230,7 @@
    "lat": 55.692175,
    "lon": 12.550032,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem E-815 og E-821 (8 m fra hinanden); registertræ #115788 «Pinus  strobus» 9 m fra gravstedet"
   },
   "E|E-844|Tsuga mertensia": {
@@ -1270,7 +1240,7 @@
    "lat": 55.692506,
    "lon": 12.55032,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 3 m fra gravstedet"
   },
   "E|E-886|Pseudotsuga menziesii": {
@@ -1279,9 +1249,9 @@
    "src": "kk",
    "lat": 55.692244,
    "lon": 12.549897,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem E-879 og E-887 (22 m fra hinanden); registertræ #115787 «Pseudotsuga menziesii» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem E-879 og E-887 (22 m fra hinanden); registertræ #115787 «Pseudotsuga menziesii» 3 m fra gravstedet"
   },
   "E|E-888|Abies pinsabo": {
    "fx": 0.71669,
@@ -1290,7 +1260,7 @@
    "lat": 55.692196,
    "lon": 12.549787,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem E-887 og E-889 (6 m fra hinanden); registertræ #114522 «Abies pinsabo» 1 m fra gravstedet"
   },
   "E|E-893|Sorbus alnifolia": {
@@ -1300,7 +1270,7 @@
    "lat": 55.692094,
    "lon": 12.54963,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 3 m fra gravstedet"
   },
   "E|E-995|Sorbus acuparia": {
@@ -1309,9 +1279,9 @@
    "src": "kk",
    "lat": 55.692132,
    "lon": 12.549451,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem E-985 og E-1001 (37 m fra hinanden); registertræ #116114 «Sorbus aucuparia» 5 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem E-985 og E-1001 (37 m fra hinanden); registertræ #116114 «Sorbus aucuparia» 5 m fra gravstedet"
   },
   "E|E-903|Betula ermanii": {
    "fx": 0.66993,
@@ -1320,7 +1290,7 @@
    "lat": 55.691987,
    "lon": 12.549475,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116106 «Betula ermanii» 8 m fra gravstedet"
   },
   "E|E-907|Nyssa sylvatica": {
@@ -1330,7 +1300,7 @@
    "lat": 55.692109,
    "lon": 12.549521,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem E-905 og E-908 (6 m fra hinanden)"
   },
   "E|E-1005|Sorbus commixta “Dodong”": {
@@ -1340,7 +1310,7 @@
    "lat": 55.692152,
    "lon": 12.549348,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem E-1004 og E-1006 (10 m fra hinanden); registertræ #114487 «Sórbus commixta 'Dodong'» 10 m fra gravstedet"
   },
   "E|E-1024|Crataegus intricata": {
@@ -1350,7 +1320,7 @@
    "lat": 55.692358,
    "lon": 12.549829,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem E-1013 og E-1025 (21 m fra hinanden); detekteret træ 3 m fra gravstedet"
   },
   "E|E-1030|Quercus coccinea": {
@@ -1359,9 +1329,9 @@
    "src": "kk",
    "lat": 55.692518,
    "lon": 12.550074,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem E-1028 og E-1034 (21 m fra hinanden); registertræ #115851 «Quercus coccinea» 5 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem E-1028 og E-1034 (21 m fra hinanden); registertræ #115851 «Quercus coccinea» 5 m fra gravstedet"
   },
   "E|E-1042|Acer campestre": {
    "fx": 0.83152,
@@ -1370,7 +1340,7 @@
    "lat": 55.692733,
    "lon": 12.550488,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem E-1041 og E-1046 (13 m fra hinanden); registertræ #114686 «Acer campestre» 1 m fra gravstedet"
   },
   "F|F-1|Colutea arborescens": {
@@ -1380,7 +1350,7 @@
    "lat": 55.692203,
    "lon": 12.549198,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: intet gravsted; eneste «Colutea arborescens» i afd. F: registertræ #114523"
   },
   "F|F-6|Sorbus commixta “Dodong”": {
@@ -1390,7 +1360,7 @@
    "lat": 55.692239,
    "lon": 12.549367,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem F-3 og F-7 (12 m fra hinanden); registertræ #114524 «Sórbus commixta 'Dodong'» 1 m fra gravstedet"
   },
   "F|F-13|Crataegus submollis": {
@@ -1399,9 +1369,9 @@
    "src": "kk",
    "lat": 55.692361,
    "lon": 12.549635,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-12 og F-17 (18 m fra hinanden); registertræ #115817 «Crataegus submollis» 2 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-12 og F-17 (18 m fra hinanden); registertræ #115817 «Crataegus submollis» 2 m fra gravstedet"
   },
   "F|F-57|Aesculus glabra": {
    "fx": 0.79234,
@@ -1409,9 +1379,9 @@
    "src": "kk",
    "lat": 55.6926,
    "lon": 12.550111,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-54 og F-59 (16 m fra hinanden); registertræ #115891 «Aesculus glabra» 7 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-54 og F-59 (16 m fra hinanden); registertræ #115891 «Aesculus glabra» 7 m fra gravstedet"
   },
   "F|F-28|Acer argutum": {
    "fx": 0.81609,
@@ -1419,9 +1389,9 @@
    "src": "kk",
    "lat": 55.692703,
    "lon": 12.550278,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-23 og F-30 (21 m fra hinanden); registertræ #114527 «Ácer argutum» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-23 og F-30 (21 m fra hinanden); registertræ #114527 «Ácer argutum» 4 m fra gravstedet"
   },
   "F|F-28|Aronia prunifolia": {
    "fx": 0.81653,
@@ -1429,9 +1399,9 @@
    "src": "kk",
    "lat": 55.692701,
    "lon": 12.550292,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-23 og F-30 (21 m fra hinanden); registertræ #114528 «Aronia prunifolia» 5 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-23 og F-30 (21 m fra hinanden); registertræ #114528 «Aronia prunifolia» 5 m fra gravstedet"
   },
   "F|F-28|Amelancier laevis": {
    "fx": 0.81448,
@@ -1439,9 +1409,9 @@
    "src": "kk",
    "lat": 55.692693,
    "lon": 12.550275,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-23 og F-30 (21 m fra hinanden); registertræ #114529 «Amelánchier laevis» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-23 og F-30 (21 m fra hinanden); registertræ #114529 «Amelánchier laevis» 3 m fra gravstedet"
   },
   "F|F-41|Acer cappadonicum": {
    "fx": 0.85546,
@@ -1450,7 +1420,7 @@
    "lat": 55.692884,
    "lon": 12.550527,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114685 «Acer cappadonicum» 1 m fra gravstedet"
   },
   "F|F-48|Malus ioensis ”Plena”": {
@@ -1460,7 +1430,7 @@
    "lat": 55.692758,
    "lon": 12.550302,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114532 «Malus ioensis  'Plena'» 1 m fra gravstedet"
   },
   "F|F-50|Acer circinatum": {
@@ -1470,7 +1440,7 @@
    "lat": 55.692744,
    "lon": 12.550247,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem F-48 og F-53 (12 m fra hinanden); registertræ #114530 «Acer circinatum» 1 m fra gravstedet"
   },
   "F|F-65|Acer freemanii X": {
@@ -1479,8 +1449,8 @@
    "src": "kk",
    "lat": 55.692451,
    "lon": 12.549664,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem F-63 og F-84 (58 m fra hinanden); registertræ #114533 «Acer freemanii X» 1 m fra gravstedet"
   },
   "F|F-79|Acer platanoides": {
@@ -1489,8 +1459,8 @@
    "src": "kk",
    "lat": 55.692233,
    "lon": 12.549227,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem F-63 og F-84 (58 m fra hinanden); registertræ #114534 «Acer platanoides» 1 m fra gravstedet"
   },
   "F|F-199|Fraxinus americana ” autum purple”": {
@@ -1500,7 +1470,7 @@
    "lat": 55.692281,
    "lon": 12.549074,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem F-198 og F-205 (18 m fra hinanden); detekteret træ 4 m fra gravstedet"
   },
   "F|F-205|Crataegus crus-calli": {
@@ -1510,7 +1480,7 @@
    "lat": 55.692253,
    "lon": 12.548921,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114535 «Crataegus crus-galli» 2 m fra gravstedet"
   },
   "F|F-207|Malus sieboldiee ”Brouwers Beauty”": {
@@ -1519,9 +1489,9 @@
    "src": "kk",
    "lat": 55.692284,
    "lon": 12.549068,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-205 og F-216 (29 m fra hinanden); registertræ #114536 «Malus sieboldie  'Browers beauty'» 6 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-205 og F-216 (29 m fra hinanden); registertræ #114536 «Malus sieboldie  'Browers beauty'» 6 m fra gravstedet"
   },
   "F|F-207|Euonymus sachaliensis": {
    "fx": 0.68721,
@@ -1529,9 +1499,9 @@
    "src": "kk",
    "lat": 55.692272,
    "lon": 12.54902,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-205 og F-216 (29 m fra hinanden); registertræ #114537 «Euonymus sachaliensis» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-205 og F-216 (29 m fra hinanden); registertræ #114537 «Euonymus sachaliensis» 3 m fra gravstedet"
   },
   "F|F-207|Euonymus europearus": {
    "fx": 0.68664,
@@ -1539,9 +1509,9 @@
    "src": "kk",
    "lat": 55.692275,
    "lon": 12.549001,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-205 og F-216 (29 m fra hinanden); registertræ #114540 «Euonymus europaeus» 2 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-205 og F-216 (29 m fra hinanden); registertræ #114540 «Euonymus europaeus» 2 m fra gravstedet"
   },
   "F|F-201|Acer davidii": {
    "fx": 0.70593,
@@ -1549,9 +1519,9 @@
    "src": "kk",
    "lat": 55.692352,
    "lon": 12.549155,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-198 og F-205 (18 m fra hinanden); registertræ #114539 «Acer davidii» 10 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-198 og F-205 (18 m fra hinanden); registertræ #114539 «Acer davidii» 10 m fra gravstedet"
   },
   "F|F-201|Euonymus europearus": {
    "fx": 0.68664,
@@ -1559,9 +1529,9 @@
    "src": "kk",
    "lat": 55.692275,
    "lon": 12.549001,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-198 og F-205 (18 m fra hinanden); registertræ #114540 «Euonymus europaeus» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-198 og F-205 (18 m fra hinanden); registertræ #114540 «Euonymus europaeus» 4 m fra gravstedet"
   },
   "F|F-201|Euonymus sachaliensis 2 stk": {
    "fx": 0.68721,
@@ -1569,9 +1539,9 @@
    "src": "kk",
    "lat": 55.692272,
    "lon": 12.54902,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-198 og F-205 (18 m fra hinanden); registertræ #114537 «Euonymus sachaliensis» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-198 og F-205 (18 m fra hinanden); registertræ #114537 «Euonymus sachaliensis» 3 m fra gravstedet"
   },
   "F|F-101|Rhus vernciflua": {
    "fx": 0.74959,
@@ -1579,9 +1549,9 @@
    "src": "kk",
    "lat": 55.692497,
    "lon": 12.549584,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-94 og F-104 (30 m fra hinanden); registertræ #114545 «Rhus vernciflua» 7 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-94 og F-104 (30 m fra hinanden); registertræ #114545 «Rhus vernciflua» 7 m fra gravstedet"
   },
   "F|F-101|Rhus typhina": {
    "fx": 0.74752,
@@ -1589,9 +1559,9 @@
    "src": "kk",
    "lat": 55.692482,
    "lon": 12.549586,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-94 og F-104 (30 m fra hinanden); registertræ #114544 «Rhus typhina» 6 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-94 og F-104 (30 m fra hinanden); registertræ #114544 «Rhus typhina» 6 m fra gravstedet"
   },
   "F|F-103|Aronia meloncarpia": {
    "fx": 0.74734,
@@ -1599,9 +1569,9 @@
    "src": "kk",
    "lat": 55.692484,
    "lon": 12.549577,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-94 og F-104 (30 m fra hinanden); registertræ #114543 «Aronia meloncarpia» 1 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-94 og F-104 (30 m fra hinanden); registertræ #114543 «Aronia meloncarpia» 1 m fra gravstedet"
   },
   "F|F-103|Cotoneaster sp": {
    "fx": 0.7486,
@@ -1609,9 +1579,9 @@
    "src": "kk",
    "lat": 55.692488,
    "lon": 12.54959,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-94 og F-104 (30 m fra hinanden); registertræ #114546 «Cotoneaster sp.» 1 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-94 og F-104 (30 m fra hinanden); registertræ #114546 «Cotoneaster sp.» 1 m fra gravstedet (kun slægten matcher)"
   },
   "F|F-103|Acer nikkoensis": {
    "fx": 0.74462,
@@ -1620,7 +1590,7 @@
    "lat": 55.692474,
    "lon": 12.549553,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem F-94 og F-104 (30 m fra hinanden); detekteret træ 3 m fra gravstedet"
   },
   "F|F-105|Rhus glabra ”Lancianata”": {
@@ -1630,7 +1600,7 @@
    "lat": 55.69252,
    "lon": 12.549623,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114548 «Rhus glabra 'lancianata'» 2 m fra gravstedet"
   },
   "F|F-105|Rhus potanani": {
@@ -1640,7 +1610,7 @@
    "lat": 55.692524,
    "lon": 12.549661,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114549 «Rhus potanínii» 2 m fra gravstedet"
   },
   "F|F-169|Picea abies": {
@@ -1650,7 +1620,7 @@
    "lat": 55.692639,
    "lon": 12.549874,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116140 «Picea abies» 2 m fra gravstedet"
   },
   "F|F-125|Acer ginnala": {
@@ -1660,7 +1630,7 @@
    "lat": 55.692828,
    "lon": 12.550323,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115495 «Acer ginnala» 4 m fra gravstedet"
   },
   "F|F-125|Euonymus sachaliensis": {
@@ -1670,7 +1640,7 @@
    "lat": 55.692831,
    "lon": 12.550348,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114526 «Euonymus sachaliensis» 2 m fra gravstedet"
   },
   "F|F-125|Aronia meloncarpia": {
@@ -1680,7 +1650,7 @@
    "lat": 55.69283,
    "lon": 12.550304,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114551 «Aronia meloncarpia» 4 m fra gravstedet"
   },
   "F|F-127|Acer negundo": {
@@ -1689,9 +1659,9 @@
    "src": "kk",
    "lat": 55.692859,
    "lon": 12.55035,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-126 og F-132 (19 m fra hinanden); registertræ #114596 «Acer negundo» 6 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-126 og F-132 (19 m fra hinanden); registertræ #114596 «Acer negundo» 6 m fra gravstedet"
   },
   "F|F-139|Acer capillipes": {
    "fx": 0.85722,
@@ -1700,7 +1670,7 @@
    "lat": 55.692977,
    "lon": 12.550305,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem F-137 og F-148 (12 m fra hinanden); registertræ #114552 «Acer capillipes» 8 m fra gravstedet"
   },
   "F|F-145|Acer rufinerva": {
@@ -1710,7 +1680,7 @@
    "lat": 55.692862,
    "lon": 12.550266,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem F-137 og F-148 (12 m fra hinanden); registertræ #114550 «Acer rufinerve» 3 m fra gravstedet"
   },
   "F|F-264|Ailanthus altissima": {
@@ -1719,8 +1689,8 @@
    "src": "kk",
    "lat": 55.692927,
    "lon": 12.550261,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem F-248 og F-270 (43 m fra hinanden); registertræ #115111 «Ailanthus altissima (han)» 2 m fra gravstedet"
   },
   "F|F-259|Abies sp": {
@@ -1729,9 +1699,9 @@
    "src": "kk",
    "lat": 55.692841,
    "lon": 12.550145,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK middel: anslået mellem F-248 og F-270 (43 m fra hinanden); registertræ #116947 «Abies sp.» 2 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-248 og F-270 (43 m fra hinanden); registertræ #116947 «Abies sp.» 2 m fra gravstedet (kun slægten matcher)"
   },
   "F|F-289|Torreya nucifera": {
    "fx": 0.8234,
@@ -1740,7 +1710,7 @@
    "lat": 55.692838,
    "lon": 12.550046,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115112 «Torreya nucifera» 2 m fra gravstedet"
   },
   "F|F-306|Torreya californica": {
@@ -1749,9 +1719,9 @@
    "src": "kk",
    "lat": 55.692661,
    "lon": 12.549748,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-292 og F-317 (32 m fra hinanden); registertræ #116122 «Torreya californica» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-292 og F-317 (32 m fra hinanden); registertræ #116122 «Torreya californica» 4 m fra gravstedet"
   },
   "F|F-214|Morus nigra": {
    "fx": 0.71614,
@@ -1759,9 +1729,9 @@
    "src": "kk",
    "lat": 55.692421,
    "lon": 12.549159,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-205 og F-216 (29 m fra hinanden); registertræ #114597 «Mórus nígra» 5 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-205 og F-216 (29 m fra hinanden); registertræ #114597 «Mórus nígra» 5 m fra gravstedet"
   },
   "F|F-330|Liquidambra styraciflua": {
    "fx": 0.72262,
@@ -1769,9 +1739,9 @@
    "src": "kk",
    "lat": 55.692469,
    "lon": 12.54915,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-320 og F-334 (25 m fra hinanden); registertræ #116038 «Liquidámbar styracíflua» 8 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-320 og F-334 (25 m fra hinanden); registertræ #116038 «Liquidámbar styracíflua» 8 m fra gravstedet"
   },
   "F|F-340|Crataegus prunifolia": {
    "fx": 0.71339,
@@ -1779,9 +1749,9 @@
    "src": "kk",
    "lat": 55.692433,
    "lon": 12.549074,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-334 og F-349 (16 m fra hinanden); registertræ #114553 «Crataegus prunifolia» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-334 og F-349 (16 m fra hinanden); registertræ #114553 «Crataegus prunifolia» 4 m fra gravstedet"
   },
   "F|F-363|Acer buergeranium": {
    "fx": 0.7183,
@@ -1789,9 +1759,9 @@
    "src": "kk",
    "lat": 55.692468,
    "lon": 12.549071,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-357 og F-372 (29 m fra hinanden); registertræ #115547 «Acer buergeranium» 7 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-357 og F-372 (29 m fra hinanden); registertræ #115547 «Acer buergeranium» 7 m fra gravstedet"
   },
   "F|F-276|Pterocarya rhoifolia": {
    "fx": 0.859,
@@ -1800,7 +1770,7 @@
    "lat": 55.692947,
    "lon": 12.550421,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114554 «Pterocarya rhoifolia» 8 m fra gravstedet"
   },
   "F|F-399|Acer carpinifolia": {
@@ -1810,7 +1780,7 @@
    "lat": 55.692957,
    "lon": 12.55025,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 5 m fra gravstedet"
   },
   "F|F-423|Acer pensylvanicum": {
@@ -1820,7 +1790,7 @@
    "lat": 55.693003,
    "lon": 12.550138,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem F-421 og F-424 (7 m fra hinanden); registertræ #115548 «Acer pensylvanicum» 11 m fra gravstedet"
   },
   "F|F-465|Cornus mas": {
@@ -1830,7 +1800,7 @@
    "lat": 55.692403,
    "lon": 12.548894,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 1 m fra gravstedet"
   },
   "F|F-314|Fraxinus excelsior": {
@@ -1839,9 +1809,9 @@
    "src": "kk",
    "lat": 55.692654,
    "lon": 12.549621,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-292 og F-317 (32 m fra hinanden); registertræ #115822 «Fraxinus excelsior» 1 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-292 og F-317 (32 m fra hinanden); registertræ #115822 «Fraxinus excelsior» 1 m fra gravstedet"
   },
   "F|F-366|Pseudotsuga menziesii": {
    "fx": 0.73572,
@@ -1849,9 +1819,9 @@
    "src": "kk",
    "lat": 55.692512,
    "lon": 12.54928,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-357 og F-372 (29 m fra hinanden); registertræ #114555 «Pseudotsuga menziesii» 2 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-357 og F-372 (29 m fra hinanden); registertræ #114555 «Pseudotsuga menziesii» 2 m fra gravstedet"
   },
   "F|F-372|Acer elegantuleum": {
    "fx": 0.75966,
@@ -1860,7 +1830,7 @@
    "lat": 55.692639,
    "lon": 12.549385,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115550 «Acer elegantuleum» 5 m fra gravstedet"
   },
   "F|F-372|Acer palmatum ”Bloodgood”": {
@@ -1870,7 +1840,7 @@
    "lat": 55.692628,
    "lon": 12.549363,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115551 «Acer palmatum  'Bloodgood'» 5 m fra gravstedet"
   },
   "F|F-560|Acer pseudosieboldianum": {
@@ -1880,7 +1850,7 @@
    "lat": 55.692655,
    "lon": 12.549179,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115546 «Acer pseudosieboldianum» 6 m fra gravstedet"
   },
   "F|F-475|Parrotia persica": {
@@ -1889,9 +1859,9 @@
    "src": "kk",
    "lat": 55.69251,
    "lon": 12.549034,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-465 og F-480 (26 m fra hinanden); registertræ #114557 «Parrotia persica» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-465 og F-480 (26 m fra hinanden); registertræ #114557 «Parrotia persica» 3 m fra gravstedet"
   },
   "F|F-472|Cornus contreversa": {
    "fx": 0.71103,
@@ -1899,9 +1869,9 @@
    "src": "kk",
    "lat": 55.692463,
    "lon": 12.548947,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-465 og F-480 (26 m fra hinanden); registertræ #114556 «Cornus contreversa» 5 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-465 og F-480 (26 m fra hinanden); registertræ #114556 «Cornus contreversa» 5 m fra gravstedet"
   },
   "F|F-598|Forthergilla major": {
    "fx": 0.74732,
@@ -1909,9 +1879,9 @@
    "src": "kk",
    "lat": 55.692666,
    "lon": 12.549077,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-590 og F-605 (39 m fra hinanden); registertræ #114566 «Forthergilla major» 9 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-590 og F-605 (39 m fra hinanden); registertræ #114566 «Forthergilla major» 9 m fra gravstedet"
   },
   "F|F-677|Calycanthus floridus": {
    "fx": 0.75037,
@@ -1920,7 +1890,7 @@
    "lat": 55.692694,
    "lon": 12.549058,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114598 «Calycanthus floridus» 6 m fra gravstedet"
   },
   "F|F-581|Malus ”Brouwers beauty”": {
@@ -1929,9 +1899,9 @@
    "src": "kk",
    "lat": 55.692429,
    "lon": 12.548755,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-580 og F-588 (23 m fra hinanden); registertræ #115345 «Malus sieboldie  'Browers beauty'» 8 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-580 og F-588 (23 m fra hinanden); registertræ #115345 «Malus sieboldie  'Browers beauty'» 8 m fra gravstedet"
   },
   "F|F-603|Juglans nigra": {
    "fx": 0.77249,
@@ -1939,9 +1909,9 @@
    "src": "kk",
    "lat": 55.692737,
    "lon": 12.549359,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-590 og F-605 (39 m fra hinanden); registertræ #114559 «Júglans nígra» 2 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-590 og F-605 (39 m fra hinanden); registertræ #114559 «Júglans nígra» 2 m fra gravstedet"
   },
   "F|F-390|Acer ginnala": {
    "fx": 0.82422,
@@ -1949,9 +1919,9 @@
    "src": "kk",
    "lat": 55.692875,
    "lon": 12.54996,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "F|F-389|Acer cissifolia": {
    "fx": 0.82023,
@@ -1960,7 +1930,7 @@
    "lat": 55.69285,
    "lon": 12.549953,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem F-388 og F-390 (7 m fra hinanden); registertræ #115010 «Acer cissifolia» 2 m fra gravstedet"
   },
   "F|F-387|Acer betulifolia": {
@@ -1970,7 +1940,7 @@
    "lat": 55.69288,
    "lon": 12.549797,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem F-379 og F-388 (20 m fra hinanden); detekteret træ 7 m fra gravstedet"
   },
   "F|F-433|Acer crataegifolium": {
@@ -1979,9 +1949,9 @@
    "src": "kk",
    "lat": 55.692883,
    "lon": 12.549892,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-429 og F-438 (27 m fra hinanden); registertræ #115011 «Acer crataegifolium» 13 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-429 og F-438 (27 m fra hinanden); registertræ #115011 «Acer crataegifolium» 13 m fra gravstedet"
   },
   "F|F-492|Crytomeria japonica": {
    "fx": 0.80604,
@@ -1990,7 +1960,7 @@
    "lat": 55.692841,
    "lon": 12.549709,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem F-491 og F-495 (10 m fra hinanden); registertræ #114560 «Crytomeria japonica» 2 m fra gravstedet"
   },
   "F|F-511|Sorbus torminalis": {
@@ -2000,7 +1970,7 @@
    "lat": 55.693023,
    "lon": 12.550069,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114561 «Sorbus torminalis» 1 m fra gravstedet"
   },
   "F|F-525|Acer japonica": {
@@ -2009,9 +1979,9 @@
    "src": "kk",
    "lat": 55.69309,
    "lon": 12.550061,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-518 og F-531 (25 m fra hinanden); registertræ #115493 «Acer japonica» 6 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-518 og F-531 (25 m fra hinanden); registertræ #115493 «Acer japonica» 6 m fra gravstedet"
   },
   "F|F-623|Osmanthus heterophyllus": {
    "fx": 0.84787,
@@ -2019,9 +1989,9 @@
    "src": "kk",
    "lat": 55.693036,
    "lon": 12.549966,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-620 og F-644 (6 m fra hinanden); registertræ #114562 «Osmanthus heterophyllus» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-620 og F-644 (6 m fra hinanden); registertræ #114562 «Osmanthus heterophyllus» 4 m fra gravstedet"
   },
   "F|F-539|Parrotia persica": {
    "fx": 0.8105,
@@ -2029,9 +1999,9 @@
    "src": "kk",
    "lat": 55.692898,
    "lon": 12.549637,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-531 og F-547 (30 m fra hinanden); registertræ #114563 «Parrotia persica» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-531 og F-547 (30 m fra hinanden); registertræ #114563 «Parrotia persica» 4 m fra gravstedet"
   },
   "F|F-731|Zelkova serrata": {
    "fx": 0.85549,
@@ -2039,9 +2009,9 @@
    "src": "kk",
    "lat": 55.693094,
    "lon": 12.549951,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-727 og F-739 (28 m fra hinanden); registertræ #116363 «Zelkóva serráta» 5 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-727 og F-739 (28 m fra hinanden); registertræ #116363 «Zelkóva serráta» 5 m fra gravstedet"
   },
   "F|F-638|Corylus americana": {
    "fx": 0.86337,
@@ -2049,9 +2019,9 @@
    "src": "kk",
    "lat": 55.693116,
    "lon": 12.55004,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-620 og F-644 (6 m fra hinanden); registertræ #114564 «Corylus americana» 10 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-620 og F-644 (6 m fra hinanden); registertræ #114564 «Corylus americana» 10 m fra gravstedet"
   },
   "F|F-635|Acer psudoplatanus": {
    "fx": 0.85366,
@@ -2060,7 +2030,7 @@
    "lat": 55.693073,
    "lon": 12.549974,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem F-620 og F-644 (6 m fra hinanden); detekteret træ 5 m fra gravstedet"
   },
   "F|F-754|Magnolia X soulangiana": {
@@ -2070,7 +2040,7 @@
    "lat": 55.692975,
    "lon": 12.549656,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem F-752 og F-756 (14 m fra hinanden); registertræ #114565 «Magnolia x Soulangiana» 6 m fra gravstedet"
   },
   "F|F-703|Hamamelis X intermedia": {
@@ -2079,9 +2049,9 @@
    "src": "kk",
    "lat": 55.692704,
    "lon": 12.549103,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-700 og F-709 (22 m fra hinanden); registertræ #114558 «Hamamelis X intermedia» 1 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-700 og F-709 (22 m fra hinanden); registertræ #114558 «Hamamelis X intermedia» 1 m fra gravstedet"
   },
   "F|F-760|Acer rubrum 3 stk + 1 modsat v bænk": {
    "fx": 0.78403,
@@ -2089,9 +2059,9 @@
    "src": "kk",
    "lat": 55.692849,
    "lon": 12.54927,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-757 og F-762 (26 m fra hinanden); registertræ #115552 «Ácer rúbrum» 1 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-757 og F-762 (26 m fra hinanden); registertræ #115552 «Ácer rúbrum» 1 m fra gravstedet"
   },
   "F|F-814|Koelreuteria paniculata 2 Stk": {
    "fx": 0.76753,
@@ -2100,7 +2070,7 @@
    "lat": 55.692792,
    "lon": 12.549114,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114567 «Koelreuteria paniculata» 2 m fra gravstedet"
   },
   "F|F-907|Acer micranthum": {
@@ -2109,9 +2079,9 @@
    "src": "kk",
    "lat": 55.692836,
    "lon": 12.549082,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-897 og F-912 (21 m fra hinanden); registertræ #115014 «Acer micranthum» 0 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-897 og F-912 (21 m fra hinanden); registertræ #115014 «Acer micranthum» 0 m fra gravstedet"
   },
   "F|F-583|Acer buergeranium": {
    "fx": 0.70547,
@@ -2119,9 +2089,9 @@
    "src": "kk",
    "lat": 55.692488,
    "lon": 12.548773,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-580 og F-588 (23 m fra hinanden); registertræ #115554 «Acer buergeranium» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-580 og F-588 (23 m fra hinanden); registertræ #115554 «Acer buergeranium» 4 m fra gravstedet"
   },
   "F|F-925|Acer tatarricum": {
    "fx": 0.71058,
@@ -2130,7 +2100,7 @@
    "lat": 55.692575,
    "lon": 12.548631,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115555 «Ácer tatáricum» 12 m fra gravstedet"
   },
   "F|F-902|Parottia persica": {
@@ -2139,9 +2109,9 @@
    "src": "kk",
    "lat": 55.692928,
    "lon": 12.549064,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-897 og F-912 (21 m fra hinanden); registertræ #115853 «Parrotia persica» 9 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-897 og F-912 (21 m fra hinanden); registertræ #115853 «Parrotia persica» 9 m fra gravstedet"
   },
   "F|F-945|Physocarbus opulifolius “ El Diabolo”": {
    "fx": 0.76697,
@@ -2150,7 +2120,7 @@
    "lat": 55.692849,
    "lon": 12.548947,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem F-943 og F-946 (8 m fra hinanden); registertræ #116126 «Physocarbus opulifolius  'El Diabolo'» 0 m fra gravstedet"
   },
   "F|F-956|Acer betulifolia": {
@@ -2160,7 +2130,7 @@
    "lat": 55.69309,
    "lon": 12.549306,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115009 «Acer betulifolia» 8 m fra gravstedet"
   },
   "F|F-964|Acer grisium 2 stk": {
@@ -2170,7 +2140,7 @@
    "lat": 55.693183,
    "lon": 12.54967,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115556 «Ácer gríseum» 2 m fra gravstedet"
   },
   "F|F-965|Prunus serrula": {
@@ -2180,7 +2150,7 @@
    "lat": 55.693195,
    "lon": 12.549696,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114569 «Prúnus sérrula» 1 m fra gravstedet"
   },
   "F|F-965|Euonymus alatus 2 stk": {
@@ -2190,7 +2160,7 @@
    "lat": 55.693243,
    "lon": 12.549687,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 5 m fra gravstedet"
   },
   "F|F-980|Pinus cembra": {
@@ -2199,9 +2169,9 @@
    "src": "kk",
    "lat": 55.693239,
    "lon": 12.549694,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem F-977 og F-984 (22 m fra hinanden); registertræ #115639 «Pinus cembra» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem F-977 og F-984 (22 m fra hinanden); registertræ #115639 «Pinus cembra» 3 m fra gravstedet"
   },
   "F|F-1076|Acer palmatum ”ozakazuki”": {
    "fx": 0.78931,
@@ -2210,7 +2180,7 @@
    "lat": 55.692982,
    "lon": 12.549005,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem F-1070 og F-1077 (7 m fra hinanden); registertræ #115558 «Acer palmatum  'Ozakazaku'» 1 m fra gravstedet"
   },
   "F|F-1026|Sorbus aria ”magnifica”": {
@@ -2220,7 +2190,7 @@
    "lat": 55.692644,
    "lon": 12.548472,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114572 «Sorbus aria» 6 m fra gravstedet"
   },
   "G|G-8|Acer ginnala": {
@@ -2230,7 +2200,7 @@
    "lat": 55.692869,
    "lon": 12.548545,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem G-7 og G-10 (9 m fra hinanden); registertræ #115560 «Acer ginnala» 2 m fra gravstedet"
   },
   "G|G-71|Oemleria cerasiformes": {
@@ -2240,7 +2210,7 @@
    "lat": 55.693026,
    "lon": 12.548751,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem G-70 og G-72 (3 m fra hinanden)"
   },
   "G|G-71|Malus trilobata": {
@@ -2250,7 +2220,7 @@
    "lat": 55.693026,
    "lon": 12.548751,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem G-70 og G-72 (3 m fra hinanden)"
   },
   "G|G-82|Malus floribunda": {
@@ -2260,7 +2230,7 @@
    "lat": 55.692805,
    "lon": 12.548373,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem G-80 og G-84 (10 m fra hinanden); detekteret træ 6 m fra gravstedet"
   },
   "G|G-80|Cercis canadensis “Forest Pansy”": {
@@ -2270,7 +2240,7 @@
    "lat": 55.692893,
    "lon": 12.548583,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114574 «Cercis canadensis  'Forest Pansy'» 7 m fra gravstedet"
   },
   "G|G-79|Acer grisium": {
@@ -2280,7 +2250,7 @@
    "lat": 55.692882,
    "lon": 12.548481,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem G-78 og G-80 (5 m fra hinanden); registertræ #114599 «Ácer gríseum» 2 m fra gravstedet"
   },
   "G|G-78|Cornus kousa": {
@@ -2290,7 +2260,7 @@
    "lat": 55.692922,
    "lon": 12.548546,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #114575 «Cornus kousa» 1 m fra gravstedet"
   },
   "G|G-102|Taxodium distichum": {
@@ -2299,9 +2269,9 @@
    "src": "kk",
    "lat": 55.692889,
    "lon": 12.54842,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem G-89 og G-111 (36 m fra hinanden); registertræ #114576 «Taxodium distichum» 9 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem G-89 og G-111 (36 m fra hinanden); registertræ #114576 «Taxodium distichum» 9 m fra gravstedet"
   },
   "G|G-187|Kolkwitzia amabilis 2 Stk": {
    "fx": 0.76202,
@@ -2309,9 +2279,9 @@
    "src": "kk",
    "lat": 55.692974,
    "lon": 12.54851,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem G-184 og G-193 (19 m fra hinanden); registertræ #114578 «Kolkwitzia amabilis» 4 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem G-184 og G-193 (19 m fra hinanden); registertræ #114578 «Kolkwitzia amabilis» 4 m fra gravstedet"
   },
   "G|G-206|Malus": {
    "fx": 0.75479,
@@ -2320,7 +2290,7 @@
    "lat": 55.692946,
    "lon": 12.54845,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem G-193 og G-219 (11 m fra hinanden); detekteret træ 2 m fra gravstedet"
   },
   "G|G-225|Paulownia tomentosa 4 Stk": {
@@ -2330,7 +2300,7 @@
    "lat": 55.693083,
    "lon": 12.548685,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 4 m fra gravstedet"
   },
   "G|G-318|Davidia involucrate “ vilmoriniana”": {
@@ -2340,7 +2310,7 @@
    "lat": 55.693051,
    "lon": 12.548292,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116023 «Davidia involucrate 'Vilmoriniana'» 1 m fra gravstedet"
   },
   "G|G-423|Sequoiadendron giganteum 2 Stk": {
@@ -2349,9 +2319,9 @@
    "src": "kk",
    "lat": 55.693149,
    "lon": 12.548024,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem G-420 og G-429 (18 m fra hinanden); registertræ #116736 «Sequoiadéndron gigantéum» 13 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem G-420 og G-429 (18 m fra hinanden); registertræ #116736 «Sequoiadéndron gigantéum» 13 m fra gravstedet"
   },
   "G|G-418|Prunus X amygdalo-persica 2 Stk": {
    "fx": 0.76921,
@@ -2359,9 +2329,9 @@
    "src": "kk",
    "lat": 55.693181,
    "lon": 12.548078,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem G-411 og G-420 (25 m fra hinanden); registertræ #115983 «Prunus X amygdalo-persica» 8 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem G-411 og G-420 (25 m fra hinanden); registertræ #115983 «Prunus X amygdalo-persica» 8 m fra gravstedet"
   },
   "G|G-453|Cornus controversa": {
    "fx": 0.77412,
@@ -2369,9 +2339,9 @@
    "src": "kk",
    "lat": 55.693232,
    "lon": 12.548031,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem G-450 og G-459 (17 m fra hinanden); registertræ #115347 «Cornus contreversa» 13 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem G-450 og G-459 (17 m fra hinanden); registertræ #115347 «Cornus contreversa» 13 m fra gravstedet"
   },
   "G|G-518|Picea pungens": {
    "fx": 0.78288,
@@ -2380,7 +2350,7 @@
    "lat": 55.693291,
    "lon": 12.548035,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem G-517 og G-532 (24 m fra hinanden); detekteret træ 4 m fra gravstedet"
   },
   "G|G-540|Cornus sanguinea": {
@@ -2389,9 +2359,9 @@
    "src": "kk",
    "lat": 55.693188,
    "lon": 12.547943,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem G-535 og G-542 (23 m fra hinanden); registertræ #116737 «Cornus sanguinea» 9 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem G-535 og G-542 (23 m fra hinanden); registertræ #116737 «Cornus sanguinea» 9 m fra gravstedet"
   },
   "G|G-547|Populus balsamifera": {
    "fx": 0.78124,
@@ -2399,9 +2369,9 @@
    "src": "kk",
    "lat": 55.693287,
    "lon": 12.548015,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem G-542 og G-564 (36 m fra hinanden); registertræ #115982 «Populus balsamifera» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem G-542 og G-564 (36 m fra hinanden); registertræ #115982 «Populus balsamifera» 3 m fra gravstedet"
   },
   "G|G-568|Cotoneaster lusidus ( Langs muren)": {
    "fx": 0.75627,
@@ -2410,7 +2380,7 @@
    "lat": 55.693207,
    "lon": 12.547762,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem G-567 og G-569 (6 m fra hinanden)"
   },
   "H|H-30|Picea orientalis": {
@@ -2420,7 +2390,7 @@
    "lat": 55.689587,
    "lon": 12.551687,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem H-28 og H-32 (8 m fra hinanden); registertræ #116835 «Picea orientalis» 4 m fra gravstedet"
   },
   "H|H-95|Castanea sativa": {
@@ -2430,7 +2400,7 @@
    "lat": 55.689511,
    "lon": 12.551852,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem H-85 og H-96 (11 m fra hinanden); registertræ #115631 «Castanea sativa» 2 m fra gravstedet"
   },
   "H|H-163|Catalpa speciosa": {
@@ -2440,7 +2410,7 @@
    "lat": 55.689371,
    "lon": 12.551946,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem H-161 og H-165 (7 m fra hinanden)"
   },
   "H|H-159|Viburnum plicatum": {
@@ -2450,7 +2420,7 @@
    "lat": 55.689429,
    "lon": 12.552015,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem H-158 og H-161 (7 m fra hinanden)"
   },
   "H|H-180|Cornus mas": {
@@ -2459,9 +2429,9 @@
    "src": "kk",
    "lat": 55.689442,
    "lon": 12.552136,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem H-175 og H-189 (10 m fra hinanden); registertræ #114585 «Cornus mas» 9 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem H-175 og H-189 (10 m fra hinanden); registertræ #114585 «Cornus mas» 9 m fra gravstedet"
   },
   "H|H-204|Ginkgo biloba": {
    "fx": 0.41753,
@@ -2470,7 +2440,7 @@
    "lat": 55.689288,
    "lon": 12.552103,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem H-196 og H-205 (7 m fra hinanden); registertræ #116298 «Ginkgo biloba» 3 m fra gravstedet"
   },
   "H|H-211|Larix deciduas": {
@@ -2480,7 +2450,7 @@
    "lat": 55.689371,
    "lon": 12.552254,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115133 «Larix decidua» 3 m fra gravstedet"
   },
   "H|H-225|Calycanthus floridus": {
@@ -2489,8 +2459,8 @@
    "src": "kk",
    "lat": 55.689346,
    "lon": 12.552188,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem H-215 og H-234 (40 m fra hinanden); registertræ #114586 «Calycanthus floridus» 4 m fra gravstedet"
   },
   "H|H-252|Pinus Nigra": {
@@ -2499,9 +2469,9 @@
    "src": "kk",
    "lat": 55.689373,
    "lon": 12.552446,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem H-250 og H-256 (17 m fra hinanden); registertræ #116873 «Pinus nigra» 3 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem H-250 og H-256 (17 m fra hinanden); registertræ #116873 «Pinus nigra» 3 m fra gravstedet"
   },
   "H|H-306|Cercidiphyllum japonicum H 254/55": {
    "fx": 0.43922,
@@ -2509,9 +2479,9 @@
    "src": "kk",
    "lat": 55.689289,
    "lon": 12.552511,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem H-303 og H-310 (19 m fra hinanden); registertræ #117086 «Cercidiphýllum japónicum» 1 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem H-303 og H-310 (19 m fra hinanden); registertræ #117086 «Cercidiphýllum japónicum» 1 m fra gravstedet"
   },
   "H|H-295|Kerria japonica": {
    "fx": 0.41264,
@@ -2520,7 +2490,7 @@
    "lat": 55.689114,
    "lon": 12.552488,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem H-294 og H-296 (4 m fra hinanden); registertræ #114587 «Kerria japonica» 10 m fra gravstedet"
   },
   "H|H-332|Hydranga arboreum": {
@@ -2530,7 +2500,7 @@
    "lat": 55.689361,
    "lon": 12.552692,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem H-329 og H-334 (9 m fra hinanden); registertræ #115630 «Hydrangea arboreum» 7 m fra gravstedet"
   },
   "H|H-340|Prunus padus": {
@@ -2539,9 +2509,9 @@
    "src": "kk",
    "lat": 55.689184,
    "lon": 12.552582,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem H-336 og H-349 (24 m fra hinanden); registertræ #115123 «Prunus padus» 2 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem H-336 og H-349 (24 m fra hinanden); registertræ #115123 «Prunus padus» 2 m fra gravstedet"
   },
   "H|H-364|Euonymus sachalinensis": {
    "fx": 0.44043,
@@ -2550,7 +2520,7 @@
    "lat": 55.689207,
    "lon": 12.552759,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem H-362 og H-371 (10 m fra hinanden); detekteret træ 6 m fra gravstedet"
   },
   "H|H-322|Pinus peuce": {
@@ -2559,9 +2529,9 @@
    "src": "kk",
    "lat": 55.689178,
    "lon": 12.5524,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem H-316 og H-326 (24 m fra hinanden); registertræ #116870 «Pinus peuce» 6 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem H-316 og H-326 (24 m fra hinanden); registertræ #116870 «Pinus peuce» 6 m fra gravstedet"
   },
   "H|H-352|Robinia pseudoacacia": {
    "fx": 0.41274,
@@ -2570,7 +2540,7 @@
    "lat": 55.689083,
    "lon": 12.552575,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem H-349 og H-353 (7 m fra hinanden); registertræ #116306 «Robinia pseudoacacia» 3 m fra gravstedet"
   },
   "H|H-412|Malus tschonoskii Allé lang Kapelvej": {
@@ -2580,7 +2550,7 @@
    "lat": 55.689067,
    "lon": 12.552765,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem H-403 og H-414 (7 m fra hinanden); registertræ #115652 «Malus tschonoskii» 2 m fra gravstedet"
   },
   "J|J-1|Prunus sachalinensis": {
@@ -2590,7 +2560,7 @@
    "lat": 55.689906,
    "lon": 12.551696,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116273 «Prunus sachalinensis» 8 m fra gravstedet"
   },
   "J|J-97|Parrotia persica": {
@@ -2600,7 +2570,7 @@
    "lat": 55.689888,
    "lon": 12.551501,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem J-94 og J-99 (7 m fra hinanden); registertræ #114588 «Parrotia persica» 3 m fra gravstedet"
   },
   "J|J-113|Picea abies “ Virgata”": {
@@ -2610,7 +2580,7 @@
    "lat": 55.689837,
    "lon": 12.551391,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem J-112 og J-115 (6 m fra hinanden); registertræ #115134 «Picea abies  'Virgata'» 2 m fra gravstedet"
   },
   "J|J-161|Cedrus atlantica ”Glauca”": {
@@ -2620,7 +2590,7 @@
    "lat": 55.689893,
    "lon": 12.551343,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem J-159 og J-162 (8 m fra hinanden); registertræ #115833 «Cedrus atlantica 'Glauca'» 3 m fra gravstedet"
   },
   "J|J-288|Chamaecyparis lawsoniana": {
@@ -2630,7 +2600,7 @@
    "lat": 55.689929,
    "lon": 12.551035,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem J-284 og J-289 (14 m fra hinanden); registertræ #116828 «Chamaecyparis lawsoniana» 2 m fra gravstedet"
   },
   "J|J-313|Corylus avellana “contorta”": {
@@ -2640,7 +2610,7 @@
    "lat": 55.689839,
    "lon": 12.550832,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #115834 «Corylus avellana  'contorta'» 3 m fra gravstedet"
   },
   "J|J-465|Juglans regia": {
@@ -2650,7 +2620,7 @@
    "lat": 55.689979,
    "lon": 12.550389,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem J-464 og J-467 (9 m fra hinanden); registertræ #114738 «Juglans regia» 11 m fra gravstedet"
   },
   "J|J-477|Catalpa Sp": {
@@ -2659,9 +2629,9 @@
    "src": "kk",
    "lat": 55.68994,
    "lon": 12.550505,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "K|K-7|Abies Sp": {
    "fx": 0.4616,
@@ -2670,7 +2640,7 @@
    "lat": 55.69023,
    "lon": 12.550352,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem K-2 og K-13 (24 m fra hinanden); detekteret træ 5 m fra gravstedet"
   },
   "K|K-80|Betula utillis": {
@@ -2680,7 +2650,7 @@
    "lat": 55.69017,
    "lon": 12.549883,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: anslået mellem K-79 og K-82 (1 m fra hinanden); registertræ #117062 «Betula utilis» 11 m fra gravstedet"
   },
   "K|K-135|Thujopsis dolobrata": {
@@ -2690,18 +2660,8 @@
    "lat": 55.69019,
    "lon": 12.550005,
    "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; registertræ #116823 «Thujopsis dolabrata» 1 m fra gravstedet"
-  },
-  "K|K1-1-4|Betula utillis": {
-   "fx": 0.42815,
-   "fy": 0.56453,
-   "src": "kk",
-   "lat": 55.69017,
-   "lon": 12.549883,
-   "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK middel: intet gravsted; eneste «Betula utilis» i afd. K: registertræ #117062"
   },
   "M|M-97|Acer rufinerve": {
    "fx": 0.454,
@@ -2710,7 +2670,7 @@
    "lat": 55.690791,
    "lon": 12.548668,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem M-89 og M-104 (32 m fra hinanden); detekteret træ 6 m fra gravstedet"
   },
   "M|M-550|Aesculus hippocastanium": {
@@ -2720,7 +2680,7 @@
    "lat": 55.69108,
    "lon": 12.54808,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem M-543 og M-555 (6 m fra hinanden)"
   },
   "O|O-595|Pterocarya fraxinifolia": {
@@ -2730,7 +2690,7 @@
    "lat": 55.691302,
    "lon": 12.546852,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem O-593 og O-599 (8 m fra hinanden); detekteret træ 2 m fra gravstedet"
   },
   "O|O-453|Ostrya carpinifolia": {
@@ -2740,7 +2700,7 @@
    "lat": 55.691572,
    "lon": 12.546845,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem O-452 og O-463 (26 m fra hinanden); detekteret træ 2 m fra gravstedet"
   },
   "O|O-826|Pinus contorta": {
@@ -2749,9 +2709,9 @@
    "src": "kk",
    "lat": 55.691535,
    "lon": 12.547244,
-   "acc": 1.0,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: anslået mellem O-789 og O-836 (17 m fra hinanden); registertræ #114779 «Pinus sp.» 10 m fra gravstedet"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: anslået mellem O-789 og O-836 (17 m fra hinanden); registertræ #114779 «Pinus sp.» 10 m fra gravstedet (kun slægten matcher)"
   },
   "O|O-9|Pinus sylvestris": {
    "fx": 0.44578,
@@ -2760,7 +2720,7 @@
    "lat": 55.691648,
    "lon": 12.54616,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: intet gravsted; eneste «Pinus sylvestris» i afd. O: registertræ #115743"
   },
   "P|P-358|Liquidambar styraciflua": {
@@ -2770,7 +2730,7 @@
    "lat": 55.68884,
    "lon": 12.551452,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem P-346 og P-362 (36 m fra hinanden); detekteret træ 1 m fra gravstedet"
   },
   "P|P-459|Populus simmonii": {
@@ -2780,7 +2740,7 @@
    "lat": 55.688531,
    "lon": 12.551265,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem P-447 og P-465 (29 m fra hinanden); detekteret træ 2 m fra gravstedet"
   },
   "P|P-506|Cryptomeria japonica": {
@@ -2790,7 +2750,7 @@
    "lat": 55.688945,
    "lon": 12.551823,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem P-504 og P-510 (13 m fra hinanden)"
   },
   "P|P-377|Taxodium distichum": {
@@ -2800,7 +2760,7 @@
    "lat": 55.688571,
    "lon": 12.551125,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem P-368 og P-381 (24 m fra hinanden); detekteret træ 3 m fra gravstedet"
   },
   "P|P-1019|Pinus nigra ssp laricio": {
@@ -2810,7 +2770,7 @@
    "lat": 55.688494,
    "lon": 12.552232,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem P-1018 og P-1020 (8 m fra hinanden); detekteret træ 4 m fra gravstedet"
   },
   "Q|Q-61|Juglans regia": {
@@ -2820,7 +2780,7 @@
    "lat": 55.689331,
    "lon": 12.549395,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem Q-58 og Q-68 (26 m fra hinanden); detekteret træ 4 m fra gravstedet"
   },
   "Q|Q-316|Larix decidua": {
@@ -2830,7 +2790,7 @@
    "lat": 55.689103,
    "lon": 12.549534,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 2 m fra gravstedet"
   },
   "Q|Q-389|Pterocarya fraxinifolia": {
@@ -2840,7 +2800,7 @@
    "lat": 55.689397,
    "lon": 12.549911,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem Q-385 og Q-393 (14 m fra hinanden); detekteret træ 4 m fra gravstedet"
   },
   "Q|Q-884|Sorbus aucuparia": {
@@ -2850,7 +2810,7 @@
    "lat": 55.689453,
    "lon": 12.550775,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem Q-881 og Q-886 (12 m fra hinanden); detekteret træ 1 m fra gravstedet"
   },
   "Q|Q-977|Sorbus “Joseph Rock”": {
@@ -2859,9 +2819,9 @@
    "src": "kk",
    "lat": 55.689446,
    "lon": 12.550905,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "Q|Q-947|Populus lasiocarpa": {
    "fx": 0.27228,
@@ -2870,7 +2830,7 @@
    "lat": 55.68893,
    "lon": 12.550335,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem Q-941 og Q-948 (15 m fra hinanden)"
   },
   "Q|Q-1065|Quercus cerris": {
@@ -2880,7 +2840,7 @@
    "lat": 55.689409,
    "lon": 12.551058,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem Q-1056 og Q-1067 (32 m fra hinanden); detekteret træ 8 m fra gravstedet"
   },
   "Q|Q-1091|Carya illioinensis": {
@@ -2890,7 +2850,7 @@
    "lat": 55.68906,
    "lon": 12.550708,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem Q-1090 og Q-1102 (29 m fra hinanden); detekteret træ 2 m fra gravstedet"
   },
   "R|R-21|Juglans cinerea": {
@@ -2900,7 +2860,7 @@
    "lat": 55.689767,
    "lon": 12.549578,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem R-8 og R-37 (10 m fra hinanden); detekteret træ 2 m fra gravstedet"
   },
   "R|R-35|Carpinus “ Rockhamton Red": {
@@ -2910,7 +2870,7 @@
    "lat": 55.689767,
    "lon": 12.549578,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem R-8 og R-37 (10 m fra hinanden); detekteret træ 3 m fra gravstedet"
   },
   "R|R-72|Pseudolarix": {
@@ -2920,7 +2880,7 @@
    "lat": 55.689622,
    "lon": 12.549325,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem R-71 og R-73 (4 m fra hinanden)"
   },
   "R|R-92|Pinus aristata": {
@@ -2930,7 +2890,7 @@
    "lat": 55.689692,
    "lon": 12.549349,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem R-86 og R-93 (13 m fra hinanden); detekteret træ 4 m fra gravstedet"
   },
   "R|R-110|Picea breweriana 3 Stk. O": {
@@ -2939,9 +2899,9 @@
    "src": "kk",
    "lat": 55.689859,
    "lon": 12.549458,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "R|R-133|Rhus potananii": {
    "fx": 0.36589,
@@ -2950,7 +2910,7 @@
    "lat": 55.689916,
    "lon": 12.549401,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 4 m fra gravstedet"
   },
   "R|R-163|Lindera": {
@@ -2960,7 +2920,7 @@
    "lat": 55.689916,
    "lon": 12.549401,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 5 m fra gravstedet"
   },
   "R|R-155|Quercus alba": {
@@ -2969,9 +2929,9 @@
    "src": "kk",
    "lat": 55.689994,
    "lon": 12.549483,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "R|R-426|Magnolia sieboldii": {
    "fx": 0.32754,
@@ -2979,9 +2939,9 @@
    "src": "kk",
    "lat": 55.689941,
    "lon": 12.548606,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "R|R-438|Psudolarix": {
    "fx": 0.36794,
@@ -2990,7 +2950,7 @@
    "lat": 55.690148,
    "lon": 12.548803,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem R-436 og R-439 (6 m fra hinanden)"
   },
   "R|R-447|Acer buergerianum": {
@@ -3000,7 +2960,7 @@
    "lat": 55.69002,
    "lon": 12.548582,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK høj: gravsted direkte; detekteret træ 5 m fra gravstedet"
   },
   "R|R-773|Cedrus deodara": {
@@ -3009,9 +2969,9 @@
    "src": "kk",
    "lat": 55.689693,
    "lon": 12.548014,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "R|R-747|Euonymus alatus": {
    "fx": 0.26469,
@@ -3020,7 +2980,7 @@
    "lat": 55.689751,
    "lon": 12.547937,
    "acc": 2.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem R-744 og R-751 (15 m fra hinanden); detekteret træ 3 m fra gravstedet"
   },
   "S|S-414|Sciadopitys verticillata": {
@@ -3029,9 +2989,9 @@
    "src": "kk",
    "lat": 55.690552,
    "lon": 12.547216,
-   "acc": 1.5,
-   "ts": "2026-10-05T16:45:32.000Z",
-   "note": "KK høj: gravsted direkte"
+   "acc": 3.0,
+   "ts": "2026-10-05T00:00:00.000Z",
+   "note": "KK middel: gravsted direkte"
   },
   "S|S-721|Tilia cordata": {
    "fx": 0.3783,
@@ -3040,7 +3000,7 @@
    "lat": 55.690625,
    "lon": 12.547688,
    "acc": 3.0,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem S-715 og S-727 (14 m fra hinanden)"
   },
   "S|S-933|Paulownia tomentosa": {
@@ -3050,7 +3010,7 @@
    "lat": 55.690397,
    "lon": 12.547996,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem S-921 og S-941 (21 m fra hinanden); detekteret træ 4 m fra gravstedet"
   },
   "S|S-953|Sequoiadendron giganteum": {
@@ -3060,7 +3020,7 @@
    "lat": 55.690504,
    "lon": 12.548324,
    "acc": 4.8,
-   "ts": "2026-10-05T16:45:32.000Z",
+   "ts": "2026-10-05T00:00:00.000Z",
    "note": "KK middel: anslået mellem S-950 og S-966 (14 m fra hinanden); detekteret træ 4 m fra gravstedet"
   }
  }

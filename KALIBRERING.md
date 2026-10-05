@@ -124,12 +124,15 @@ GPS-aflæsning er let at spotte og slette igen.
 - Nøglen er `afdeling|gravsted|art` (samme id som “set”-funktionen bruger).
 - `fx`/`fy` er brøkdele af kortbilledet (0–1), samme system som
   afdelingsmarkørerne. Skalaen er ca. 0,46 m pr. billedpixel.
-- `src` er `kort` (trykket på kortet), `gps` eller `kk` (fra kommunens data,
-  se nedenfor); ved GPS og `kk` gemmes også de rå koordinater (`lat`, `lon`)
-  og nøjagtigheden i meter (`acc`). De rå koordinater betyder, at
-  placeringerne kan genberegnes, hvis kort-georeferencen forbedres senere —
-  feltarbejdet skal ikke gøres om. En `kk`-post har desuden en `note`, der
-  forklarer, hvordan den blev fundet (“KK høj: gravsted direkte”).
+- `src` er `kort` (trykket på kortet), `gps` eller `kk` (scriptets forslag
+  fra kommunens data, se nedenfor); ved GPS og `kk` gemmes også de rå
+  koordinater (`lat`, `lon`) og nøjagtigheden i meter (`acc`), og de bliver
+  stående på en `kort`-post, der er flyttet fra en GPS-placering eller valgt
+  fra et kommunepunkt. De rå koordinater betyder, at placeringerne kan
+  genberegnes, hvis kort-georeferencen forbedres senere — feltarbejdet skal
+  ikke gøres om. En `kk`-post har desuden en `note`, der forklarer, hvordan
+  den blev fundet (“KK høj: gravsted direkte”). En post fra en parring bærer
+  stoppets tidsstempel som `obs`.
 - `fx`/`fy` er den gældende placering; `lat`/`lon` er den rå GPS-aflæsning
   bag den. Finjustering med pilene ændrer kun `fx`/`fy`, mens den rå
   aflæsning bliver stående som dokumentation.
@@ -161,12 +164,24 @@ placeringer end GPS, og det meste kan gøres hjemme. Filerne ligger i
 **`python3 scripts/match_kk.py`** placerer listens træer automatisk: listens
 numre er kirkegårdens gravstedsnumre, så gravstedet slås op direkte eller
 anslås mellem nabonumrene (numrene ligger fortløbende i rækkerne; 0,6 m
-median-fejl på kendte gravsteder). Står der et registreret træ af samme art
-tæt på gravstedet, bruges registrets punkt; ellers “snapper” et
-LiDAR-detekteret træ. Hvert forslag får sikkerhed *høj*, *middel* eller
-*lav*; de to første skrives til `positions.json` med `src: "kk"`, `acc` i
-meter og en `note`, de sidste står i `data/kk_gennemgang.md`. Scriptet
-overskriver aldrig en placering, et menneske har lavet (`kort`/`gps`).
+median-fejl på kendte gravsteder over hele kirkegården, 1,3 m i de
+afdelinger listen bruger, og 90 % inden for 5 m, når naboerne står højst
+15 m fra hinanden). Står der et registreret træ af samme art tæt på
+gravstedet, bruges registrets punkt; ellers “snapper” et LiDAR-detekteret
+træ. Hvert forslag får sikkerhed *høj*, *middel* eller *lav*: *høj* kræver et
+registertræ med både slægt og art inden for 12 m af et gravsted, der er
+fundet direkte eller anslået mellem naboer højst 15 m fra hinanden, eller et
+detekteret træ ved et direkte fundet gravsted; et gravsted alene, et løst
+anslået gravsted eller en match kun på slægten giver højst *middel*.
+Gravstedsnumre med flere led (“D-1-2-2/7”, “K1-1-4”) går altid til
+gennemgang. *Høj* og *middel* skrives til `positions.json` med `src: "kk"`,
+`acc` i meter og en `note`; *lav* står i `data/kk_gennemgang.md`. Scriptet
+rører kun sine egne poster: en placering, et menneske har lavet eller
+slettet, bevares altid, og et forslag får aldrig et tidsstempel nyere end
+datafilens hentedato, så det ikke kan “indhente” feltarbejde. Siden regner
+desuden altid en menneskelig post for stærkere end et `kk`-forslag, uanset
+tidsstempel. Besøgende ser `kk`-forslag som almindelige prikker; tag
+stikprøver i felten, før for meget bygges på dem.
 
 **Gennemgang i kalibreringstilstanden** (på computeren):
 - **🛰 Ortofoto** lægger luftfotoet oven på kortet; skyderen styrer
@@ -175,12 +190,15 @@ overskriver aldrig en placering, et menneske har lavet (`kort`/`gps`).
 - **🌳 KK-træer** viser registrets træer som blå punkter (fyldte: med art;
   blege: uden) og detekterede træer som grå prikker; hold musen over for
   art, planteår og højde. Har du valgt et træ i listen, sætter et tryk på et
-  blåt punkt krydset dér med registrets koordinat (`src: "kk"`, `acc` 1 m);
-  tryk så **✓ Gem**.
+  blåt punkt krydset dér med registrets koordinat; posten gemmes som dit
+  valg (`src: "kort"` med `lat`/`lon`, `acc` 1 m og en note om punktet), så
+  scriptet ikke rører den igen. Tryk så **✓ Gem**.
 - Gå `data/kk_gennemgang.md` igennem afdeling for afdeling, og tjek gerne
   stikprøver af *middel*-forslagene (noten i værktøjet fortæller, hvordan
-  de blev fundet). Et `kk`-forslag, der flyttes med kortet, bliver til en
-  almindelig `kort`-placering og røres ikke af scriptet igen.
+  de blev fundet). Et `kk`-forslag, der flyttes (pilene eller et tryk på
+  kortet), bliver til en almindelig `kort`-placering uden scriptets
+  koordinater og note og røres ikke af scriptet igen; gemmes det uflyttet,
+  forbliver det et forslag.
 
 Rettes ankrene (**⚓ GPS-ankre**), følger både ortofotoets punkter og
 registrets punkter med; selve ortofotoet er forvrænget efter de indbyggede

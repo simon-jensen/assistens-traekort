@@ -8,16 +8,29 @@ dem ikke. Fremgangsmåde og vurdering: `KALIBRERING.md` og `NOTAT-kalibrering.md
 
 | Fil | Indhold | Kilde | Licens |
 |---|---|---|---|
-| `kk_traeer.json` | 2.865 træer på Assistens Kirkegård fra kommunens træregister; 906 med art | Københavns Kommune, WFS-lag `k101:trae_basis` ([Træ basis på opendata.dk](https://www.opendata.dk/city-of-copenhagen/trae-basis-kommunale-traeer)) | CC BY 4.0 |
-| `kk_gravsteder.json` | 8.599 gravsteder med afdeling, nummer og midtpunkt | Københavns Kommune, WFS-lag `k101:kirkegd_gravsteder` | CC BY 4.0 |
-| `kk_afdelinger.json` | Afdelingsgrænser for Assistens Kirkegård (115 polygoner) | Københavns Kommune, WFS-lag `k101:kirkegd_afdelingsgr_1` | CC BY 4.0 |
-| `kk_detekterede.json` | 2.928 LiDAR-detekterede træer med højde og kroneareal | Københavns Kommune, WFS-lag `k101:automatisk_detekterede_traeer_kk_beta` | CC BY 4.0 |
-| `orto_kort_2025.jpg` | Forårsortofoto 2025, 10 cm, forvrænget ind i `kort.png`'s pixelnet (2800 × 2432) | GeoDanmark / Klimadatastyrelsen via [Dataforsyningen](https://dataforsyningen.dk/data/981) | CC BY 4.0 |
+| `kk_traeer.json` | 2.865 træer på Assistens Kirkegård fra kommunens træregister; 906 med art | Københavns Kommune, WFS-lag `k101:trae_basis` ([Træ basis på opendata.dk](https://www.opendata.dk/city-of-copenhagen/trae-basis-kommunale-traeer)) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.da) (datasætsiden) |
+| `kk_gravsteder.json` | 8.567 gravsteder med afdeling, nummer og midtpunkt (32 rækker uden kirkegård 1, afdeling eller nummer er sprunget over) | Københavns Kommune, WFS-lag `k101:kirkegd_gravsteder` | CC BY 4.0 *antaget* |
+| `kk_afdelinger.json` | Afdelingsgrænser for Assistens Kirkegård (115 polygoner) | Københavns Kommune, WFS-lag `k101:kirkegd_afdelingsgr_1` | CC BY 4.0 *antaget* |
+| `kk_detekterede.json` | 2.928 LiDAR-detekterede træer med højde og kroneareal | Københavns Kommune, WFS-lag `k101:automatisk_detekterede_traeer_kk_beta` | CC BY 4.0 *antaget* |
+| `orto_kort_2025.jpg` | Forårsortofoto 2025, 10 cm, forvrænget ind i `kort.png`'s pixelnet (2800 × 2432) | GeoDanmark / Klimadatastyrelsen via [Dataforsyningen](https://dataforsyningen.dk/data/981) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.da) ([GeoDanmarks vilkår](https://www.geodanmark.dk/)) |
 | `kk_gennemgang.md` | Træer, som `match_kk.py` ikke kunne placere sikkert | genereret | — |
 
-Kreditering: *Trædata og gravsteder: Københavns Kommune (CC BY 4.0). Ortofoto:
-GeoDanmark / Klimadatastyrelsen, Dataforsyningen (CC BY 4.0).* Begge står i
-`README.md`.
+Alle filer er hentet 5. oktober 2026 (feltet `hentet`) og er *bearbejdede*
+udgaver af kilderne (slanket til de felter, siden bruger; gravsteder
+reduceret til polygonernes midtpunkter; ortofotoet forvrænget). CC BY 4.0
+kræver, at det fremgår.
+
+**Licens-forbehold:** kun `trae_basis` har en fundbar datasætside på
+opendata.dk (licensfeltet “CC_BY”). For gravsteder, afdelingsgrænser og de
+detekterede træer oplyser hverken WFS'ens GetCapabilities eller opendata.dk
+en licens; CC BY 4.0 er antaget, fordi det er kommunens standardlicens for
+åbne data. Bekræft gerne hos Københavns Kommune (Teknik- og
+Miljøforvaltningen, åbne data), før projektet gøres mere synligt.
+
+Kreditering (står i `README.md`): *Indeholder data fra Københavns Kommune
+(CC BY 4.0), hentet oktober 2026, bearbejdet. Ortofoto: indeholder data fra
+GeoDanmark / Klimadatastyrelsen via Dataforsyningen (CC BY 4.0), hentet
+oktober 2026, bearbejdet.*
 
 ## Format
 
@@ -70,8 +83,14 @@ hvis GPS-ankrene ændres og ortofotoet skal forvrænges på ny.
    anden bbox eller størrelse, skal tallene i scriptet opdateres.
 
 3. `python3 scripts/match_kk.py` skriver nye forslag til `positions.json`
-   (menneskelige placeringer med `src` `kort`/`gps` bevares) og
-   `kk_gennemgang.md`.
+   og `kk_gennemgang.md`. Scriptet rører kun sine egne poster (`src: "kk"`
+   med en note, der begynder med “KK høj:”/“KK middel:”); menneskers
+   placeringer, et kommunepunkt valgt i værktøjet og sletninger bevares.
+   Uændrede forslag beholder deres tidsstempel; nye og ændrede stemples med
+   datafilens `hentet`-dato kl. 00:00Z, aldrig kørselstidspunktet, så et
+   forslag aldrig er “nyere” end feltarbejde. Andre topniveau-felter i
+   `positions.json` (fx `stops`) bevares.
 
-`orto_kort_2025.jpg` udløser **ikke** et bump af `VERSION` i `sw.js`; den
-hentes først, når laget tændes, og caches derefter som alt andet.
+Filerne i `data/` udløser **ikke** et bump af `VERSION` i `sw.js`. Service
+workeren henter dem netværk-først (offline gives sidst kendte kopi), så en
+genskabt fil vises med det samme; ortofotoet hentes først, når laget tændes.

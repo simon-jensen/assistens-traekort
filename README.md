@@ -40,11 +40,20 @@ GPS-koordinater, tidsstempler og noter i den fil bliver offentlige.
   SIL Open Font License 1.1 (se `fonts/OFL-*.txt`).
 - Artsbeskrivelser og sæsondata (`DESC`/`SEASON` i `index.html`) samt
   `positions.json` er projektets egne data.
-- Trædata, gravsteder og afdelingsgrænser i `data/`: Københavns Kommune
-  (CC BY 4.0, [opendata.dk](https://www.opendata.dk/city-of-copenhagen/trae-basis-kommunale-traeer)).
-  Ortofoto forår 2025 (`data/orto_kort_2025.jpg`): GeoDanmark /
-  Klimadatastyrelsen via [Dataforsyningen](https://dataforsyningen.dk/data/981)
-  (CC BY 4.0). Se `data/README.md`.
+- Trædata, gravsteder, afdelingsgrænser og LiDAR-detekterede træer i
+  `data/`: indeholder data fra Københavns Kommune, hentet 5. oktober 2026 fra
+  kommunens WFS (wfs-kbhkort.kk.dk), bearbejdet (slanket til de felter, siden
+  bruger, og gravsteder reduceret til midtpunkter). Licens
+  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.da) ifølge
+  datasætsiden for [Træ basis på opendata.dk](https://www.opendata.dk/city-of-copenhagen/trae-basis-kommunale-traeer);
+  for de tre øvrige lag er samme licens *antaget* som for kommunens øvrige
+  åbne data, da de ikke har en fundbar datasætside (se `data/README.md`).
+- Ortofoto forår 2025 (`data/orto_kort_2025.jpg`): indeholder data fra
+  GeoDanmark / Klimadatastyrelsen, hentet 5. oktober 2026 via
+  [Dataforsyningen](https://dataforsyningen.dk/data/981), bearbejdet
+  (forvrænget ind i kortets pixelnet). Licens
+  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.da). Se
+  `data/README.md`.
 
 *Til opfølgning:* dokumentér tilladelsen til at gengive kortet og
 træfortegnelsen, og vælg licens for koden (fx MIT) og for projektets egne

@@ -67,7 +67,8 @@ def main(argv):
         afd, nr = (p.get("afdeling_nr") or "").strip(), (p.get("gravsted_nr") or "").strip()
         if not afd or not nr:
             continue
-        pts = [pt for poly in g["coordinates"] for pt in poly[0]]
+        polys = [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"]  # WFS'en leverer MultiPolygon i dag; en Polygon må ikke vælte scriptet
+        pts = [pt for poly in polys for pt in poly[0]]
         rows.append([afd, nr, r6(sum(q[0] for q in pts) / len(pts)), r6(sum(q[1] for q in pts) / len(pts))])
     rows.sort()
     write("kk_gravsteder.json", {"kilde": KILDE, "lag": "kirkegd_gravsteder", "hentet": hentet,
@@ -79,7 +80,8 @@ def main(argv):
         p, g = x["properties"], x["geometry"]
         if not g:
             continue
-        coords = [[[[r6(a), r6(b)] for a, b in ring] for ring in poly] for poly in g["coordinates"]]
+        polys = [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"]
+        coords = [[[[r6(a), r6(b)] for a, b in ring] for ring in poly] for poly in polys]
         feats.append({"type": "Feature", "properties": {"afd": (p.get("afd_nr") or "").strip(), "navn": p.get("afd_navn")},
                       "geometry": {"type": "MultiPolygon", "coordinates": coords}})
     write("kk_afdelinger.json", {"type": "FeatureCollection", "kilde": KILDE, "lag": "kirkegd_afdelingsgr_1", "hentet": hentet, "features": feats})
