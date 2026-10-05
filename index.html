@@ -360,7 +360,7 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
 #anchorbox input[type=text]{font-family:'Outfit';font-size:12px;padding:4px 8px;border:1px solid var(--line);border-radius:3px;background:var(--input-bg);color:var(--ink)}
 .anchorrow{display:flex;gap:8px;align-items:baseline;padding:3px 0;font-size:10.5px}
 .anchorrow .adel{border:none;background:none;color:var(--rare);cursor:pointer;font-family:inherit;font-size:10px;padding:0}
-#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(90px);background:var(--moss-d);color:#fff;font-family:'Spline Sans Mono',monospace;font-size:12px;padding:9px 16px;border-radius:5px;z-index:70;transition:transform .25s;max-width:88vw;text-align:center}
+#toast{pointer-events:none;position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(90px);background:var(--moss-d);color:#fff;font-family:'Spline Sans Mono',monospace;font-size:12px;padding:9px 16px;border-radius:5px;z-index:70;transition:transform .25s;max-width:88vw;text-align:center}
 #toast.show{transform:translateX(-50%) translateY(0)}
 .hot.done{border-color:var(--gold)}
 .hot.done::after{content:"✓";position:absolute;top:-8px;right:-8px;font-size:11px;color:var(--gold);font-weight:600}
@@ -371,6 +371,8 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
 body.tur .turbar{display:block}
 body.tur .wrap{padding-bottom:230px} /* indholdet må ikke gemme sig bag bjælken */
 body.tur .caltool{display:none !important} /* luppen og pilene hører til finjustering hjemme */
+body.tur #toast{bottom:auto;top:14px;transform:translateX(-50%) translateY(-90px)} /* ikke oven på knapperne */
+body.tur #toast.show{transform:translateX(-50%) translateY(0)}
 .turrow{display:flex;gap:8px;align-items:center;margin-bottom:6px;min-height:18px}
 .turrow span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .turbtn{display:block;width:100%;min-height:68px;margin-top:6px;font-family:'Outfit',sans-serif;font-size:20px;font-weight:500;border-radius:10px;border:2px solid transparent;cursor:pointer;
@@ -463,7 +465,7 @@ body.calib .stopdot{display:flex;align-items:center;justify-content:center}
 </div>
 <div id="toast" role="status"></div>
 <div class="turbar" id="turbar" aria-label="Omvisning">
-  <div class="turrow"><span id="turinfo">Omvisning</span><button class="turx" id="turFind" title="Søg efter et træ i listen">🔍 søg</button><button class="turx" id="turNote" title="Note til seneste fangst">✎ note</button><button class="turx" id="turUndo" title="Fortryd seneste fangst">↶ fortryd</button><button class="turx" id="turOff" title="Afslut omvisning">✕</button></div>
+  <div class="turrow"><span id="turinfo">Omvisning</span><button class="turx" id="turFind" title="Søg efter et træ i listen">🔍 søg</button><button class="turx" id="turDrop" title="Fravælg træet" hidden>✕ træ</button><button class="turx" id="turNote" title="Note til seneste fangst">✎ note</button><button class="turx" id="turUndo" title="Fortryd seneste fangst">↶ fortryd</button><button class="turx" id="turOff" title="Afslut omvisning">✕</button></div>
   <button type="button" class="turbtn" id="turTree" hidden>📡 Gem træ</button>
   <button type="button" class="turbtn" id="turStop">⏺ Stop her</button>
 </div>
@@ -696,7 +698,9 @@ function rowAction(e){
   const btn=e.target.closest('.infobtn');
   if(btn){e.stopPropagation();openPanel(+btn.dataset.info);return;}
   const row=e.target.closest('.tree'); if(!row)return;
-  if(document.body.classList.contains('calib')){if(stopSel!==null){pairStop(stopSel,+row.dataset.i);return;}armTree(+row.dataset.i);return;}
+  if(document.body.classList.contains('calib')){if(stopSel!==null){pairStop(stopSel,+row.dataset.i);return;}
+    if(armed===+row.dataset.i){disarm();return;} // samme række igen: fravælg
+    armTree(+row.dataset.i);return;}
   const t=TREES[+row.dataset.i], pos=getPos(t);
   if(pos){clearPeek();showFocus(pos);
     const mw=document.getElementById('mapwrap');
@@ -780,6 +784,7 @@ function fitAffine(){ // mindste kvadraters affine tilpasning (lon,lat) -> (fx,f
 }
 function llToFrac(lat,lon){const u=lon-LON0,v=lat-LAT0;
   return {fx:TF.fx[0]*u+TF.fx[1]*v+TF.fx[2],fy:TF.fy[0]*u+TF.fy[1]*v+TF.fy[2]};}
+function udenforM(f){const dx=Math.max(0,-f.fx,f.fx-1)*IMGW,dy=Math.max(0,-f.fy,f.fy-1)*IMGH;return Math.hypot(dx,dy)*M_PER_PX;} // meter uden for kortet (0 = inden for)
 function anchorErrM(p){const g=llToFrac(p.lat,p.lon);
   return Math.hypot((g.fx-p.fx)*IMGW,(g.fy-p.fy)*IMGH)*M_PER_PX;}
 function placedCount(){let n=0;TREES.forEach(t=>{if(getPos(t))n++;});return n;}
@@ -884,10 +889,10 @@ document.getElementById('calGPS').onclick=()=>{
     if(armed!==target||!document.body.classList.contains('calib'))return;
     const c=pos.coords,f=llToFrac(c.latitude,c.longitude);
     let warn='';
-    const dx=Math.max(0,-f.fx,f.fx-1)*IMGW,dy=Math.max(0,-f.fy,f.fy-1)*IMGH,udenfor=Math.round(Math.hypot(dx,dy)*M_PER_PX);
+    const udenfor=Math.round(udenforM(f));
     // Langt uden for kortet (kontoret, hjemme): ingen placering — og ingen rå koordinater i en fil, der ender offentligt i repoet
     if(udenfor>30){calMsg('GPS: ±'+Math.round(c.accuracy)+' m, men positionen ligger '+udenfor+' m uden for kortet. Ingen placering sat — stil dig ved træet og prøv igen.');return;}
-    if(dx||dy)warn=' — OBS: '+udenfor+' m uden for kortet; krydset er lagt på kanten';
+    if(udenfor)warn=' — OBS: '+udenfor+' m uden for kortet; krydset er lagt på kanten';
     cand={fx:Math.min(1,Math.max(0,f.fx)),fy:Math.min(1,Math.max(0,f.fy)),
       lat:c.latitude,lon:c.longitude,acc:Math.round(c.accuracy),src:'gps'};
     updCross();
@@ -935,7 +940,8 @@ function mergedData(){
   (FILEPOS.anchors||[]).concat(STORE.anchors||[]).forEach(a=>{
     const k=a.navn+'|'+a.lat+'|'+a.lon;if(seenA[k])return;seenA[k]=1;anchors.push(a);});
   const out={version:1,updated:new Date().toISOString().slice(0,10),anchors:anchors,trees:trees};
-  if(STORE.stops.length)out.stops=STORE.stops; // uparrede stop rejser med filen fra telefon til computer; filens egne stops indlæses ikke
+  const stops=STORE.stops.filter(s=>!Number.isFinite(s.lat)||stopFrac(s)); // et prøvetryk hjemme (uden for kortet) må ikke ende i en offentlig fil
+  if(stops.length)out.stops=stops; // uparrede stop rejser med filen fra telefon til computer; filens egne stops indlæses ikke
   return out;
 }
 document.getElementById('calExport').onclick=async()=>{
@@ -977,6 +983,8 @@ document.getElementById('calFile').onchange=e=>{
     (d.anchors||[]).forEach(a=>{
       if(a.seed||![a.lat,a.lon,a.fx,a.fy].every(Number.isFinite))return;
       if(!allAnchors().some(b2=>b2.lat===a.lat&&b2.lon===a.lon&&b2.navn===a.navn))STORE.anchors.push(a);});
+    const obs=new Set(Object.values(d.trees||{}).map(v=>v&&v.obs).filter(Boolean));
+    STORE.stops=STORE.stops.filter(s=>!obs.has(s.ts)); // stop, filen allerede har parret, er udtjente her
     let ns=0;(Array.isArray(d.stops)?d.stops:[]).forEach(s=>{ // stop fra en anden enhed; tidsstemplet er nøglen
       if(!s||typeof s.ts!=='string'||STORE.stops.some(x=>x.ts===s.ts))return;
       STORE.stops.push({ts:s.ts,lat:s.lat,lon:s.lon,acc:s.acc,note:s.note});ns++;});
@@ -1043,6 +1051,8 @@ function loadPositionsFile(){ // giver 'ok' | 'stale' (offline-kopi fra service 
         if(f&&f.ts&&v.ts&&f.ts>=v.ts){delete STORE.trees[k];return;}
         if(v.del&&!f)delete STORE.trees[k];
       });
+      const obs=new Set(Object.values(FILEPOS.trees).map(v=>v.obs).filter(Boolean)); // stop, der er parret og publiceret, er udtjente
+      STORE.stops=STORE.stops.filter(s=>!obs.has(s.ts));
       saveStore();
       fitAffine();buildDots();render();ankList();
       return stale?'stale':'ok';
@@ -1078,8 +1088,7 @@ hereBtn.onclick=()=>{
   hereBtn.classList.add('on');hereBtn.setAttribute('aria-pressed','true');toast('Henter din position …');
   let told=false;
   hereWatch=navigator.geolocation.watchPosition(pos=>{
-    const c=pos.coords,f=llToFrac(c.latitude,c.longitude);
-    const dx=Math.max(0,-f.fx,f.fx-1)*IMGW,dy=Math.max(0,-f.fy,f.fy-1)*IMGH,ud=Math.hypot(dx,dy)*M_PER_PX;
+    const c=pos.coords,f=llToFrac(c.latitude,c.longitude),ud=udenforM(f);
     if(ud>60){youEl.hidden=true;if(!told){told=true;toast('Du er ca. '+Math.round(ud)+' m uden for kortet');}return;}
     const fx=Math.min(1,Math.max(0,f.fx)),fy=Math.min(1,Math.max(0,f.fy));
     youEl.style.left=(fx*100)+'%';youEl.style.top=(fy*100)+'%';
@@ -1125,32 +1134,32 @@ function turApply(p){ // skriv (eller overskriv) posten for en fangst med dens h
   let txt,lbl;
   if(p.kind==='stop'){
     let s=STORE.stops.find(x=>x.ts===p.ts);
+    if(!s&&p.saved){turFinish(p);return;} // stoppet er slettet eller parret imens: fangsten afsluttes stille
     if(!s){s={ts:p.ts};STORE.stops.push(s);}
     if(f){s.lat=+f.lat.toFixed(6);s.lon=+f.lon.toFixed(6);s.acc=Math.round(f.acc);}
     txt=hhmm+' stop '+(STORE.stops.indexOf(s)+1);lbl='Stop '+(STORE.stops.indexOf(s)+1)+' gemt';
     if(first)turLast={kind:'stop',ts:p.ts,txt:txt};
   }else{
     if(!f)return;
-    const t=TREES[p.idx],id=treeId(t),g=llToFrac(f.lat,f.lon);
-    const dx=Math.max(0,-g.fx,g.fx-1)*IMGW,dy=Math.max(0,-g.fy,g.fy-1)*IMGH,ud=Math.round(Math.hypot(dx,dy)*M_PER_PX);
-    if(ud>30){turSetInfo(t.plot+': GPS '+ud+' m uden for kortet — venter på en bedre aflæsning');return;} // ingen rå koordinater fra kontoret i en offentlig fil
+    const t=TREES[p.idx],id=treeId(t),g=llToFrac(f.lat,f.lon),ud=Math.round(udenforM(g));
+    if(ud>30){p.fix=null;turSetInfo(t.plot+': GPS '+ud+' m uden for kortet — venter på en bedre aflæsning');return;} // ingen rå koordinater fra kontoret i en offentlig fil; næste aflæsning tages uanset nøjagtighed
     const rec={fx:+Math.min(1,Math.max(0,g.fx)).toFixed(5),fy:+Math.min(1,Math.max(0,g.fy)).toFixed(5),src:'gps',
       lat:+f.lat.toFixed(6),lon:+f.lon.toFixed(6),acc:Math.round(f.acc),ts:p.ts};
     const old=getPos(t);if(old&&old.note)rec.note=old.note;
-    if(first)turLast={kind:'tree',id:id,prev:STORE.trees[id],ts:p.ts,txt:hhmm+' '+t.plot};
+    if(first)turLast={kind:'tree',id:id,prev:STORE.trees[id],ts:p.ts,rts:p.ts,txt:hhmm+' '+t.plot};
     STORE.trees[id]=rec;txt=hhmm+' '+t.plot+' · '+t._vis;lbl=t.plot+' · '+t._vis+' gemt';
   }
   p.saved=true;saveStore();buildDots();stopList();
   if(first){toast(lbl+(f?' · ±'+Math.round(f.acc)+' m':' · henter GPS …'));
     turbarEl.classList.remove('flash');void turbarEl.offsetWidth;turbarEl.classList.add('flash');}
-  if(f&&!p.buzzed){p.buzzed=true;vib(p.kind==='stop'?[60]:[40,60,40]);}
+  if(f&&!p.buzzed){p.buzzed=true;vib(p.kind==='stop'?[60]:[40,60,40,60,40]);}
   turSetInfo((first?'Gemt: ':'Forbedret: ')+txt+(f?' · ±'+Math.round(f.acc)+' m':''));
 }
 function turCapture(kind,idx){
   if(!navigator.geolocation){toast('Din browser tilbyder ikke GPS');return;}
   const now=Date.now();
   if(kind==='stop'){if(now-turLastStop<2500){toast('Stop er allerede gemt (dobbelttryk)');return;}turLastStop=now;}
-  const p={kind:kind,idx:idx,ts:nowTs(),fix:bestFix(turFixes.filter(f=>now-f.t<12000)),saved:false,buzzed:false};
+  const p={kind:kind,idx:idx,ts:nowTs(),fix:bestFix(turFixes.filter(f=>now-f.t<4000)),saved:false,buzzed:false};
   turPend.push(p);
   if(kind==='tree')disarm(); // bjælken er klar til næste træ; svaret lander på p.idx, uanset hvad der vælges imens
   if(kind==='stop'||p.fix)turApply(p);
@@ -1167,7 +1176,7 @@ function turFinish(p){
 function turSync(){ // bjælkens knap og infolinje følger det valgte træ og den seneste aflæsning
   if(!document.body.classList.contains('tur'))return;
   const t=armed!==null?TREES[armed]:null;
-  turTreeBtn.hidden=!t;
+  turTreeBtn.hidden=!t;document.getElementById('turDrop').hidden=!t;
   if(t)turTreeBtn.textContent='📡 Gem '+t.plot+' · '+t._vis;
   if(turPend.length)return; // en fangst skriver selv i infolinjen
   const b=bestFix(turFixes.filter(f=>Date.now()-f.t<15000));
@@ -1177,7 +1186,9 @@ function turUndo(){
   const l=turLast;if(!l){toast('Intet at fortryde');return;}
   turPend.filter(p=>p.ts===l.ts).forEach(p=>{clearTimeout(p.timer);turPend=turPend.filter(x=>x!==p);});
   if(l.kind==='stop')STORE.stops=STORE.stops.filter(s=>s.ts!==l.ts);
-  else{if(l.prev===undefined)delete STORE.trees[l.id];else STORE.trees[l.id]=l.prev;
+  else{const cur=STORE.trees[l.id];
+    if(!cur||cur.ts!==l.rts){turLast=null;turSync();toast('Træet er ændret siden — intet fortrudt');return;} // posten er ikke længere fangstens egen
+    if(l.prev===undefined)delete STORE.trees[l.id];else STORE.trees[l.id]=l.prev;
     if(l.stop)STORE.stops.splice(Math.min(l.stopIdx,STORE.stops.length),0,l.stop);} // en fortrudt parring får sit stop tilbage
   turLast=null;saveStore();buildDots();stopList();render();toast('Fortrudt: '+l.txt);
 }
@@ -1188,11 +1199,11 @@ function turNote(){
   if(n.trim())rec.note=n.trim();else delete rec.note;
   saveStore();stopList();toast('Note gemt');
 }
-function setTur(on){
+function setTur(on,persist){
   on=!!on;if(on===document.body.classList.contains('tur'))return;
   document.body.classList.toggle('tur',on);
   const b=document.getElementById('calTurBtn');b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);
-  try{localStorage.setItem(TUR_KEY,on?'1':'0');}catch(e){}
+  if(persist!==false){try{localStorage.setItem(TUR_KEY,on?'1':'0');}catch(e){}} // et #tur=1-link må ikke sætte sig fast hos modtageren
   if(on){turStartWatch();toast('Omvisning: ⏺ gemmer et stop her · vælg et træ i listen og tryk 📡 for at gemme det');}
   else{turStopWatch();turPend.slice().forEach(turFinish);}
   syncHash();turSync();
@@ -1200,6 +1211,7 @@ function setTur(on){
 document.getElementById('turStop').onclick=()=>turCapture('stop');
 turTreeBtn.onclick=()=>{if(armed!==null)turCapture('tree',armed);};
 document.getElementById('turOff').onclick=()=>setTur(false);
+document.getElementById('turDrop').onclick=()=>disarm();
 document.getElementById('turFind').onclick=()=>{q.scrollIntoView({behavior:SB,block:'start'});q.focus();q.select();}; // ét tryk til søgefeltet, guiden har lige sagt artsnavnet
 document.getElementById('turUndo').onclick=turUndo;
 document.getElementById('turNote').onclick=turNote;
@@ -1207,8 +1219,8 @@ document.getElementById('calTurBtn').onclick=()=>setTur(!document.body.classList
 // Stop på kortet og i listen; parring med et træ (stop først og så træet i listen, eller træet først og så stoppet)
 function stopFrac(s){ // kortposition for et stop, eller null, hvis GPS mangler eller ligger >30 m uden for kortet
   if(!Number.isFinite(s.lat)||!Number.isFinite(s.lon))return null;
-  const g=llToFrac(s.lat,s.lon),dx=Math.max(0,-g.fx,g.fx-1)*IMGW,dy=Math.max(0,-g.fy,g.fy-1)*IMGH;
-  if(Math.hypot(dx,dy)*M_PER_PX>30)return null;
+  const g=llToFrac(s.lat,s.lon);
+  if(udenforM(g)>30)return null;
   return {fx:Math.min(1,Math.max(0,g.fx)),fy:Math.min(1,Math.max(0,g.fy))};
 }
 function stopTxt(s,i){return 'Stop '+(i+1)+' · '+fmtTs(s.ts)+(s.acc?' · ±'+s.acc+' m':' · uden GPS')+(s.note?' · '+s.note:'');}
@@ -1217,7 +1229,7 @@ function buildStopDots(){
   STORE.stops.forEach((s,i)=>{const f=stopFrac(s);if(!f)return;
     const d=document.createElement('button');d.type='button';d.className='stopdot'+(i===stopSel?' sel':'');d.tabIndex=-1;
     d.style.left=(f.fx*100)+'%';d.style.top=(f.fy*100)+'%';d.title=stopTxt(s,i);d.dataset.i=i;d.innerHTML='<span>'+(i+1)+'</span>';
-    d.onclick=ev=>{ev.stopPropagation();if(armed!==null)pairStop(i,armed);else selectStop(stopSel===i?null:i);};
+    d.onclick=ev=>{ev.stopPropagation();if(armed!==null&&!document.body.classList.contains('tur'))pairStop(i,armed);else selectStop(stopSel===i?null:i);}; // parring hører til computeren, ikke omvisningen
     wrap.appendChild(d);});
   document.getElementById('calStopBtn').textContent='⏺ Stop ('+STORE.stops.length+')';
 }
@@ -1242,7 +1254,7 @@ function pairStop(i,idx){
   // ts er parringens tidspunkt (så "nyeste vinder" gælder som ved alle andre placeringer); obs er selve aflæsningens tidspunkt
   const rec={fx:+f.fx.toFixed(5),fy:+f.fy.toFixed(5),src:'gps',lat:s.lat,lon:s.lon,acc:s.acc,ts:nowTs(),obs:s.ts};
   if(s.note)rec.note=s.note;else if(old&&old.note)rec.note=old.note;
-  turLast={kind:'pair',id:id,prev:STORE.trees[id],stop:s,stopIdx:i,txt:'stop '+(i+1)+' → '+t.plot};
+  turLast={kind:'pair',id:id,prev:STORE.trees[id],rts:rec.ts,stop:s,stopIdx:i,txt:'stop '+(i+1)+' → '+t.plot};
   STORE.trees[id]=rec;STORE.stops.splice(i,1);
   selectStop(null);if(armed!==null)disarm();
   saveStore();buildDots();stopList();render();showFocus(f);
@@ -1250,11 +1262,11 @@ function pairStop(i,idx){
 }
 function stopList(){
   const el=document.getElementById('stoplist');
-  el.innerHTML=STORE.stops.length?STORE.stops.map((s,i)=>'<div class="anchorrow"><span style="flex:1">'+esc(stopTxt(s,i))+(s.lat&&!stopFrac(s)?' · uden for kortet':'')+'</span>'+
+  el.innerHTML=STORE.stops.length?STORE.stops.map((s,i)=>'<div class="anchorrow"><span style="flex:1">'+esc(stopTxt(s,i))+(s.lat&&!stopFrac(s)?' · uden for kortet, eksporteres ikke':'')+'</span>'+
     '<button class="adel" data-sel="'+i+'" style="color:var(--moss-d)">vælg</button><button class="adel" data-del="'+i+'">slet</button></div>').join('')
     :'<div style="color:var(--faint)">Ingen stop endnu.</div>';
   if(turLast&&turLast.kind==='pair')el.innerHTML+='<button class="calbtn" id="pairUndo" style="margin-top:6px">↶ Fortryd seneste parring ('+esc(turLast.txt)+')</button>';
-  el.querySelectorAll('[data-sel]').forEach(b=>b.onclick=()=>{const i=+b.dataset.sel;if(armed!==null)pairStop(i,armed);else selectStop(i);});
+  el.querySelectorAll('[data-sel]').forEach(b=>b.onclick=()=>{const i=+b.dataset.sel;if(armed!==null&&!document.body.classList.contains('tur'))pairStop(i,armed);else selectStop(i);});
   el.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{STORE.stops.splice(+b.dataset.del,1);selectStop(null);saveStore();buildDots();stopList();});
   const pu=document.getElementById('pairUndo');if(pu)pu.onclick=turUndo;
   document.getElementById('calStopBtn').textContent='⏺ Stop ('+STORE.stops.length+')';
@@ -1285,7 +1297,7 @@ loadPositionsFile();
   const p=new URLSearchParams(location.hash.slice(1));
   const term=p.get('q');if(term)q.value=term;
   if(p.get('kal')==='1')setCalib(true);
-  if(p.get('tur')==='1'||turPersisted){setCalib(true);setTur(true);} // hjemmeskærms-genvejen åbner uden hash, så tilstanden huskes også lokalt
+  if(p.get('tur')==='1'||turPersisted){setCalib(true);setTur(true,turPersisted);} // hjemmeskærms-genvejen åbner uden hash, så tilstanden huskes også lokalt
   const afd=p.get('afd');
   if(afd&&TREESECS.includes(afd)){selectSec(afd);}else{render();}
 })();

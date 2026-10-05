@@ -122,8 +122,9 @@ if os.path.exists(pp):
                 errors.append(f"positions.json: stop {i} skal være et objekt med 'ts' (ISO-tidsstempel)")
                 continue
             if "lat" in s or "lon" in s:
-                if not (LAT[0] <= s.get("lat", 0) <= LAT[1] and LON[0] <= s.get("lon", 0) <= LON[1]):
-                    errors.append(f"positions.json: stop {i} ({s['ts']}): lat/lon ligger uden for Assistens Kirkegård")
+                ok = all(isinstance(s.get(c), (int, float)) for c in ("lat", "lon"))
+                if not ok or not (LAT[0] <= s["lat"] <= LAT[1] and LON[0] <= s["lon"] <= LON[1]):
+                    errors.append(f"positions.json: stop {i} ({s['ts']}): lat/lon skal være tal inden for Assistens Kirkegård")
         notes.append(f"positions.json: {n_pos} placeringer, {n_del} sletninger, {len(anchors)} ankre")
         if stops:
             notes.append(f"positions.json: {len(stops)} uparrede stop — parres i kalibreringstilstand (⏺ Stop), før filen committes")
