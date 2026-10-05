@@ -21,7 +21,11 @@ oversigtskort, afdeling for afdeling.
 
 Træerne kan placeres præcist på kortet, på stedet med GPS eller med et tryk på
 kortet; **🚶 Omvisning** gemmer et træ eller et stop med ét tryk, når der
-ikke er tid til mere. Fremgangsmåde og dataformat: [KALIBRERING.md](KALIBRERING.md).
+ikke er tid til mere. De fleste placeringer kommer dog fra skrivebordet:
+`scripts/match_kk.py` placerer træerne ud fra kommunens gravsteds- og
+træregister, og **🛰 Ortofoto**/**🌳 KK-træer** viser luftfoto og registrets
+punkter under kalibreringen. Fremgangsmåde og dataformat:
+[KALIBRERING.md](KALIBRERING.md).
 Placeringerne deles via filen `positions.json` i repoets rod. **Bemærk:** rå
 GPS-koordinater, tidsstempler og noter i den fil bliver offentlige.
 
@@ -36,6 +40,11 @@ GPS-koordinater, tidsstempler og noter i den fil bliver offentlige.
   SIL Open Font License 1.1 (se `fonts/OFL-*.txt`).
 - Artsbeskrivelser og sæsondata (`DESC`/`SEASON` i `index.html`) samt
   `positions.json` er projektets egne data.
+- Trædata, gravsteder og afdelingsgrænser i `data/`: Københavns Kommune
+  (CC BY 4.0, [opendata.dk](https://www.opendata.dk/city-of-copenhagen/trae-basis-kommunale-traeer)).
+  Ortofoto forår 2025 (`data/orto_kort_2025.jpg`): GeoDanmark /
+  Klimadatastyrelsen via [Dataforsyningen](https://dataforsyningen.dk/data/981)
+  (CC BY 4.0). Se `data/README.md`.
 
 *Til opfølgning:* dokumentér tilladelsen til at gengive kortet og
 træfortegnelsen, og vælg licens for koden (fx MIT) og for projektets egne

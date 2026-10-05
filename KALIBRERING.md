@@ -124,10 +124,12 @@ GPS-aflæsning er let at spotte og slette igen.
 - Nøglen er `afdeling|gravsted|art` (samme id som “set”-funktionen bruger).
 - `fx`/`fy` er brøkdele af kortbilledet (0–1), samme system som
   afdelingsmarkørerne. Skalaen er ca. 0,46 m pr. billedpixel.
-- `src` er `kort` (trykket på kortet) eller `gps`; ved GPS gemmes også de rå
-  koordinater (`lat`, `lon`) og nøjagtigheden i meter (`acc`). De rå
-  koordinater betyder, at placeringerne kan genberegnes, hvis
-  kort-georeferencen forbedres senere — feltarbejdet skal ikke gøres om.
+- `src` er `kort` (trykket på kortet), `gps` eller `kk` (fra kommunens data,
+  se nedenfor); ved GPS og `kk` gemmes også de rå koordinater (`lat`, `lon`)
+  og nøjagtigheden i meter (`acc`). De rå koordinater betyder, at
+  placeringerne kan genberegnes, hvis kort-georeferencen forbedres senere —
+  feltarbejdet skal ikke gøres om. En `kk`-post har desuden en `note`, der
+  forklarer, hvordan den blev fundet (“KK høj: gravsted direkte”).
 - `fx`/`fy` er den gældende placering; `lat`/`lon` er den rå GPS-aflæsning
   bag den. Finjustering med pilene ændrer kun `fx`/`fy`, mens den rå
   aflæsning bliver stående som dokumentation.
@@ -147,6 +149,42 @@ GPS-aflæsning er let at spotte og slette igen.
   Feltet er kun transport fra telefon til computer: siden læser det **ikke**
   fra den committede fil, kun ved **Importér…**. Parr stoppene, før du
   committer; check-scriptet godkender feltet, men nævner antallet.
+
+## Kommunens data: de fleste træer placeres fra skrivebordet
+
+Københavns Kommune udgiver gravstedspolygoner, afdelingsgrænser, sit
+træregister (art og koordinat) og LiDAR-detekterede træer som åbne data
+(CC BY 4.0), og GeoDanmarks forårsortofoto er frit. Det giver langt bedre
+placeringer end GPS, og det meste kan gøres hjemme. Filerne ligger i
+`data/` (se `data/README.md`).
+
+**`python3 scripts/match_kk.py`** placerer listens træer automatisk: listens
+numre er kirkegårdens gravstedsnumre, så gravstedet slås op direkte eller
+anslås mellem nabonumrene (numrene ligger fortløbende i rækkerne; 0,6 m
+median-fejl på kendte gravsteder). Står der et registreret træ af samme art
+tæt på gravstedet, bruges registrets punkt; ellers “snapper” et
+LiDAR-detekteret træ. Hvert forslag får sikkerhed *høj*, *middel* eller
+*lav*; de to første skrives til `positions.json` med `src: "kk"`, `acc` i
+meter og en `note`, de sidste står i `data/kk_gennemgang.md`. Scriptet
+overskriver aldrig en placering, et menneske har lavet (`kort`/`gps`).
+
+**Gennemgang i kalibreringstilstanden** (på computeren):
+- **🛰 Ortofoto** lægger luftfotoet oven på kortet; skyderen styrer
+  gennemsigtigheden. Kronerne kan ses enkeltvis, så et tryk på kortet kan
+  lande på stammen.
+- **🌳 KK-træer** viser registrets træer som blå punkter (fyldte: med art;
+  blege: uden) og detekterede træer som grå prikker; hold musen over for
+  art, planteår og højde. Har du valgt et træ i listen, sætter et tryk på et
+  blåt punkt krydset dér med registrets koordinat (`src: "kk"`, `acc` 1 m);
+  tryk så **✓ Gem**.
+- Gå `data/kk_gennemgang.md` igennem afdeling for afdeling, og tjek gerne
+  stikprøver af *middel*-forslagene (noten i værktøjet fortæller, hvordan
+  de blev fundet). Et `kk`-forslag, der flyttes med kortet, bliver til en
+  almindelig `kort`-placering og røres ikke af scriptet igen.
+
+Rettes ankrene (**⚓ GPS-ankre**), følger både ortofotoets punkter og
+registrets punkter med; selve ortofotoet er forvrænget efter de indbyggede
+ankre og skal genskabes med `scripts/orto_warp.mjs`, hvis de ændres.
 
 ## Feltarbejde under en omvisning
 

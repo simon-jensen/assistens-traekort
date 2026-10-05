@@ -74,7 +74,17 @@ Format og merge-regler står i `KALIBRERING.md`. Kort: nøglen er træ-id'et,
 `{"del": 1, "ts": …}`. Filen committes af medarbejdere efter feltarbejde;
 `scripts/check_positions.py` skal være grøn.
 
-## 6. Lokal test
+## 6. Kommunens data i `data/`
+
+`data/kk_*.json` og `data/orto_kort_2025.jpg` er slankede udgaver af
+Københavns Kommunes åbne data og GeoDanmarks ortofoto (begge CC BY 4.0, se
+`data/README.md` for kilder, genskabelse og kreditering). De bruges kun af
+kalibreringsværktøjet og af `scripts/match_kk.py`, som skriver forslag med
+`src: "kk"` til `positions.json`; kør scriptet igen, hvis `TREES` eller data
+ændres (menneskelige placeringer bevares). Ingen af filerne udløser et bump
+af `VERSION` i `sw.js`.
+
+## 7. Lokal test
 
 ```
 python3 -m http.server 8000     # åbn http://localhost:8000/
@@ -84,7 +94,7 @@ Service workeren cacher også lokalt. Ser du ikke dine ændringer: bump
 `VERSION`, eller afregistrér workeren og ryd cachen i DevTools → Application.
 GPS, udklipsholder og service worker kræver HTTPS eller localhost.
 
-## 7. Deploy
+## 8. Deploy
 
 GitHub Pages udgiver `main` direkte. Pages sender `cache-control:
 max-age=600`, så ændringer kan være op til 10 minutter om at slå igennem.
