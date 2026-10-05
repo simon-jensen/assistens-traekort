@@ -67,9 +67,9 @@ er også nyttige: de viser, hvor der overhovedet står et træ. Udtrækket:
 https://wfs-kbhkort.kk.dk/k101/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=k101:trae_basis&outputFormat=application%2Fjson&SRSNAME=EPSG:4326&maxFeatures=10000&CQL_FILTER=stednavn%3D%27Assistens%20Kirkeg%C3%A5rd%27
 ```
 
-Licensen for datasættet er efter alt at dømme CC BY 4.0 med Københavns
-Kommune som kilde; det skal aflæses på opendata.dk, før registrets
-koordinater committes, og kilden skal krediteres i README.
+Datasættet er udgivet under Creative Commons Attribution 4.0 International
+(aflæst på opendata.dk 5. oktober 2026), så registrets koordinater kan
+committes, blot Københavns Kommune krediteres som kilde i README.
 
 **Frit ortofoto (bedste grundlag for præcision).** GeoDanmarks forårsortofoto
 (Klimadatastyrelsen, tidl. SDFI) er frie data under CC BY 4.0 med 12,5 cm
