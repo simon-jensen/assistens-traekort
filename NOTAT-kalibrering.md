@@ -1,6 +1,6 @@
 # Notat: er GPS-kalibrering i felten den rigtige metode?
 
-*5. oktober 2026. Vurdering af den nuværende metode (tryk på kortet + lup,
+*5. oktober 2026, træregistret verificeret samme dag. Vurdering af den nuværende metode (tryk på kortet + lup,
 eller GPS pr. træ, localStorage, eksport via deleark, manuel commit af
 `positions.json`) over for alternativerne. Netværksadgangen ved
 udarbejdelsen var begrænset til søgeresultater; hvad der ikke kunne
@@ -12,8 +12,9 @@ Nej, ikke som hovedmetode. GPS i felten kan placere et træ i den rigtige
 afdeling og i den rigtige ende af en række, men ikke skelne nabotræer, og
 328 træer taget ét ad gangen er mange timers feltarbejde for et resultat, der
 alligevel skal rettes bagefter. Den bedste vej er omvendt: placér træerne
-hjemme ved computeren på et frit ortofoto (12,5 cm pr. pixel), gerne med
-kommunens træregister som udgangspunkt, og brug felten til det, kun felten
+hjemme ved computeren med kommunens træregister som udgangspunkt (2.865
+kirkegårdstræer med koordinat, 906 med art) og et frit ortofoto (12,5 cm pr.
+pixel) til resten, og brug felten til det, kun felten
 kan: verificere arter og afgøre de tvivlstilfælde, hvor ortofotoet ikke
 rækker. Omvisningen torsdag passer præcis til dét: artsverifikation og en
 håndfuld markante træer.
@@ -38,25 +39,37 @@ håndfuld markante træer.
 
 ## Alternativer, der kan give mange træer på én gang
 
-**Kommunens træregister (bedste kandidat, ikke verificeret).** Københavns
-Kommune udgiver “Træ basis (Kommunale træer)” og “Gadetræer” på opendata.dk
-(GeoJSON/CSV) og som WFS-laget `k101:trae_basis` på `wfs-kbhkort.kk.dk`
-uden token. Felterne omfatter latinsk art, slægt, dansk navn og planteår;
-registret rummer ca. 60.000 træer, heraf ca. 35.000 med art (treemap.dk,
-2020). Kirkegårdene drives af Teknik- og Miljøforvaltningen, så træerne er
-kommunale, men **om kirkegårdstræerne er med i registret, kunne ikke
-verificeres**: WFS-kaldet blev blokeret af netværkspolitikken. Det afgøres
-med ét kald fra en almindelig maskine:
+**Kommunens træregister (bedste kilde, verificeret 5. oktober).** Københavns
+Kommune udgiver “Træ basis (Kommunale træer)” på opendata.dk og som
+WFS-laget `k101:trae_basis` på `wfs-kbhkort.kk.dk` uden token. Et udtræk
+med filteret `stednavn='Assistens Kirkegård'` gav **2.865 træer** på
+kirkegården, alle med koordinat; **906 har art** (`traeart`), heraf 631 med
+fuldt artsnavn, resten kun slægt (“Malus sp.”). Artsnavnene bærer de samme
+stavefejl som listen fra 2015 (“Crytomeria”, “Physocarbus”, “Atropupurea”),
+så registret er tydeligvis opmålt med listen i hånden. En prøvematchning
+af de 328 mod registret på art + afdeling (med sidens staveretning og en
+grov afdelingstest ud fra nærmeste markør) gav:
+
+| Udfald | Træer |
+|---|---|
+| Én kandidat med samme art i træets afdeling | 162 |
+| Flere kandidater med samme art i afdelingen (vælg på kortet) | 48 |
+| Én kandidat, men lander nærmest en anden afdeling (tjek) | 32 |
+| Flere kandidater, ingen i afdelingen | 60 |
+| Ingen kandidat (mest buske: Hamamelis, Viburnum, Euonymus) | 26 |
+
+Omkring halvdelen af listen kan altså placeres automatisk med registrets
+GIS-nøjagtighed (typisk ≤1–2 m), og yderligere et par hundrede bliver et
+valg mellem få kandidater i stedet for frihånd. De 1.959 anonyme punkter
+er også nyttige: de viser, hvor der overhovedet står et træ. Udtrækket:
 
 ```
-https://wfs-kbhkort.kk.dk/k101/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=k101:trae_basis&outputFormat=json&SRSNAME=EPSG:4326&bbox=12.543,55.687,12.556,55.695,EPSG:4326
+https://wfs-kbhkort.kk.dk/k101/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=k101:trae_basis&outputFormat=application%2Fjson&SRSNAME=EPSG:4326&maxFeatures=10000&CQL_FILTER=stednavn%3D%27Assistens%20Kirkeg%C3%A5rd%27
 ```
 
-Kommer der hundredvis af træer med art, kan de matches mod listen på art +
-afdeling (afdelingspolygoner aflæst i `kort.png`) og give et automatisk
-første bud på de fleste af de 328, med GIS-nøjagtighed (typisk ≤1–2 m).
-Kommer der ingen, falder kilden bort, og man har brugt ti minutter. Licensen
-er typisk CC BY 4.0 for kommunens datasæt (ikke aflæst for netop dette).
+Licensen for datasættet er efter alt at dømme CC BY 4.0 med Københavns
+Kommune som kilde; det skal aflæses på opendata.dk, før registrets
+koordinater committes, og kilden skal krediteres i README.
 
 **Frit ortofoto (bedste grundlag for præcision).** GeoDanmarks forårsortofoto
 (Klimadatastyrelsen, tidl. SDFI) er frie data under CC BY 4.0 med 12,5 cm
@@ -107,8 +120,10 @@ ejer, ikke en teknisk nødvendighed.
    af markante træer med omvisningstilstanden; notér uoverensstemmelser med
    listen i noter. Ikke fuld kalibrering, og ingen forventning om bedre end
    ±5–15 m i felten.
-2. **Ti minutter ved en computer:** kør WFS-kaldet ovenfor. Er kirkegården
-   med, er det den største enkeltgevinst i projektet.
+2. **Træregistret:** et script, der matcher de 328 mod udtrækket på art +
+   afdeling og foreslår `positions.json`-poster med egen kildemarkering
+   (fx `src: "kk"`), plus en liste over tvivlstilfælde til gennemgang på
+   kortet. Det er den største enkeltgevinst i projektet.
 3. **Ortofoto:** opret bruger/token, georeferér `kort.png` i QGIS (eller tilføj
    et sidelag), og placér træerne afdeling for afdeling hjemmefra ud fra
    gravstedsnumrene; brug torsdagens stop og GPS som kontrol.
