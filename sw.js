@@ -3,11 +3,7 @@
 //
 // VIGTIGT: Bump VERSION ved hvert deploy, der ændrer index.html, kortet, fonte eller ikoner.
 // Ellers kan en gammel side hænge fast i cachen hos dem, der allerede har besøgt siden.
-<<<<<<< HEAD
 const VERSION = '2026-10-06b';
-=======
-const VERSION = '2026-10-06b';
->>>>>>> claude/guided-tour-calibration-mode-2tfi26
 const CACHE = 'traekort-' + VERSION;
 const CORE = ['./', './index.html', './manifest.webmanifest'];
 
