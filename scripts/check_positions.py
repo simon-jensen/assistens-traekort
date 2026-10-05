@@ -111,7 +111,22 @@ if os.path.exists(pp):
             ok = isinstance(a, dict) and all(isinstance(a.get(c), (int, float)) for c in ("lat", "lon", "fx", "fy"))
             if not ok or not (LAT[0] <= a["lat"] <= LAT[1] and LON[0] <= a["lon"] <= LON[1] and 0 <= a["fx"] <= 1 and 0 <= a["fy"] <= 1):
                 errors.append(f"positions.json: ugyldigt anker {a.get('navn') if isinstance(a, dict) else a!r}")
+        # 'stops' er valgfri: GPS-stop uden træ fra en omvisning (se KALIBRERING.md). De rejser med filen fra
+        # telefon til computer og bør være parret med træer, før filen committes; siden læser dem ikke fra filen.
+        stops = d.get("stops", [])
+        if not isinstance(stops, list):
+            errors.append("positions.json: 'stops' skal være en liste")
+            stops = []
+        for i, s in enumerate(stops, 1):
+            if not isinstance(s, dict) or not (isinstance(s.get("ts"), str) and TS.match(s["ts"])):
+                errors.append(f"positions.json: stop {i} skal være et objekt med 'ts' (ISO-tidsstempel)")
+                continue
+            if "lat" in s or "lon" in s:
+                if not (LAT[0] <= s.get("lat", 0) <= LAT[1] and LON[0] <= s.get("lon", 0) <= LON[1]):
+                    errors.append(f"positions.json: stop {i} ({s['ts']}): lat/lon ligger uden for Assistens Kirkegård")
         notes.append(f"positions.json: {n_pos} placeringer, {n_del} sletninger, {len(anchors)} ankre")
+        if stops:
+            notes.append(f"positions.json: {len(stops)} uparrede stop — parres i kalibreringstilstand (⏺ Stop), før filen committes")
 else:
     notes.append("positions.json findes ikke endnu (det er i orden)")
 

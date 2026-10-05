@@ -32,6 +32,11 @@ på det præcise sted. Vil du flytte eller slette en placering: slå kalibrering
 til, tryk på træet (eller dets prik på kortet) og brug **Slet placering**
 eller placér forfra.
 
+Har du ikke tid til at stå og trykke på kortet (du går fx med i en omvisning),
+så brug **🚶 Omvisning** — se afsnittet “Feltarbejde under en omvisning”
+nedenfor. Det gemmer et træ eller et “stop” med ét tryk, og det grundige
+arbejde kan vente til computeren.
+
 ## Fra telefon til repo (vigtigt)
 
 Placeringerne ligger først kun i browserens lokale lager på den enhed, du
@@ -55,7 +60,9 @@ brugte. De skal eksporteres for at blive fælles:
 flere, der kalibrerer, eller du skifter telefon undervejs. Ved sammenfald på
 samme træ vinder posten med nyeste tidsstempel, både på kortet og i eksporten.
 Sletninger følger med som poster med `"del": 1`, så et træ, en kollega har
-slettet, ikke dukker op igen fra en gammel telefon.
+slettet, ikke dukker op igen fra en gammel telefon. Uparrede stop fra en
+omvisning følger også med (feltet `stops`), så de kan parres på computeren;
+ved import springes stop, enheden allerede kender (samme `ts`), over.
 
 **Pas på browserens lager.** Placeringerne ligger i localStorage, indtil de er
 eksporteret. Safari kan slette lageret for en side, der ikke har været brugt i
@@ -127,6 +134,84 @@ GPS-aflæsning er let at spotte og slette igen.
 - Nøgler, der ikke matcher et træ, og koordinater uden for 0–1 ignoreres.
   `scripts/check_positions.py` (kører i GitHub Actions) fanger den slags,
   før filen når siden.
+- `obs` (valgfri) sættes, når en placering er lavet ved at parre et stop fra
+  en omvisning med et træ: `ts` er parringens tidspunkt (det, “nyeste
+  vinder” regner med), `obs` er tidspunktet for selve GPS-aflæsningen.
+- `stops` (valgfri, øverste niveau) er en liste af uparrede stop fra en
+  omvisning: `{"ts": …, "lat": …, "lon": …, "acc": 12, "note": "…"}`;
+  `lat`/`lon`/`acc`/`note` kan mangle (et stop uden GPS har kun tidspunkt).
+  Feltet er kun transport fra telefon til computer: siden læser det **ikke**
+  fra den committede fil, kun ved **Importér…**. Parr stoppene, før du
+  committer; check-scriptet godkender feltet, men nævner antallet.
+
+## Feltarbejde under en omvisning
+
+Går du med i en guidet omvisning, kan du ikke stå med lup og pile, mens
+guiden taler og gruppen går videre. **🚶 Omvisning** (knappen i
+kalibreringsbjælken, eller linket `#kal=1&tur=1`) er lavet til det: en fast
+bjælke nederst med to store knapper, der kan rammes uden at kigge.
+
+- **⏺ Stop her** gemmer et *stop*: tidspunkt + GPS-position, uden træ. Nul
+  læsning, nul søgning. Du parrer stoppet med det rigtige træ hjemme.
+- **📡 Gem 〈træ〉** vises, når du har valgt et træ i listen (tryk **🔍 søg**
+  i bjælken, skriv fx “ginkgo”, tryk på artsnavnet). Ét tryk gemmer træet som
+  GPS-placering (`src: gps`) og nulstiller valget, så næste tryk ikke kan
+  lande på et forkert træ. Svaret lander altid på det træ, du trykkede for,
+  også hvis du når at vælge et andet imens.
+- Tilstanden holder GPS’en kørende i baggrunden, så første tryk allerede har
+  en frisk aflæsning. Posten gemmes straks og forbedres stille i op til 8
+  sekunder, hvis en mere præcis aflæsning kommer; telefonen må gerne i
+  lommen med det samme. Bekræftelse: toast, et gyldent blink i bjælken og
+  (Android) en kort vibration — én for stop, tre for træ.
+- **↶ fortryd** tager seneste fangst tilbage; **✎ note** sætter en kort note
+  på den (“ved kapellet”, “guiden sagde *Zelkova*”). **✕** afslutter.
+- Tilstanden huskes på enheden, fordi en genvej på hjemmeskærmen åbner siden
+  uden `#`-del. Sluk den med **✕**, når du er færdig.
+
+**Dagen før**
+1. Åbn siden på telefonen *med net*, så service workeren cacher den, og læg
+   den på hjemmeskærmen. Åbn genvejen (den har sit eget lager, se ovenfor),
+   tryk **Vis værktøjet** i sidefoden, **📍 Kalibrér** og **🚶 Omvisning**.
+2. Giv GPS-tilladelse, når browseren spørger (vælg “tillad”, ikke “kun denne
+   gang”, hvis muligt). Vent, til bjælken viser “GPS ±… m”.
+3. Test ét tryk på **⏺ Stop her** i gaden: toast + blink, og **⏺ Stop (1)**
+   i kalibreringsbjælken. Slet det igen (**⏺ Stop** → *slet*), eller lad det
+   stå og slet det hjemme; et stop uden for kortet kan ikke parres og giver
+   fejl i check-scriptet, hvis det committes.
+4. Slå flytilstand til et øjeblik og genindlæs: siden skal stadig vise sig
+   (offline). Oplad telefonen; GPS i baggrunden i to timer koster batteri.
+   Lad tilstanden stå tændt.
+
+**Under omvisningen**
+- Guiden standser ved et træ: tag telefonen op, tryk **⏺ Stop her**, læg den
+  væk. Det er alt. Stå så vidt muligt tæt på stammen i de sekunder, det tager.
+- Kender du træet, og har du ti sekunder: **🔍 søg** → artsnavn → tryk på
+  rækken → **📡 Gem**. Ellers tag et stop og notér evt. artsnavnet med
+  **✎ note**, når gruppen går.
+- Nævner guiden et træ, der ikke er på listen (nyt, eller listen fra 2015 er
+  forældet): tag et stop og skriv artsnavnet i noten. Det ender som et
+  uparret stop i eksporten og kan bruges til at rette `TREES` senere.
+- Siger guiden et andet artsnavn end listen: tag et stop med note; ret ikke
+  noget i felten (`t.sp` må ikke ændres, se CLAUDE.md).
+- Tryk hellere ét stop for meget end ét for lidt; **↶ fortryd** findes.
+
+**Bagefter (samme dag)**
+1. Mens telefonen har net: **⬇ Eksportér** og send filen til dig selv
+   (eller **📋 Kopiér**). Gør det samme dag: Safari kan rydde lageret for en
+   side, der ikke er brugt i 7 dage, og genvejens lager er adskilt fra
+   Safaris.
+2. På computeren: åbn siden med `#kal=1`, tryk **Importér…** og vælg filen.
+   Stoppene vises som blå, nummererede ruder på kortet og under **⏺ Stop**.
+3. Parr: tryk på et stop (ruden eller *vælg* i listen), derefter på træet i
+   listen — eller træet først og så ruden. Træet får stoppets GPS-position
+   som `src: gps`, stoppet forsvinder, og noten følger med. Fortrudt?
+   **↶ Fortryd seneste parring** i stop-boksen.
+4. Finjustér: tryk på træets prik, flyt med kortet/luppen/pilene, **✓ Gem**.
+   Den rå GPS-aflæsning bliver stående i posten som dokumentation.
+5. Slet stop, der ikke kan parres, **⬇ Eksportér** igen, læg filen som
+   `positions.json` i repo-roden og kør `python3 scripts/check_positions.py`,
+   før du committer. Tryk **✕**/**🚶 Omvisning** på telefonen, så tilstanden
+   (og GPS’en) ikke bliver ved med at køre.
 
 ## Begrænsning
 

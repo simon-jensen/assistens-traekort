@@ -349,6 +349,7 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
 .nudge button,.calbtn{font-family:'Spline Sans Mono',monospace;font-size:11px;border:1px solid var(--bark);background:transparent;color:var(--bark);border-radius:3px;cursor:pointer;padding:5px 10px}
 .nudge button:hover,.calbtn:hover{background:var(--bark);color:var(--paper)}
 .calbtn{min-height:36px}
+.calbtn.on{background:var(--bark);color:var(--paper)}
 .calbtn.go{border-color:var(--moss-d);color:var(--moss-d);font-weight:500}
 .calbtn.go:hover{background:var(--moss-d);color:#fff}
 .calbtn.warn{border-color:var(--rare);color:var(--rare)}
@@ -364,8 +365,33 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
 .hot.done{border-color:var(--gold)}
 .hot.done::after{content:"✓";position:absolute;top:-8px;right:-8px;font-size:11px;color:var(--gold);font-weight:600}
 .tree.armed{background:rgba(200,162,74,.18);outline:2px solid var(--gold);outline-offset:-2px}
+/* — Omvisning: ét-tryks fangst med store knapper i en fast bjælke nederst (se KALIBRERING.md) — */
+.turbar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:8px 12px calc(10px + env(safe-area-inset-bottom));
+ background:var(--panel-bg);border-top:2px solid var(--moss-d);box-shadow:0 -8px 26px -16px rgba(0,0,0,.6);font-family:'Spline Sans Mono',monospace;font-size:11px;color:var(--mute)}
+body.tur .turbar{display:block}
+body.tur .wrap{padding-bottom:230px} /* indholdet må ikke gemme sig bag bjælken */
+body.tur .caltool{display:none !important} /* luppen og pilene hører til finjustering hjemme */
+.turrow{display:flex;gap:8px;align-items:center;margin-bottom:6px;min-height:18px}
+.turrow span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.turbtn{display:block;width:100%;min-height:68px;margin-top:6px;font-family:'Outfit',sans-serif;font-size:20px;font-weight:500;border-radius:10px;border:2px solid transparent;cursor:pointer;
+ -webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.turbtn:active{filter:brightness(.85)}
+#turStop{background:var(--rare);color:#fff;min-height:80px;font-size:24px}
+#turTree{background:var(--moss-d);color:#fff}
+#turTree[hidden]{display:none} /* vises kun, mens et træ er valgt i listen */
+.turx{font-family:'Spline Sans Mono',monospace;font-size:10px;border:1px solid var(--line);background:transparent;color:var(--mute);border-radius:3px;padding:3px 8px;cursor:pointer;min-height:28px}
+.turbar.flash{animation:turflash .35s}
+@keyframes turflash{0%{background:var(--gold)}100%{background:var(--panel-bg)}}
+.stopdot{position:absolute;display:none;width:18px;height:18px;border-radius:4px;background:#2b6cd9;color:#fff;border:1.5px solid #fff;transform:translate(-50%,-50%) rotate(45deg);z-index:4;cursor:pointer;padding:0;font-family:'Spline Sans Mono',monospace;font-size:9px;line-height:1}
+.stopdot span{display:block;transform:rotate(-45deg)}
+body.calib .stopdot{display:flex;align-items:center;justify-content:center}
+.stopdot.sel{box-shadow:0 0 0 3px var(--gold)}
+#stopbox{display:none;margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
+#stopbox.open{display:block}
+#stopsel{display:none;margin-top:6px;padding:6px 8px;border:1px solid #2b6cd9;border-radius:4px}
+#stopsel.open{display:block}
 @media (prefers-color-scheme: dark){ /* hvid tekst på de lyse mørk-tilstands-farver giver for lav kontrast */
- .filterbtn.on,#calBtn.on,#toast,.calbtn.go:hover,.calbtn.warn:hover,.infobtn:hover,.lookup:hover{color:var(--plot-text)}
+ .filterbtn.on,#calBtn.on,#toast,.calbtn.go:hover,.calbtn.warn:hover,.infobtn:hover,.lookup:hover,#turStop,#turTree{color:var(--plot-text)}
 }
 @media (prefers-reduced-motion: reduce){
  .hot.active::before,#focusdot::before{animation:none}
@@ -389,9 +415,16 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
     <button class="calbtn" id="calCopy">📋 Kopiér</button>
     <button class="calbtn" id="calImportBtn">Importér…</button>
     <button class="calbtn" id="calAnchorBtn">⚓ GPS-ankre</button>
+    <button class="calbtn" id="calStopBtn">⏺ Stop</button>
+    <button class="calbtn" id="calTurBtn" aria-pressed="false">🚶 Omvisning</button>
     <span class="count" id="calcount" style="margin-left:auto"></span>
   </div>
   <input type="file" id="calFile" accept="application/json,.json" style="display:none">
+  <div id="stopbox">
+    <div style="margin-bottom:6px"><b>Stop</b> er GPS-aflæsninger uden træ, fanget med ét tryk under en omvisning. Parring: tryk på et stop (her eller på kortets blå ruder), og derefter på det træ i listen, der stod der — eller omvendt. Stoppene følger med i eksporten (feltet <code>stops</code>) og bør være parret, før <code>positions.json</code> committes.</div>
+    <div id="stoplist"></div>
+  </div>
+  <div id="stopsel"></div>
   <div id="anchorbox">
     <div style="margin-bottom:6px"><b>GPS-ankre</b> forbinder kortbilledet med virkelighedens koordinater. Fire hjørner er indbygget. Vil du forbedre præcisionen: stil dig et sted, du entydigt kan udpege på kortet (en låge, et hjørne), skriv et navn, tryk <b>Nyt anker</b> — og tryk så på kortet, dér hvor du står. GPS-positionen gemmes automatisk.</div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
@@ -429,6 +462,11 @@ body.calib:not(.placing) .dot::after{content:"";position:absolute;inset:-9px}
   </div>
 </div>
 <div id="toast" role="status"></div>
+<div class="turbar" id="turbar" aria-label="Omvisning">
+  <div class="turrow"><span id="turinfo">Omvisning</span><button class="turx" id="turFind" title="Søg efter et træ i listen">🔍 søg</button><button class="turx" id="turNote" title="Note til seneste fangst">✎ note</button><button class="turx" id="turUndo" title="Fortryd seneste fangst">↶ fortryd</button><button class="turx" id="turOff" title="Afslut omvisning">✕</button></div>
+  <button type="button" class="turbtn" id="turTree" hidden>📡 Gem træ</button>
+  <button type="button" class="turbtn" id="turStop">⏺ Stop her</button>
+</div>
 <div class="legend">
   <span><span class="ringL"></span>Klikbar afdeling</span>
   <span><span class="dotL"></span>Indeholder sjælden art</span>
@@ -595,6 +633,8 @@ function syncHash(){
   const p=new URLSearchParams();
   if(curSec)p.set('afd',curSec);
   if(q.value.trim())p.set('q',q.value.trim());
+  if(document.body.classList.contains('calib'))p.set('kal','1'); // #kal=1 og #tur=1 overlever en genindlæsning
+  if(document.body.classList.contains('tur'))p.set('tur','1');
   const h=p.toString();
   history.replaceState(null,'',h?('#'+h):location.pathname+location.search);
 }
@@ -656,7 +696,7 @@ function rowAction(e){
   const btn=e.target.closest('.infobtn');
   if(btn){e.stopPropagation();openPanel(+btn.dataset.info);return;}
   const row=e.target.closest('.tree'); if(!row)return;
-  if(document.body.classList.contains('calib')){armTree(+row.dataset.i);return;}
+  if(document.body.classList.contains('calib')){if(stopSel!==null){pairStop(stopSel,+row.dataset.i);return;}armTree(+row.dataset.i);return;}
   const t=TREES[+row.dataset.i], pos=getPos(t);
   if(pos){clearPeek();showFocus(pos);
     const mw=document.getElementById('mapwrap');
@@ -708,9 +748,9 @@ const SEED_ANCHORS=[
  {lat:55.690514,lon:12.554329,fx:1001/IMGW,fy:1146/IMGH,navn:'Hjørnet Kapelvej / Nørrebrogade',seed:1},
  {lat:55.693494,lon:12.549890,fx:1272/IMGW,fy:252/IMGH,navn:'Hjørnet ved Nørrebros Runddel',seed:1}];
 const POS_KEY='assistens_pos_v1';
-let STORE={anchors:[],trees:{}};
+let STORE={anchors:[],trees:{},stops:[]}; // stops: GPS-stop uden træ fra en omvisning (parres bagefter, se KALIBRERING.md)
 let FILEPOS={anchors:[],trees:{}};
-try{const s=JSON.parse(localStorage.getItem(POS_KEY)||'{}');STORE={anchors:s.anchors||[],trees:s.trees||{}};}catch(e){}
+try{const s=JSON.parse(localStorage.getItem(POS_KEY)||'{}');STORE={anchors:s.anchors||[],trees:s.trees||{},stops:s.stops||[]};}catch(e){}
 let saveWarned=false;
 function saveStore(){try{localStorage.setItem(POS_KEY,JSON.stringify(STORE));}
   catch(e){if(!saveWarned){saveWarned=true;toast('⚠ Browseren kan ikke gemme lokalt — eksportér, før du lukker siden');}}}
@@ -765,6 +805,7 @@ function buildDots(){
     wrap.appendChild(d);
   });
   document.querySelectorAll('.hot').forEach(h=>h.classList.toggle('done',!!done[h.dataset.s]));
+  buildStopDots();
   updProgress();
 }
 let toastT=null;
@@ -782,7 +823,7 @@ function setCalib(on){
   if(on&&navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{}); // bed browseren om ikke at rydde lageret med placeringerne // et #kal=1-link skal virke, selv om værktøjet er skjult — vis knappen uden at gemme valget
   document.body.classList.toggle('calib',on);
   calBtn.classList.toggle('on',on);calBtn.setAttribute('aria-pressed',on);
-  if(!on){ankArm=false;disarm();document.getElementById('anchorbox').classList.remove('open');document.body.classList.remove('placing');}
+  if(!on){ankArm=false;disarm();document.getElementById('anchorbox').classList.remove('open');document.body.classList.remove('placing');selectStop(null);setTur(false);}
   syncHash();render();
 }
 calBtn.onclick=()=>setCalib(!document.body.classList.contains('calib'));
@@ -893,7 +934,9 @@ function mergedData(){
   const seenA={},anchors=[];
   (FILEPOS.anchors||[]).concat(STORE.anchors||[]).forEach(a=>{
     const k=a.navn+'|'+a.lat+'|'+a.lon;if(seenA[k])return;seenA[k]=1;anchors.push(a);});
-  return {version:1,updated:new Date().toISOString().slice(0,10),anchors:anchors,trees:trees};
+  const out={version:1,updated:new Date().toISOString().slice(0,10),anchors:anchors,trees:trees};
+  if(STORE.stops.length)out.stops=STORE.stops; // uparrede stop rejser med filen fra telefon til computer; filens egne stops indlæses ikke
+  return out;
 }
 document.getElementById('calExport').onclick=async()=>{
   const st=await loadPositionsFile(); // hent nyeste committede fil først, så eksporten fletter oven på den og ikke et gammelt øjebliksbillede
@@ -934,8 +977,11 @@ document.getElementById('calFile').onchange=e=>{
     (d.anchors||[]).forEach(a=>{
       if(a.seed||![a.lat,a.lon,a.fx,a.fy].every(Number.isFinite))return;
       if(!allAnchors().some(b2=>b2.lat===a.lat&&b2.lon===a.lon&&b2.navn===a.navn))STORE.anchors.push(a);});
-    saveStore();fitAffine();buildDots();render();ankList();
-    toast('Importeret: '+n+' placeringer'+(skip?' · '+skip+' ugyldige sprunget over':''));
+    let ns=0;(Array.isArray(d.stops)?d.stops:[]).forEach(s=>{ // stop fra en anden enhed; tidsstemplet er nøglen
+      if(!s||typeof s.ts!=='string'||STORE.stops.some(x=>x.ts===s.ts))return;
+      STORE.stops.push({ts:s.ts,lat:s.lat,lon:s.lon,acc:s.acc,note:s.note});ns++;});
+    saveStore();fitAffine();buildDots();render();ankList();stopList();
+    toast('Importeret: '+n+' placeringer'+(ns?' · '+ns+' stop':'')+(skip?' · '+skip+' ugyldige sprunget over':''));
   }).catch(err=>toast('Kunne ikke læse filen: '+err.message));
   e.target.value='';
 };
@@ -975,8 +1021,8 @@ function ankList(){
     b.onclick=()=>{STORE.anchors.splice(+b.dataset.a,1);saveStore();fitAffine();ankList();};
   });
 }
-// progressbaren skal følge med, når filtre/afdeling ændrer sig
-const _render0=render;render=function(){_render0();updProgress();};
+// progressbaren og omvisningsbjælken skal følge med, når filtre/afdeling/valgt træ ændrer sig
+const _render0=render;render=function(){_render0();updProgress();turSync();};
 function loadPositionsFile(){ // giver 'ok' | 'stale' (offline-kopi fra service workeren) | 'none' (ingen fil endnu) | 'neterr' | 'badjson'
   let stale=false;                // — eksporten må kun fortsætte ved 'ok' og 'none'
   return fetch('positions.json?t='+Date.now(),{cache:'no-store'}) // ?t= omgår også GitHub Pages' CDN-cache (10 min)
@@ -1046,6 +1092,174 @@ hereBtn.onclick=()=>{
       if(mapwrapEl.scrollIntoView)mapwrapEl.scrollIntoView({behavior:SB,block:'center'});}
   },err=>{stopHere();toast('GPS-fejl: '+err.message);},{enableHighAccuracy:true,timeout:20000,maximumAge:5000});
 };
+// ————— Omvisning: diskret fangst med ét tryk (et stop uden træ, eller GPS på det valgte træ) —————
+// Benspænd: man går i en gruppe og lytter til en guide, så telefonen må kun være fremme et par sekunder.
+// Derfor: en fast bjælke nederst med store knapper, en løbende GPS-overvågning (så første tryk allerede har
+// en frisk aflæsning) og "gem straks, forbedr stille": posten gemmes ved første brugbare aflæsning og
+// overskrives, hvis en mere præcis kommer inden for få sekunder. Stop parres med træer bagefter (pairStop).
+// Tilstanden huskes lokalt (TUR_KEY), fordi en hjemmeskærms-genvej åbner manifestets start_url uden #-hash.
+const TUR_KEY='assistens_tur_v1';
+let turPersisted=false;try{turPersisted=localStorage.getItem(TUR_KEY)==='1';}catch(e){}
+let turWatch=null,turFixes=[],turPend=[],turLast=null,stopSel=null,turLastStop=0;
+const turbarEl=document.getElementById('turbar'),turInfo=document.getElementById('turinfo'),turTreeBtn=document.getElementById('turTree');
+function fmtTs(ts,kun){const d=new Date(ts);if(isNaN(d))return ts;
+  return kun?d.toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit'}):d.toLocaleString('da-DK',{weekday:'short',hour:'2-digit',minute:'2-digit'});}
+function bestFix(fixes){return fixes.reduce((a,b)=>(!a||b.acc<a.acc)?b:a,null);}
+function vib(p){try{if(navigator.vibrate)navigator.vibrate(p);}catch(e){}} // Android; iOS Safari har ingen vibration — der er toast og blink
+function turSetInfo(m){turInfo.textContent=m;}
+function turStartWatch(){
+  if(!navigator.geolocation||!document.body.classList.contains('tur'))return;
+  if(turWatch!==null)navigator.geolocation.clearWatch(turWatch);
+  turWatch=navigator.geolocation.watchPosition(pos=>{const c=pos.coords;turFeed({lat:c.latitude,lon:c.longitude,acc:c.accuracy,t:Date.now()});},
+    err=>{turSetInfo('GPS-fejl: '+err.message);},{enableHighAccuracy:true,timeout:20000,maximumAge:1000});
+}
+function turStopWatch(){if(turWatch!==null&&navigator.geolocation)navigator.geolocation.clearWatch(turWatch);turWatch=null;}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&document.body.classList.contains('tur'))turStartWatch();}); // efter skærmlås: overvågningen genstartes
+function turFeed(f){ // hver aflæsning: husk de seneste, og opgradér igangværende fangster med en bedre aflæsning
+  turFixes.push(f);if(turFixes.length>30)turFixes.shift();
+  turPend.slice().forEach(p=>{if(!p.fix||f.acc<p.fix.acc){p.fix=f;turApply(p);}if(f.acc<=5)turFinish(p);}); // under 5 m bliver det ikke på en telefon
+  if(!turPend.length)turSync();
+}
+function turApply(p){ // skriv (eller overskriv) posten for en fangst med dens hidtil bedste aflæsning
+  const f=p.fix,first=!p.saved,hhmm=fmtTs(p.ts,true);
+  let txt,lbl;
+  if(p.kind==='stop'){
+    let s=STORE.stops.find(x=>x.ts===p.ts);
+    if(!s){s={ts:p.ts};STORE.stops.push(s);}
+    if(f){s.lat=+f.lat.toFixed(6);s.lon=+f.lon.toFixed(6);s.acc=Math.round(f.acc);}
+    txt=hhmm+' stop '+(STORE.stops.indexOf(s)+1);lbl='Stop '+(STORE.stops.indexOf(s)+1)+' gemt';
+    if(first)turLast={kind:'stop',ts:p.ts,txt:txt};
+  }else{
+    if(!f)return;
+    const t=TREES[p.idx],id=treeId(t),g=llToFrac(f.lat,f.lon);
+    const dx=Math.max(0,-g.fx,g.fx-1)*IMGW,dy=Math.max(0,-g.fy,g.fy-1)*IMGH,ud=Math.round(Math.hypot(dx,dy)*M_PER_PX);
+    if(ud>30){turSetInfo(t.plot+': GPS '+ud+' m uden for kortet — venter på en bedre aflæsning');return;} // ingen rå koordinater fra kontoret i en offentlig fil
+    const rec={fx:+Math.min(1,Math.max(0,g.fx)).toFixed(5),fy:+Math.min(1,Math.max(0,g.fy)).toFixed(5),src:'gps',
+      lat:+f.lat.toFixed(6),lon:+f.lon.toFixed(6),acc:Math.round(f.acc),ts:p.ts};
+    const old=getPos(t);if(old&&old.note)rec.note=old.note;
+    if(first)turLast={kind:'tree',id:id,prev:STORE.trees[id],ts:p.ts,txt:hhmm+' '+t.plot};
+    STORE.trees[id]=rec;txt=hhmm+' '+t.plot+' · '+t._vis;lbl=t.plot+' · '+t._vis+' gemt';
+  }
+  p.saved=true;saveStore();buildDots();stopList();
+  if(first){toast(lbl+(f?' · ±'+Math.round(f.acc)+' m':' · henter GPS …'));
+    turbarEl.classList.remove('flash');void turbarEl.offsetWidth;turbarEl.classList.add('flash');}
+  if(f&&!p.buzzed){p.buzzed=true;vib(p.kind==='stop'?[60]:[40,60,40]);}
+  turSetInfo((first?'Gemt: ':'Forbedret: ')+txt+(f?' · ±'+Math.round(f.acc)+' m':''));
+}
+function turCapture(kind,idx){
+  if(!navigator.geolocation){toast('Din browser tilbyder ikke GPS');return;}
+  const now=Date.now();
+  if(kind==='stop'){if(now-turLastStop<2500){toast('Stop er allerede gemt (dobbelttryk)');return;}turLastStop=now;}
+  const p={kind:kind,idx:idx,ts:nowTs(),fix:bestFix(turFixes.filter(f=>now-f.t<12000)),saved:false,buzzed:false};
+  turPend.push(p);
+  if(kind==='tree')disarm(); // bjælken er klar til næste træ; svaret lander på p.idx, uanset hvad der vælges imens
+  if(kind==='stop'||p.fix)turApply(p);
+  if(!p.saved)turSetInfo('Henter GPS …');
+  if(!turFixes.length||now-turFixes[turFixes.length-1].t>15000)turStartWatch(); // overvågningen ser død ud: genstart
+  p.timer=setTimeout(()=>turFinish(p),p.fix?8000:20000);
+}
+function turFinish(p){
+  clearTimeout(p.timer);turPend=turPend.filter(x=>x!==p);
+  if(!p.saved)toast('⚠ Ingen GPS-aflæsning — '+TREES[p.idx].plot+' ikke gemt');
+  else if(!p.fix)toast('Stop gemt uden GPS-aflæsning (kun tidspunkt)');
+  if(!turPend.length)turSync();
+}
+function turSync(){ // bjælkens knap og infolinje følger det valgte træ og den seneste aflæsning
+  if(!document.body.classList.contains('tur'))return;
+  const t=armed!==null?TREES[armed]:null;
+  turTreeBtn.hidden=!t;
+  if(t)turTreeBtn.textContent='📡 Gem '+t.plot+' · '+t._vis;
+  if(turPend.length)return; // en fangst skriver selv i infolinjen
+  const b=bestFix(turFixes.filter(f=>Date.now()-f.t<15000));
+  turSetInfo((b?'GPS ±'+Math.round(b.acc)+' m':'GPS: venter …')+' · '+STORE.stops.length+' stop'+(turLast?' · sidst: '+turLast.txt:''));
+}
+function turUndo(){
+  const l=turLast;if(!l){toast('Intet at fortryde');return;}
+  turPend.filter(p=>p.ts===l.ts).forEach(p=>{clearTimeout(p.timer);turPend=turPend.filter(x=>x!==p);});
+  if(l.kind==='stop')STORE.stops=STORE.stops.filter(s=>s.ts!==l.ts);
+  else{if(l.prev===undefined)delete STORE.trees[l.id];else STORE.trees[l.id]=l.prev;
+    if(l.stop)STORE.stops.splice(Math.min(l.stopIdx,STORE.stops.length),0,l.stop);} // en fortrudt parring får sit stop tilbage
+  turLast=null;saveStore();buildDots();stopList();render();toast('Fortrudt: '+l.txt);
+}
+function turNote(){
+  const l=turLast;if(!l){toast('Ingen fangst at notere på');return;}
+  const rec=l.kind==='stop'?STORE.stops.find(s=>s.ts===l.ts):STORE.trees[l.id];if(!rec){toast('Fangsten findes ikke længere');return;}
+  const n=prompt('Note til '+l.txt+':',rec.note||'');if(n===null)return;
+  if(n.trim())rec.note=n.trim();else delete rec.note;
+  saveStore();stopList();toast('Note gemt');
+}
+function setTur(on){
+  on=!!on;if(on===document.body.classList.contains('tur'))return;
+  document.body.classList.toggle('tur',on);
+  const b=document.getElementById('calTurBtn');b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);
+  try{localStorage.setItem(TUR_KEY,on?'1':'0');}catch(e){}
+  if(on){turStartWatch();toast('Omvisning: ⏺ gemmer et stop her · vælg et træ i listen og tryk 📡 for at gemme det');}
+  else{turStopWatch();turPend.slice().forEach(turFinish);}
+  syncHash();turSync();
+}
+document.getElementById('turStop').onclick=()=>turCapture('stop');
+turTreeBtn.onclick=()=>{if(armed!==null)turCapture('tree',armed);};
+document.getElementById('turOff').onclick=()=>setTur(false);
+document.getElementById('turFind').onclick=()=>{q.scrollIntoView({behavior:SB,block:'start'});q.focus();q.select();}; // ét tryk til søgefeltet, guiden har lige sagt artsnavnet
+document.getElementById('turUndo').onclick=turUndo;
+document.getElementById('turNote').onclick=turNote;
+document.getElementById('calTurBtn').onclick=()=>setTur(!document.body.classList.contains('tur'));
+// Stop på kortet og i listen; parring med et træ (stop først og så træet i listen, eller træet først og så stoppet)
+function stopFrac(s){ // kortposition for et stop, eller null, hvis GPS mangler eller ligger >30 m uden for kortet
+  if(!Number.isFinite(s.lat)||!Number.isFinite(s.lon))return null;
+  const g=llToFrac(s.lat,s.lon),dx=Math.max(0,-g.fx,g.fx-1)*IMGW,dy=Math.max(0,-g.fy,g.fy-1)*IMGH;
+  if(Math.hypot(dx,dy)*M_PER_PX>30)return null;
+  return {fx:Math.min(1,Math.max(0,g.fx)),fy:Math.min(1,Math.max(0,g.fy))};
+}
+function stopTxt(s,i){return 'Stop '+(i+1)+' · '+fmtTs(s.ts)+(s.acc?' · ±'+s.acc+' m':' · uden GPS')+(s.note?' · '+s.note:'');}
+function buildStopDots(){
+  document.querySelectorAll('#mapwrap .stopdot').forEach(el=>el.remove());
+  STORE.stops.forEach((s,i)=>{const f=stopFrac(s);if(!f)return;
+    const d=document.createElement('button');d.type='button';d.className='stopdot'+(i===stopSel?' sel':'');d.tabIndex=-1;
+    d.style.left=(f.fx*100)+'%';d.style.top=(f.fy*100)+'%';d.title=stopTxt(s,i);d.dataset.i=i;d.innerHTML='<span>'+(i+1)+'</span>';
+    d.onclick=ev=>{ev.stopPropagation();if(armed!==null)pairStop(i,armed);else selectStop(stopSel===i?null:i);};
+    wrap.appendChild(d);});
+  document.getElementById('calStopBtn').textContent='⏺ Stop ('+STORE.stops.length+')';
+}
+function selectStop(i){
+  stopSel=(i===null||i===undefined||!STORE.stops[i])?null:i;
+  document.querySelectorAll('.stopdot').forEach(d=>d.classList.toggle('sel',+d.dataset.i===stopSel));
+  const el=document.getElementById('stopsel');
+  if(stopSel===null){el.classList.remove('open');el.innerHTML='';return;}
+  const s=STORE.stops[stopSel],f=stopFrac(s);
+  el.classList.add('open');
+  el.innerHTML='<b>'+esc(stopTxt(s,stopSel))+'</b> — tryk nu på det træ i listen, der stod her. '+
+    '<button class="calbtn warn" id="stopDel">Slet stop</button> <button class="calbtn" id="stopCancel">Annullér</button>';
+  document.getElementById('stopDel').onclick=()=>{STORE.stops.splice(stopSel,1);selectStop(null);saveStore();buildDots();stopList();toast('Stop slettet');};
+  document.getElementById('stopCancel').onclick=()=>selectStop(null);
+  if(f){showFocus(f);centerMap([f.fx,f.fy],true);}
+}
+function pairStop(i,idx){
+  const s=STORE.stops[i],t=TREES[idx];if(!s||!t)return;
+  const f=stopFrac(s);
+  if(!f){toast('Stop '+(i+1)+' har ingen brugbar GPS-position (mangler eller uden for kortet)');return;}
+  const id=treeId(t),old=getPos(t);
+  // ts er parringens tidspunkt (så "nyeste vinder" gælder som ved alle andre placeringer); obs er selve aflæsningens tidspunkt
+  const rec={fx:+f.fx.toFixed(5),fy:+f.fy.toFixed(5),src:'gps',lat:s.lat,lon:s.lon,acc:s.acc,ts:nowTs(),obs:s.ts};
+  if(s.note)rec.note=s.note;else if(old&&old.note)rec.note=old.note;
+  turLast={kind:'pair',id:id,prev:STORE.trees[id],stop:s,stopIdx:i,txt:'stop '+(i+1)+' → '+t.plot};
+  STORE.trees[id]=rec;STORE.stops.splice(i,1);
+  selectStop(null);if(armed!==null)disarm();
+  saveStore();buildDots();stopList();render();showFocus(f);
+  toast('Stop → '+t.plot+' · '+t._vis+' placeret (±'+(s.acc||'?')+' m) — finjustér evt. via prikken');
+}
+function stopList(){
+  const el=document.getElementById('stoplist');
+  el.innerHTML=STORE.stops.length?STORE.stops.map((s,i)=>'<div class="anchorrow"><span style="flex:1">'+esc(stopTxt(s,i))+(s.lat&&!stopFrac(s)?' · uden for kortet':'')+'</span>'+
+    '<button class="adel" data-sel="'+i+'" style="color:var(--moss-d)">vælg</button><button class="adel" data-del="'+i+'">slet</button></div>').join('')
+    :'<div style="color:var(--faint)">Ingen stop endnu.</div>';
+  if(turLast&&turLast.kind==='pair')el.innerHTML+='<button class="calbtn" id="pairUndo" style="margin-top:6px">↶ Fortryd seneste parring ('+esc(turLast.txt)+')</button>';
+  el.querySelectorAll('[data-sel]').forEach(b=>b.onclick=()=>{const i=+b.dataset.sel;if(armed!==null)pairStop(i,armed);else selectStop(i);});
+  el.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{STORE.stops.splice(+b.dataset.del,1);selectStop(null);saveStore();buildDots();stopList();});
+  const pu=document.getElementById('pairUndo');if(pu)pu.onclick=turUndo;
+  document.getElementById('calStopBtn').textContent='⏺ Stop ('+STORE.stops.length+')';
+}
+document.getElementById('calStopBtn').onclick=()=>{document.getElementById('stopbox').classList.toggle('open');stopList();};
 // Kalibreringsværktøjet er til medarbejdere og er skjult for almindelige besøgende.
 // Det tændes med knappen i sidefoden (valget huskes i browseren) eller via et #kal=1-link.
 const TOOLS_KEY='assistens_tools_v1';
@@ -1071,6 +1285,7 @@ loadPositionsFile();
   const p=new URLSearchParams(location.hash.slice(1));
   const term=p.get('q');if(term)q.value=term;
   if(p.get('kal')==='1')setCalib(true);
+  if(p.get('tur')==='1'||turPersisted){setCalib(true);setTur(true);} // hjemmeskærms-genvejen åbner uden hash, så tilstanden huskes også lokalt
   const afd=p.get('afd');
   if(afd&&TREESECS.includes(afd)){selectSec(afd);}else{render();}
 })();

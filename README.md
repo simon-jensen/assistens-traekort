@@ -20,7 +20,8 @@ oversigtskort, afdeling for afdeling.
 ## Kalibrering (medarbejdere)
 
 Træerne kan placeres præcist på kortet, på stedet med GPS eller med et tryk på
-kortet. Fremgangsmåde og dataformat: [KALIBRERING.md](KALIBRERING.md).
+kortet; **🚶 Omvisning** gemmer et træ eller et stop med ét tryk, når der
+ikke er tid til mere. Fremgangsmåde og dataformat: [KALIBRERING.md](KALIBRERING.md).
 Placeringerne deles via filen `positions.json` i repoets rod. **Bemærk:** rå
 GPS-koordinater og tidsstempler i den fil bliver offentlige.
 
