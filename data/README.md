@@ -32,6 +32,14 @@ Vigtigt fund: artsnavnene i træregistret bærer de samme stavefejl som listen
 fra 2015 (“Crytomeria”, “Physocarbus”, “Atropupurea”), så registret er opmålt
 med listen i hånden. Det gør matchningen i `match_kk.py` troværdig.
 
+## Rå filer: `data/raw/` (ikke i repoet)
+
+Læg de rå WFS-udtræk og det originale ortofoto (4000 × 4365 pixel) i
+`data/raw/`; mappen står i `.gitignore`, så de aldrig ryger med i et commit.
+Udtrækkene kan hentes igen uden token (se nedenfor), men ortofotoet kræver
+en token på Dataforsyningen, så gem originalen. Den skal kun bruges igen,
+hvis GPS-ankrene ændres og ortofotoet skal forvrænges på ny.
+
 ## Sådan genskabes filerne
 
 1. Hent de rå WFS-lag (ingen token). Bbox er kirkegårdens omrids:
@@ -39,11 +47,13 @@ med listen i hånden. Det gør matchningen i `match_kk.py` troværdig.
    ```
    BB="bbox=12.543,55.687,12.556,55.695,EPSG:4326"
    U="https://wfs-kbhkort.kk.dk/k101/ows?service=WFS&version=1.0.0&request=GetFeature&outputFormat=application%2Fjson&SRSNAME=EPSG:4326"
+   cd data/raw
    curl -o trae_basis.json   "$U&typeName=k101:trae_basis&maxFeatures=10000&CQL_FILTER=stednavn%3D%27Assistens%20Kirkeg%C3%A5rd%27"
    curl -o gravsteder.json   "$U&typeName=k101:kirkegd_gravsteder&maxFeatures=50000&$BB"
    curl -o afdelinger.json   "$U&typeName=k101:kirkegd_afdelingsgr_1&maxFeatures=1000"
    curl -o detekterede.json  "$U&typeName=k101:automatisk_detekterede_traeer_kk_beta&maxFeatures=50000&$BB"
-   python3 scripts/kk_hent.py trae_basis.json gravsteder.json afdelinger.json detekterede.json
+   cd ../..
+   python3 scripts/kk_hent.py data/raw/trae_basis.json data/raw/gravsteder.json data/raw/afdelinger.json data/raw/detekterede.json
    ```
 
 2. Ortofotoet kræver en gratis bruger og token på dataforsyningen.dk. Hent
@@ -53,7 +63,8 @@ med listen i hånden. Det gør matchningen i `match_kk.py` troværdig.
    https://api.dataforsyningen.dk/orto_foraar_DAF?token=…&service=WMS&version=1.3.0&request=GetMap&layers=geodanmark_2025_10cm&styles=&crs=EPSG:3857&bbox=1396280,7496357,1397728,7497937&width=4000&height=4365&format=image/jpeg
    ```
 
-   Forvræng det derefter ind i kortets pixelnet med `scripts/orto_warp.mjs`
+   Gem det som `data/raw/orto_assistens_2025.jpg`, og forvræng det ind i
+   kortets pixelnet med `scripts/orto_warp.mjs`
    (kræver Node og Playwright/Chromium; den affine afbildning beregnes af
    bbox'en og sidens fire GPS-ankre, se kommentaren i scriptet). Bruges en
    anden bbox eller størrelse, skal tallene i scriptet opdateres.
