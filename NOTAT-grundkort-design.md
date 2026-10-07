@@ -322,16 +322,73 @@ og om bogstaverne kan læses. Det består alle retninger. Tilføj:
 1. **Lagdelingen:** stregværk og tekst ud af bitmap'en og ind i SVG'en; ret
    dobbelttegningen af bogstaver i `index.html` (`--gk-lbl-op`, eller bedre:
    bitmap uden bogstaver). Luppen på ortofotoet altid.
-2. **Render "plan"** efter tabellen i afsnit 4 som fjerde retning i
-   `kort_render.mjs` (`--kun plan`), lys og mørk, og læg den i
-   sammenligningstavlen. Fjern kroner, gravprikker, OSM-træer og skravering; stier
-   som negativt rum; tre afdelingstoner; øer uden kontur.
+2. **"Plan" er renderet som skitse** (afsnit 8) og kan ses med 🗺 Grundkort.
+   Næste skridt på den: stihierarki (gravrækkernes stier smallere), L's øer
+   samlet, kapellet dæmpet i mørk, og tonefordelingen justeret.
 3. **Afprøv ren SVG** (anbefaling A) på den ældste telefon; fald tilbage til B,
    hvis den hakker ved zoom.
 4. **Trykmål:** `.hot` som usynligt 44 px-mål i centroiden; polygon som sekundært.
 5. **Felttest** med vejfindingsopgaver og KK som nullinje (afsnit 6), og vælg.
 6. **Derefter** det, der allerede står i migrationsplanen: U's grænse, kreditering,
    header, README, `VERSION`, "Luftfoto"-knap for besøgende.
+
+## 8. Skitse: "plan" renderet
+
+For at vise, at afsnit 4 ikke kun er ord, er "plan" lagt ind som fjerde retning
+i `scripts/kort_render.mjs` (`node scripts/kort_render.mjs --kun plan`) og
+renderet i lys og mørk udgave til `data/kort_plan*.webp`. Den kan ses på
+telefonen med `#kal=1` → 📍 Kalibrér → 🗺 Grundkort, indtil knappen siger
+"plan (skitse)", gerne med 🔲 Afdelinger. Skærmbilleder i samme opsætning som
+de andre ligger i `docs/grundkort/plan_*.webp` og `sol_plan.webp`.
+
+Skitsen følger tabellen i afsnit 4 med disse forenklinger: afdelingerne er
+farvet grådigt i op til fire toner (naboskab = inden for 24 px, så også
+afdelinger på hver side af en sti regnes som naboer; fjerde tone blev brugt
+12 gange af 41 flader); alle stier har samme bredde-regel (OSM's bredde × 2,3,
+altså 5 px for footway og 4 px for path); øer i L, K, D og M tegnes kun med
+fyld og en 0,8 px kant i 30 % blæk; bygninger inde på kirkegården under 40 m²
+er udeladt; ingen teksturer, ingen OSM-træer; bogstaver Fraunces 600 i 46 px.
+Bitmap'en bærer stadig stregværk og bogstaver (afsnit 3's lagdeling er *ikke*
+ændret i skitsen; den afprøver kun udtrykket).
+
+**Størrelse** (webp / avif, KB): lys 82 / 50 i 1×, 185 / 100 i 2×; mørk
+85 / 51 og 192 / 102. Budgettet er 102 / 76. Det er altså den første retning
+med OSM-laget, der ligger *under* budgettet, og den koster en tredjedel af
+tegnet plan, fordi teksturer og skravering er væk.
+
+**Hvad skitsen viser** (sammenlign `plan_lys_lag.webp` med
+`tegnet_lys_lag.webp` og `kk_lys_lag.webp`): kirkegården er figuren, byen er
+kulisse; stierne kan ses som lyse mellemrum uden zoom; B, C, D og E kan
+skelnes på tonen, før man finder en grænse; muren er den eneste skarpe linje;
+bogstaverne står som på tegnet plan. I mørk tilstand er der ingen glans:
+dæmpet grøn, grå stier, lys mur og lyse bogstaver.
+
+**Hvad der stadig er galt**, i den rækkefølge det bør rettes:
+
+1. **Stihierarki.** OSM har stier mellem hver gravrække i K, J, H, N og O.
+   Ved 5 px bliver de en hvid kam, der konkurrerer med hovedstierne. Hovedstier
+   (lange, sammenhængende kæder, eller OSM `width`/`name`) skal have 6–7 px,
+   gravrækkernes stier 2–2,5 px, og de bør måske først vises ved zoom. KK's
+   kort gør præcis det: brede gange, tynde rækker.
+2. **L's øer.** 39 små flader med hver sin svage kant læses stadig som pletter.
+   Kanten skal kun ligge på afdelingens ydergrænse (union af polygonerne).
+3. **Kapellet** er hvidt i mørk tilstand (85 % blæk). Dæmp til 65–70 %.
+4. **Tonefordelingen.** Fire toner med 8 %-trin giver for lille forskel mellem
+   nabo-toner nogle steder (fx B og D). Brug tre toner med 10 %-trin
+   (16/26/36 %) og en naboskabstærskel på 12–16 px, og vælg bevidst, hvilke
+   afdelinger der får den mørkeste tone (de små: G, T, U, H).
+5. **U** er stadig en cirkel, og underafdelingsnavne, orienteringspunkter og
+   gravmønster er ikke med (de hører til zoom-laget i SVG'en, afsnit 3).
+6. **Træprikkerne** (7 px `moss-d` med 1,5 px papirring) har mindre kontrast på
+   de grønne flader end på tegnet plans beige (se `plan_lys_lag.webp` mod
+   `tegnet_lys_lag.webp`). Papirringen bærer dem stadig, men ved valget af
+   "plan" bør ringen op på 2 px, eller prikken i `ink`, så træerne, der er
+   kortets egentlige indhold, forbliver det mest kontrastrige på kortet. I mørk
+   tilstand er der intet problem (lys prik på mørk flade).
+
+Sol-simuleringen (`sol_plan.webp` mod `sol_stille.webp` og `sol_tegnet.webp`)
+viser det, afsnit 2.8 forudsiger: fladerne og de brede stier overlever som
+struktur, hvor stille kort blev hvidt og tegnet plan beholdt bogstaverne alene.
 
 ## Tal brugt i notatet
 

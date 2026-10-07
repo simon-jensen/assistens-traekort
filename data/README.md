@@ -56,9 +56,10 @@ oktober 2026, bearbejdet.*
 ## Eget grundkort (`scripts/kort_render.mjs`)
 
 Renderet 2026-10-07 med `node scripts/kort_render.mjs` (Playwright/Chromium; webp og avif med Pillow, da
-cwebp/avifenc ikke fandtes). Tre retninger, hver i lys og mørk udgave, i 1× (1400 × 1216) og 2× (2800 × 2432):
-`kort_tegnet*` (tegnet plan), `kort_stille*` (stille kort) og `kort_orto*` (dæmpet ortofoto; afdelinger
-tegnes kun af vektorlaget). `afdelinger.svg` er vektorlaget med de 19 trykflader (`#afd-A` …) og følger
+cwebp/avifenc ikke fandtes). Fire retninger, hver i lys og mørk udgave, i 1× (1400 × 1216) og 2× (2800 × 2432):
+`kort_tegnet*` (tegnet plan), `kort_stille*` (stille kort), `kort_orto*` (dæmpet ortofoto; afdelinger
+tegnes kun af vektorlaget) og `kort_plan*` (plan: skitse af syntesen i `NOTAT-grundkort-design.md`, uden teksturer,
+med stier som lyse mellemrum og afdelinger i tre-fire toner). `afdelinger.svg` er vektorlaget med de 19 trykflader (`#afd-A` …) og følger
 sidens CSS-variabler. Kun webp ligger i repoet; PNG og AVIF er målt lokalt.
 
 - **OSM:** hentet 2026-10-07 (2798 elementer, © OpenStreetMap-bidragydere, ODbL); omrids fra OSM way 3099111.
@@ -81,6 +82,10 @@ KB = 1024 byte. 1×-målet fra issuet: `kort.png` 215 KB, `kort.webp` 102 KB, `k
 | `kort_orto@2x.webp` | 2800 × 2432 | 8972 | 840 | 645 |
 | `kort_orto_moerk.webp` | 1400 × 1216 | 2370 | 209 | 158 |
 | `kort_orto_moerk@2x.webp` | 2800 × 2432 | 8184 | 590 | 472 |
+| `kort_plan.webp` | 1400 × 1216 | 222 | 82 | 50 |
+| `kort_plan@2x.webp` | 2800 × 2432 | 494 | 185 | 100 |
+| `kort_plan_moerk.webp` | 1400 × 1216 | 240 | 85 | 51 |
+| `kort_plan_moerk@2x.webp` | 2800 × 2432 | 535 | 192 | 102 |
 | `afdelinger.svg` | viewBox 1400 × 1216 | | 129 (svg) | |
 <!-- kort_render:end -->
 

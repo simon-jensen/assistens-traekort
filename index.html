@@ -409,6 +409,7 @@ body.placing #afdlag .gk-afd{pointer-events:none} /* som .hot: mens et træ plac
 #afdlag .gk-afd.peek{stroke:var(--gold);stroke-width:2}
 #afdlag .gk-afd.active{stroke:var(--gold);stroke-width:3;fill-opacity:.22}
 #afdlag .gk-lbl.active{fill:var(--gold)}
+body[data-gk=tegnet] #afdlag .gk-lbl:not(.active),body[data-gk=stille] #afdlag .gk-lbl:not(.active),body[data-gk=plan] #afdlag .gk-lbl:not(.active){opacity:0} /* disse bitmaps bærer selv bogstaverne; SVG'en tegner kun det valgte (guld), så bogstaverne ikke står dobbelt */
 #afdlag .gk-done{display:none;fill:var(--gold);font-size:18px;font-weight:600;pointer-events:none}
 #afdlag .gk-done.done{display:inline}
 .kkdot{position:absolute;display:none;transform:translate(-50%,-50%);z-index:3;padding:0;border:0;cursor:pointer}
@@ -446,7 +447,7 @@ body.calib.kkl .kkdot.reg:hover{box-shadow:0 0 0 3px rgba(200,162,74,.7);z-index
     <button class="calbtn" id="calStopBtn">⏺ Stop</button>
     <button class="calbtn" id="calTurBtn" aria-pressed="false">🚶 Omvisning</button>
     <button class="calbtn" id="calOrtoBtn" aria-pressed="false" title="Luftfoto forår 2025 lagt oven på kortet">🛰 Ortofoto</button><input type="range" id="ortoOp" min="0" max="100" value="70" aria-label="Ortofotoets synlighed" hidden>
-    <button class="calbtn" id="calBaseBtn" title="Skift grundlag: KK's kort, tegnet plan, stille kort eller ortofoto (prototyper, issue #12)">🗺 Grundkort: KK</button>
+    <button class="calbtn" id="calBaseBtn" title="Skift grundlag: KK's kort, tegnet plan, stille kort, ortofoto eller plan (prototyper, issue #12; plan er skitsen i NOTAT-grundkort-design.md)">🗺 Grundkort: KK</button>
     <button class="calbtn" id="calAfdBtn" aria-pressed="false" title="Afdelingspolygoner fra kommunens data som trykflader oven på grundlaget">🔲 Afdelinger</button>
     <button class="calbtn" id="calKKBtn" aria-pressed="false" title="Kommunens træregister og LiDAR-detekterede træer som punkter">🌳 KK-træer</button>
     <span class="count" id="calcount" style="margin-left:auto"></span>
@@ -1361,8 +1362,8 @@ document.getElementById('calOrtoBtn').onclick=()=>setOrto(!document.body.classLi
 ortoOp.oninput=()=>{ortoEl.style.opacity=ortoOp.value/100;};
 // ————— Eget grundkort (prototyper, issue #12; se NOTAT-grundkort.md): grundlag og afdelingspolygoner, kun i kalibreringstilstand —————
 // Alle filer i data/ ligger i kort.png's pixelnet (1400 × 1216, @2x = 2800 × 2432), så FRACS, ankre og positions.json gælder uændret.
-const GK_KEY='assistens_grundkort_v1',AFD_KEY='assistens_afdlag_v1',GK_RET=['kk','tegnet','stille','orto'],
-      GK_NAVN={kk:'KK',tegnet:'tegnet plan',stille:'stille kort',orto:'ortofoto'};
+const GK_KEY='assistens_grundkort_v1',AFD_KEY='assistens_afdlag_v1',GK_RET=['kk','tegnet','stille','orto','plan'],
+      GK_NAVN={kk:'KK',tegnet:'tegnet plan',stille:'stille kort',orto:'ortofoto',plan:'plan (skitse)'};
 const gkEl=document.getElementById('grundkort'),gkMoerk=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
 let grundkort='kk',afdPaa=false,afdHentes=false;
 try{const v=localStorage.getItem(GK_KEY);if(GK_RET.includes(v))grundkort=v;afdPaa=localStorage.getItem(AFD_KEY)==='1';}catch(e){}
@@ -1370,7 +1371,7 @@ function updGrundkort(){
   const on=document.body.classList.contains('calib')&&grundkort!=='kk';
   if(on){const b='data/kort_'+grundkort+(gkMoerk&&gkMoerk.matches?'_moerk':''),src=b+'.webp';
     if(gkEl.getAttribute('src')!==src){gkEl.srcset=src+' 1x, '+b+'@2x.webp 2x';gkEl.src=src;}} // hentes først, når laget vises: ingen netværkskald for besøgende
-  document.body.classList.toggle('gkort',on);
+  document.body.classList.toggle('gkort',on);document.body.dataset.gk=on?grundkort:'kk';
   const btn=document.getElementById('calBaseBtn');btn.textContent='🗺 Grundkort: '+GK_NAVN[grundkort];btn.classList.toggle('on',grundkort!=='kk');
   if(cand)drawLoupe();
 }
