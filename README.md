@@ -69,8 +69,9 @@ rådgivning.
   gravstederne). Licens
   [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.da) ifølge
   datasætsiden for [Træ basis på opendata.dk](https://www.opendata.dk/city-of-copenhagen/trae-basis-kommunale-traeer);
-  for de tre øvrige lag er licensen *ikke bekræftet* (ingen datasætside,
-  intet i WFS'ens GetCapabilities) og skal bekræftes hos kommunen (se
+  for de tre øvrige lag er licensen *ikke bekræftet* (ingen datasætside
+  blandt kommunens 216 på opendata.dk, intet i WFS'ens GetCapabilities;
+  tjekket 7. oktober 2026) og skal bekræftes hos kommunen (se
   `data/README.md`).
 - Ortofoto forår 2025 (`data/orto_kort_2025.jpg`): indeholder data fra
   GeoDanmark / Klimadatastyrelsen, hentet 5. oktober 2026 via

@@ -5,8 +5,8 @@ skal skiftes fra Københavns Kirkegårdes (KK) oversigtskort til projektets eget
 kort af åbne data. Notatet beskriver den tekniske plan, de tre designretninger,
 rettighederne, hvad en pitch skal kunne vise, og en felttest-protokol. Alt
 bygget i denne omgang ligger bag kalibreringsknapperne; besøgende ser stadig
-`kort.png`. Netadgangen fra sessionen var begrænset til GitHub og websøgning,
-så OSM-udtrækket kunne ikke hentes; hvad det betyder, står under “Ikke gjort”.*
+`kort.png`. OSM-udtrækket blev hentet 7. oktober fra en maskine med net; alle
+renderinger, tal og skærmbilleder i notatet er med OSM-laget (se “Ikke gjort”).*
 
 ## Konklusion i fem linjer
 
@@ -121,7 +121,7 @@ står øverst i scriptet). Ingen af filerne i `data/` kræver et `VERSION`-bump.
 
 ### Migrationen som commits
 
-1. **OSM-udtræk** (Simon, fra en maskine med netadgang): kør curl-kommandoen
+1. **OSM-udtræk** (gjort 7. oktober; gentages, når OSM er rettet): kør curl-kommandoen
    i `scripts/osm_slank.mjs`, læg svaret i `data/raw/osm_assistens.json`,
    kør `node scripts/osm_slank.mjs …` og `node scripts/kort_render.mjs`;
    commit `data/osm_assistens.json`, de genererede grundlag og
@@ -155,14 +155,15 @@ står øverst i scriptet). Ingen af filerne i `data/` kræver et `VERSION`-bump.
 kalibrering tændt ligger i `docs/grundkort/` (`<grundlag>_<lys|moerk>_<lag|uden>.webp`,
 `sol_*.webp` er sol-simuleringen, `lup_*.webp` luppen) og i PR'ens
 sammenligningstavle. Målinger: design-rapporten `/tmp/design/rapport.md`
-fra sessionen; tallene står i afsnit “Tal”. Alle renderinger er uden
-OSM-lag, så stier, mure, bygninger og gadenavne mangler i alle tre.*
+fra sessionen; tallene står i afsnit “Tal”. Skærmbillederne er genskabt
+7. oktober med `scripts/grundkort_skaermbilleder.mjs`, efter at OSM-laget kom
+ind: stier, mure, låger, bygninger og gadenavne er med i alle tre.*
 
 | | tegnet plan | stille kort | ortofoto med lag |
 |---|---|---|---|
 | **Idé** | streg og flade som en klassisk kirkegårdsplan: papir, blæk-konturer, Fraunces 600-bogstaver, svag kronetekstur og gravstedsprikker | flade, dæmpede mos-toner uden konturer, stier som lyse mellemrum, Outfit-bogstaver | GeoDanmarks forårsfoto dæmpet (lys: papirslør; mørk: nedtonet), så vektorlaget bærer bogstaver og grænser |
-| **For** | gentager headerens udtryk (Fraunces, papir/blæk); højeste kontrast (11:1 lys, 10:1 mørk); holder bedst i sol; en rigtig mørk udgave | roligst som baggrund for prikkerne; mindste fil (46 KB); markørerne træder tydeligst frem | viser det, man ser i felten (kroner, stier, tage); passer kommunens grænser inden for ca. 0,5 m; luppen får noget at sigte efter |
-| **Imod** | uden OSM fattigere end KK (ingen stier/låger); underafdelingsnavne 3 CSS-px på telefon; luppen viser kun tekstur | grænser og tekstur forsvinder helt i sol; bogstaver kun 4,9–5,3:1; Outfit-bogstaver bryder med headerens Fraunces | lys tilstand 3,3–3,5:1 for bogstav mod foto (haloen redder det); tungest (291 KB / 811 KB 2×); gråt foto mod papir/mos-paletten |
+| **For** | gentager headerens udtryk (Fraunces, papir/blæk); højeste kontrast (11:1 lys, 10:1 mørk); holder bedst i sol; en rigtig mørk udgave | roligst som baggrund for prikkerne; mindste fil (116 KB webp, 79 KB avif); markørerne træder tydeligst frem | viser det, man ser i felten (kroner, stier, tage); passer kommunens grænser inden for ca. 0,5 m; luppen får noget at sigte efter |
+| **Imod** | over budgettet med OSM-laget (256 KB webp, 133 KB avif); underafdelingsnavne 3 CSS-px på telefon; luppen viser kun tekstur | grænser og tekstur forsvinder helt i sol; bogstaver kun 4,9–5,3:1; Outfit-bogstaver bryder med headerens Fraunces | lys tilstand 3,3–3,5:1 for bogstav mod foto (haloen redder det); tungest (292 KB / 826 KB 2×); gråt foto mod papir/mos-paletten |
 | **Telefon i sol** | bedst: bogstaver 2,4:1 efter simuleringen, kontur og mur overlever | dårligst: fladen bliver hvid, kun bogstaverne står | bogstaverne holder via haloen; tynde grænser forsvinder først |
 | **Mørk tilstand** | 9,7–10,9:1, blænder ikke | 5,1–5,3:1, lidt gråt | 4,9–5,3:1 med SVG-laget; fotoet er dæmpet nok |
 
@@ -198,9 +199,10 @@ frarådes som standard på grund af sol. Valget bekræftes i felttesten
 
 *Ikke juridisk rådgivning. Kilderne til dette afsnit er samlet i rettigheds-
 rapporten fra sessionen (ODbL 1.0 og CC BY 4.0 læst i kopier på GitHub;
-OSMF's retningslinjer, ophavsretsloven og opendata.dk's vilkår kun som
-søgeuddrag, fordi siderne var blokeret). Alt, der kun hviler på søgeuddrag,
-bør tjekkes mod originalen, før det citeres i en pitch.*
+OSMF's retningslinjer og ophavsretsloven kun som søgeuddrag, fordi siderne
+var blokeret; opendata.dk's register og kommunens WFS er slået op direkte
+7. oktober). Alt, der kun hviler på søgeuddrag, bør tjekkes mod originalen,
+før det citeres i en pitch.*
 
 ### Hvad der er taget fra KK's kort, og hvad der bevidst ikke er
 
@@ -256,16 +258,18 @@ bør tjekkes mod originalen, før det citeres i en pitch.*
 
 ### Kommunens data og GeoDanmark
 
-- `trae_basis` har en datasætside på opendata.dk med licens CC BY 4.0. For
-  `kirkegd_afdelingsgr_1`, `kirkegd_gravsteder` og
-  `automatisk_detekterede_traeer_kk_beta` findes ingen datasætside, og
-  GetCapabilities oplyser ingen licens. Open Data DK's vilkår lader
-  dataejeren sætte licensen pr. datasæt, og kommunen bruger mindst ét andet
-  vilkårssæt (“Legepladser”), så “kommunens standardlicens” er en svagere
-  antagelse, end `data/README.md` lader forstå. **Forbehold:** CC BY 4.0 er
-  ikke bekræftet; spørg Københavns Kommune (Klima-, Miljø- og
-  Teknikforvaltningen, enheden bag kbhkort/WFS; kontaktpunktet står på
-  datasætsiden for Træ basis). Mail-udkast:
+- `trae_basis` har en datasætside på opendata.dk, hvor begge ressourcer er
+  mærket “CC_BY” (feltet `license_id` i CKAN-API'et er tomt). Slået op
+  7. oktober 2026 i opendata.dk's register (CKAN-API'et på admin.opendata.dk):
+  Københavns Kommune har 216 datasæt, 196 under CC BY 4.0, 2 under CC0 1.0
+  (“Toiletter TMF”, “Vejstøj 2022”) og 18 uden licensfelt. **Ingen** af dem
+  dækker `kirkegd_afdelingsgr_1`, `kirkegd_gravsteder` eller
+  `automatisk_detekterede_traeer_kk_beta`, og WFS'ens GetCapabilities siger
+  kun `Fees: NONE` og `AccessConstraints: NONE` uden licens pr. lag.
+  Licensen sættes altså pr. datasæt (CC0 forekommer), så “kommunens
+  standardlicens” er en antagelse. **Forbehold:** CC BY 4.0 er ikke
+  bekræftet for de tre lag; spørg Bydata, Københavns Kommune (bydata@kk.dk,
+  dataejer ifølge WFS'en og datasætsiden for Træ basis). Mail-udkast:
 
   > **Emne:** Licens for WFS-lagene kirkegd_afdelingsgr_1 og kirkegd_gravsteder
   >
@@ -360,21 +364,27 @@ KB = 1024 byte; webp med Pillow quality 85, avif quality 62). Målet er
 
 | Grundlag (1×, 1400 × 1216) | PNG | WebP | AVIF | 2× WebP | 2× AVIF |
 |---|--:|--:|--:|--:|--:|
-| tegnet plan, lys | 564 | **83** | 63 | 209 | 139 |
-| tegnet plan, mørk | 543 | 78 | 55 | 203 | 127 |
-| stille kort, lys | 477 | **46** | 34 | 113 | 71 |
-| stille kort, mørk | 436 | 36 | 27 | 91 | 57 |
-| ortofoto, lys | 2639 | **291** | 207 | 811 | 634 |
-| ortofoto, mørk | 2329 | 205 | 152 | 589 | 461 |
-| `afdelinger.svg` | | 24 | | | |
+| tegnet plan, lys | 681 | **256** | 133 | 675 | 301 |
+| tegnet plan, mørk | 657 | 254 | 131 | 671 | 296 |
+| stille kort, lys | 546 | **116** | 79 | 271 | 170 |
+| stille kort, mørk | 526 | 102 | 70 | 236 | 148 |
+| ortofoto, lys | 2628 | **292** | 208 | 826 | 638 |
+| ortofoto, mørk | 2351 | 208 | 154 | 576 | 465 |
+| `afdelinger.svg` | | 129 | | | |
 
-Tegnet plan og stille kort ligger under det nuværende `kort.webp` selv som
-1×-webp, og selv 2×-avif til skarpe skærme (127–139 KB for tegnet plan,
-57–71 KB for stille kort) er mindre end dagens png.
-Ortofotoet ligger 2–3 gange over budgettet i 1× og 6–8 gange i 2×; det kan
-være et lag, der hentes på forlangende (som i dag), ikke et standardgrundlag
-offline. Renderingerne er **uden OSM-lag** (se “Ikke gjort”); stier,
-bygninger og gadenavne vil lægge nogle få KB til tegnet plan og stille kort.
+Tallene er med OSM-laget (7. oktober). Uden laget var tegnet plan 83 KB og
+stille kort 46 KB som webp og `afdelinger.svg` 24 KB, så OSM-laget (nabo-
+karréernes bygninger, stierne, murene og gadenavnene) koster tegnet plan
+ca. 170 KB og stille kort ca. 70 KB i 1×-webp; hvad hver del vejer, er ikke
+målt. Stille kort ligger nu omtrent på budgettet (116 KB webp mod
+`kort.webp`s 102, 79 KB avif mod `kort.avif`s 76), tegnet plan 2,5 gange over
+som webp og 1,75 gange over som avif. To greb, der ikke er prøvet: tegn
+bygninger uden for muren som flade uden skravering, og klip OSM-laget til en
+smal bræmme om kirkegården. `afdelinger.svg` bærer nu også mure og bygninger
+for hele udsnittet; Pages sender den gzippet, så 129 KB bliver langt mindre
+over nettet. Ortofotoet ligger 3 gange over budgettet i 1× og 8 gange i 2×;
+det kan være et lag, der hentes på forlangende (som i dag), ikke et
+standardgrundlag offline.
 
 ### FRACS mod polygoncentroider (0,46 m pr. pixel)
 
@@ -462,35 +472,82 @@ fra 0,107 til 0,069, ortofotoets fra 0,105 til 0,080.
 
 ### Pasning: kommunens polygoner mod ortofotoet
 
-OSM kunne ikke hentes, så pasningen er målt for kommunens afdelingsgrænser
+Pasningen er målt for kommunens afdelingsgrænser
 mod ortofotoet i 14 udsnit på 120 × 120 px (`/tmp/design/pasning_*.png`,
 øjemål ±1 px). 11 kunne aflæses: median 1 px = 0,46 m, største 5 px =
 2,3 m (ydermurens hjørne i A, hvor polygonen skærer hjørnet af); inde i
 parken følger grænserne hække og stier inden for ca. 0,5 m. Tre punkter
 (nordkanten langs Jagtvej, stikrydset ved Ny Russisk, R's vestkant) var
-dækket af kroner eller skygge. Det, OSM skal levere (eller som tegnes af
-efter ortofotoet, hvis OSM er tynd): stierne inde i afdelingerne, murene,
-lågerne, kapellerne og bygningerne, gadenavnene og Runddelen; de brede
-grusstier, tagene og teglmuren langs Nørrebrogade ses skarpt på fotoet,
-nordmuren ved Jagtvej gør ikke.
+dækket af kroner eller skygge. Det, OSM leverer, står i næste afsnit; de
+brede grusstier, tagene og teglmuren langs Nørrebrogade ses skarpt på
+fotoet, nordmuren ved Jagtvej gør ikke.
+
+### OSM: dækning og pasning (kriterium 4)
+
+Udtrækket (Overpass, OSM-basis 7. oktober 2026 18:29 UTC; bbox
+55,687–55,695 N, 12,543–12,556 Ø, plus way 3099111) har 2.798 elementer
+(1.377 noder, 1.397 ways, 24 relationer), 1,5 MB råt og 462 KB slanket.
+673 af dem ligger inden for kirkegårdens omrids. Målt med et lille script i
+sessionen (afstande i `kort.png`'s pixelnet, 0,46 m/px):
+
+- **Stier:** 154 `footway` (10,8 km), 51 `path` (3,2 km), 2 `cycleway`
+  (Hans Tavsens Stien, Poppelalléen) og 5 `service`; 125 af de 212
+  stistykker har `surface` (compacted 39, fine_gravel 38, asphalt 13,
+  dirt 12, grass 11).
+- **Mure, hegn, låger:** 12 murstykker (2,6 km), 2 hegn, 59 hække (1,0 km);
+  6 `barrier=gate`, 1 `entrance` og 1 drejekors. Lågerne tegnes som
+  åbninger i nærmeste mur.
+- **Bygninger:** kapellet (`building=chapel`) og 13 andre (7 `yes`,
+  4 skure, 1 `government`, 1 `service`).
+- **Andet:** 10 `historic=tomb` med navn (H.C. Andersen, Niels Bohr,
+  Dan Turèll, Martin Andersen Nexø m.fl.) og Ben Websters mindesten;
+  47 bænke, 4 drikkevandsposter, 3 toiletter; 287 `natural=tree`, som
+  bevidst ikke tegnes og aldrig må kopieres til `positions.json` (afsnit 3).
+- **Gadenavne:** 15 navngivne gader rører rammen. Første rendering viste
+  kun fem (Jagtvej, Meinungsgade, Peter Fabers Gade, Struenseegade og et for
+  kort stykke af Frederik VII's Gade), fordi scriptet valgte den længste
+  strækning pr. navn i hele bbox'en, og Nørrebrogades og Kapelvejs længste
+  stykker ligger uden for billedet. Rettet i `kort_render.mjs` (strækninger
+  med samme navn sammenføjes, klippes til rammen, og den længste del inden
+  for rammen vinder): nu står også Nørrebrogade, Kapelvej, Sjællandsgade,
+  Prinsesse Charlottes Gade og Hans Egedes Gade.
+
+Pasning mellem OSM og kommunens polygoner (samme affine afbildning for
+begge):
+
+- OSM's omrids (way 3099111, 37 punkter) mod nærmeste kant i kommunens
+  afdelingspolygoner: median 0,3 m, middel 1,1 m, 90 %-fraktil 1,7 m. Tre
+  punkter ligger 4–16 m væk (ydermuren ved Jagtvej nord for G: 16 m; to
+  punkter på vestsiden mod Hans Tavsens Park: 7 og 4 m), hvor kommunens
+  afdelinger ikke når ud til muren; det er dækning, ikke forskydning.
+- Omvendt har de 74 af kommunens 1.881 polygonpunkter, der ligger inden for
+  10 px af OSM-omridset, median 0,4 m til det.
+- OSM's mure (55 punkter på eller ved kirkegården) mod kommunens
+  polygonkanter: median 0,3 m, 90 %-fraktil 6,7 m (de store afstande er
+  murstykker, der ikke følger en afdelingsgrænse).
+
+Sammen med polygonernes pasning mod ortofotoet (median 0,5 m, ovenfor)
+betyder det, at OSM's stier og mure kan ligge i samme pixelnet som
+afdelingerne uden lokal tilpasning. OSM er ikke målt direkte mod
+ortofotoet; lågerne og stikrydsene tjekkes i felttesten (afsnit 5).
 
 ## Ikke gjort herfra, og hvorfor
 
-- **OSM-udtrækket.** Sessionens netværkspolitik tillod kun GitHub og
-  websøgning; Overpass (begge servere), OSM's API og WebFetch mod dem gav
-  alle “CONNECT tunnel failed, 403”. Derfor findes `data/osm_assistens.json`
-  ikke, og renderingerne er uden stier, mure, bygninger, låger og
-  gadenavne. Det, der skal gøres: fra en maskine med net, kør
-  curl-kommandoen øverst i `scripts/osm_slank.mjs` (den gemmer svaret som
-  `data/raw/osm_assistens.json`), derefter
-  `node scripts/osm_slank.mjs data/raw/osm_assistens.json data/osm_assistens.json`
-  og `node scripts/kort_render.mjs`. Scriptet læser både Overpass-svar og
-  OSM-API-svar; OSM-tegningen er kun prøvet på et syntetisk fixture.
-- **Dækning og pasning af OSM** (kriterium 4) kunne af samme grund ikke
-  måles mod ortofotoet. Pasningen af *kommunens* polygoner mod ortofotoet
-  er målt i stedet (afsnit “Tal”).
-- **Licensen på afdelingslaget** kunne ikke bekræftes (opendata.dk og
-  kk.dk var blokeret); mail-udkast i afsnit 3.
+- **OSM-udtrækket** er hentet 7. oktober fra en maskine med net
+  (cloud-sessionens netværkspolitik blokerede Overpass og OSM's API).
+  overpass-api.de svarer 406 på curls standard-User-Agent, så
+  curl-kommandoen i `scripts/osm_slank.mjs` sætter `-A` med projektets navn.
+  Slankning, rendering og skærmbilleder er kørt igen; dækning og pasning
+  står i “Tal”. OSM's stier og låger er frivilliges aftegning og tjekkes i
+  felten (afsnit 5).
+- **Pasning af OSM mod ortofotoet** er ikke målt direkte; OSM er målt mod
+  kommunens polygoner (median 0,3 m) og polygonerne mod ortofotoet
+  (median 0,5 m).
+- **Licensen på afdelingslaget** er stadig ubekræftet, nu efter opslag i
+  originalerne (afsnit 3): opendata.dk har ingen datasætside for de tre lag,
+  og WFS'ens GetCapabilities siger kun `Fees: NONE` og
+  `AccessConstraints: NONE`. Mail-udkastet i afsnit 3 kan sendes til
+  bydata@kk.dk.
 - **Afdeling U** har ingen åben datakilde; grænsen skal tegnes af efter
   ortofotoet (felttest punkt 7) eller hentes hos kommunen.
 - **KK's tilladelse til det nuværende kort** er stadig udokumenteret; den
