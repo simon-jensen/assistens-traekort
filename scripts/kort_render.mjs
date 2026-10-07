@@ -36,9 +36,9 @@ const P = (...a) => path.join(ROOT, ...a);
 const rel = f => (f.startsWith(ROOT + path.sep) ? path.relative(ROOT, f) : f);
 const args = process.argv.slice(2);
 const kunIdx = args.indexOf('--kun');
-const ALLE = ['tegnet', 'stille', 'orto'];
+const ALLE = ['tegnet', 'stille', 'orto', 'plan', 'plangroen'];
 const KUN = kunIdx >= 0 ? (args[kunIdx + 1] || '').split(',').filter(Boolean) : ALLE;
-if (KUN.some(k => !ALLE.includes(k))) { console.error('brug: node scripts/kort_render.mjs [--kun tegnet,stille,orto]'); process.exit(2); }
+if (KUN.some(k => !ALLE.includes(k))) { console.error('brug: node scripts/kort_render.mjs [--kun tegnet,stille,orto,plan,plangroen]'); process.exit(2); }
 
 const OSM_STD = P('data', 'osm_assistens.json');
 const OSM_FIL = process.env.OSM ? path.resolve(process.env.OSM) : OSM_STD;
@@ -444,6 +444,83 @@ function stille() {
 }
 const STILLE_VARS = { lys: '--vej:var(--line);--sti:color-mix(in srgb,var(--paper) 92%,#fff);--flade:color-mix(in srgb,var(--moss) 24%,var(--paper))',
   moerk: '--vej:color-mix(in srgb,var(--ink) 20%,var(--paper));--sti:color-mix(in srgb,var(--ink) 27%,var(--paper));--flade:color-mix(in srgb,var(--moss) 24%,var(--paper))' };
+// 4. plan (skitse fra NOTAT-grundkort-design.md): KK-kortets opbygning i sidens farver. Afdelinger som flader i tre-fire
+//    mos-toner, så ingen naboer deler tone; stier som brede, lyse mellemrum tegnet efter fladerne; omgivelser flade og
+//    kontur-løse; ingen teksturer, ingen OSM-træer; Fraunces-bogstaver med halo; muren som den eneste skarpe linje.
+const bbox = r => r.reduce((o, p) => [Math.min(o[0], p[0]), Math.min(o[1], p[1]), Math.max(o[2], p[0]), Math.max(o[3], p[1])], [1e9, 1e9, -1e9, -1e9]);
+function polysNear(a, b, tol) { // ligger to polygonsæt inden for tol px af hinanden (også tværs over en sti)?
+  for (const pa of a) for (const pb of b) {
+    const A = bbox(pa[0]), B = bbox(pb[0]);
+    if (A[0] > B[2] + tol || B[0] > A[2] + tol || A[1] > B[3] + tol || B[1] > A[3] + tol) continue;
+    const ra = pa[0], rb = pb[0];
+    for (const p of ra) for (let i = 0; i < rb.length; i++) if (segDist(p, rb[i], rb[(i + 1) % rb.length]) < tol) return true;
+    for (const p of rb) for (let i = 0; i < ra.length; i++) if (segDist(p, ra[i], ra[(i + 1) % ra.length]) < tol) return true;
+  }
+  return false;
+}
+const NODES = TREESECS.map(s => ({ id: s, polys: groups[s].polys })).concat(Object.values(subs).map((sb, i) => ({ id: 'sub' + i, polys: sb.polys })));
+const ADJ = NODES.map(() => new Set());
+for (let i = 0; i < NODES.length; i++) for (let j = i + 1; j < NODES.length; j++) if (polysNear(NODES[i].polys, NODES[j].polys, 24)) { ADJ[i].add(j); ADJ[j].add(i); }
+const TONE = {}; // id -> 1..4, grådigt efter antal naboer
+NODES.map((_, i) => i).sort((a, b) => ADJ[b].size - ADJ[a].size).forEach(i => {
+  const used = new Set([...ADJ[i]].map(j => TONE[NODES[j].id]).filter(Boolean));
+  let t = 1; while (used.has(t) && t < 4) t++;
+  TONE[NODES[i].id] = t;
+});
+console.log('plan: toner ' + TREESECS.map(s => s + TONE[s]).join(' ') + ' · ' + Object.values(subs).length + ' underafdelinger · 4. tone brugt ' + Object.values(TONE).filter(t => t === 4).length + ' gange');
+const bc = r => { const b = bbox(r); return [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2]; };
+const bygnUde = O.bygn.filter(r => !inRing(bc(r), OUTLINE));
+const MINB = 40 / (MPP * MPP); // 40 m² i px²: mindre "bygninger" inde på kirkegården er gravmæler
+const bygnInde = O.bygn.filter(r => inRing(bc(r), OUTLINE) && Math.abs(area(r)) >= MINB);
+const stiPlan = () => O.sti.map(v => `<path class="sti" stroke-width="${r1(v.w * 2.3)}" d="${lineD(v.L)}"/>`).join(''); // 2,2 → 5, 1,8 → 4
+function plan() {
+  return `<style>
+  .bg{fill:var(--paper)}
+  .karre{fill:var(--karre,color-mix(in srgb,var(--ink) 7%,var(--paper)))}
+  .park{fill:var(--park,color-mix(in srgb,var(--moss) 8%,var(--paper)))}
+  .vand{fill:color-mix(in srgb,${VAND} 20%,var(--paper))}
+  .vej{fill:none;stroke:var(--paper);stroke-linecap:round;stroke-linejoin:round}
+  .cem{fill:var(--cem,color-mix(in srgb,var(--moss) 12%,var(--paper)))}
+  .afd{stroke:none} .t1{fill:var(--t1)} .t2{fill:var(--t2)} .t3{fill:var(--t3)} .t4{fill:var(--t4)}
+  .afdk{fill:none;stroke:var(--afdk,var(--ink));stroke-opacity:.3;stroke-width:.8;stroke-linejoin:round}
+  .subk{fill:none;stroke:var(--paper);stroke-opacity:.6;stroke-width:.6}
+  .sti{fill:none;stroke:var(--stic);stroke-linecap:round;stroke-linejoin:round}
+  .trappe{fill:none;stroke:var(--stic);stroke-width:4} .trappek{fill:none;stroke:var(--ink);stroke-width:1;stroke-dasharray:1 2.5}
+  .haek{fill:none;stroke:var(--moss-d);stroke-opacity:.5;stroke-width:1.2;stroke-linecap:round}
+  .bygn{fill:var(--bark);fill-opacity:.35;stroke:var(--bark);stroke-width:.8} .kapel{fill:var(--ink);fill-opacity:.85;stroke:var(--ink);stroke-width:1}
+  .mur{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+  .hegn{fill:none;stroke:var(--ink);stroke-width:1;stroke-opacity:.7}
+  .omrids{fill:none;stroke:var(--ink);stroke-width:1;stroke-opacity:.6}
+  .l-gab{fill:none;stroke:var(--stic);stroke-width:6} .l-kant{fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linecap:round} .l-ring{fill:var(--stic);stroke:var(--ink);stroke-width:1.3}
+  .lbl{font-family:'Fraunces',serif;font-weight:600;font-size:46px;fill:var(--ink);text-anchor:middle;dominant-baseline:central;stroke:var(--paper);stroke-width:6px;stroke-linejoin:round;paint-order:stroke}
+  .gade{font-family:'Fraunces',serif;font-style:italic;font-size:15px;fill:var(--faint);text-anchor:middle;stroke:var(--paper);stroke-width:3.5px;paint-order:stroke;letter-spacing:.04em}
+  </style>
+  <rect class="bg" width="${IMGW}" height="${IMGH}"/>
+  <path class="park" d="${fillD(O.fill.gron)}"/><path class="karre" d="${fillD(bygnUde)}"/>
+  <path class="vand" d="${fillD(O.fill.vand)}"/>${vejSvg('vej')}
+  <path class="cem" d="${D.cem}"/>
+  ${TREESECS.map(s => `<path class="afd t${TONE[s]}" d="${polysD(groups[s].polys)}"/>`).join('')}
+  ${Object.values(subs).map((sb, i) => `<path class="afd t${TONE['sub' + i]}" d="${polysD(sb.polys)}"/>`).join('')}
+  <path class="afdk" d="${D.afd}"/><path class="subk" d="${D.sub}"/>
+  ${stiPlan()}${linjer(O.trappe, 'trappe')}${linjer(O.trappe, 'trappek')}
+  ${linjer(O.haek, 'haek')}
+  ${bygnInde.length ? `<path class="bygn" d="${fillD(bygnInde)}"/>` : ''}${fillD(O.kapel) ? `<path class="kapel" d="${fillD(O.kapel)}"/>` : ''}
+  <path class="omrids" d="${ringD(OUTLINE)}"/>${linjer(O.hegn, 'hegn')}${linjer(O.mur, 'mur')}
+  ${LAAGER.map(l => laageSvg(l, 'l')).join('')}
+  ${labels('lbl')}${gadenavne('gade')}`;
+}
+// 5. plan, kortgrøn: samme opbygning og samme funktion som plan, men med en egentlig kortgrøn (lysere og mere
+//    mættet end UI-mossen, i KK-kortets retning: mellemtone omkring (200, 220, 176)), hvide stier og lysere karréer.
+//    Svar på spørgsmålet i PR #14, om plan blot ligner tegnet plan: plans flader var UI-mos i 16–40 % papir,
+//    altså gråoliven med halvt så meget mætning som KK's bladgrøn. UI-mossen er her forbeholdt tekst og knapper.
+const PLANGROEN_VARS = {
+  lys: '--t1:#d8e7c6;--t2:#c8dcb0;--t3:#b7d09b;--t4:#a6c487;--stic:#fbfbf4;--cem:#e2edd3;--karre:#ebe9df;--park:#e9eedb;--afdk:#3f5a37',
+  moerk: '--t1:#2c3f2d;--t2:#344b35;--t3:#3d573d;--t4:#476346;--stic:#7b8275;--cem:#243424;--karre:#272a25;--park:#232b22;--afdk:#9bbb8c',
+};
+const PLAN_VARS = {
+  lys: '--t1:color-mix(in srgb,var(--moss) 16%,var(--paper));--t2:color-mix(in srgb,var(--moss) 24%,var(--paper));--t3:color-mix(in srgb,var(--moss) 32%,var(--paper));--t4:color-mix(in srgb,var(--moss) 40%,var(--paper));--stic:var(--paper)',
+  moerk: '--t1:color-mix(in srgb,var(--moss) 18%,var(--paper));--t2:color-mix(in srgb,var(--moss) 26%,var(--paper));--t3:color-mix(in srgb,var(--moss) 34%,var(--paper));--t4:color-mix(in srgb,var(--moss) 42%,var(--paper));--stic:color-mix(in srgb,var(--ink) 30%,var(--paper))',
+};
 // 3. ortofoto med lag: kun fotoet dæmpet (og gadenavne, hvis OSM); afdelinger tegnes af vektorlaget
 const ORTO_CSS = { lys: 'filter:saturate(.7)', moerk: 'filter:brightness(.5) saturate(.6)' };
 const ORTO_SLOER = { lys: 'opacity:.45', moerk: 'opacity:.25' };
@@ -505,6 +582,8 @@ for (const v of KUN) for (const m of ['lys', 'moerk']) {
   let under = '', inner, vars = '';
   if (v === 'tegnet') inner = tegnet();
   if (v === 'stille') { inner = stille(); vars = STILLE_VARS[m]; }
+  if (v === 'plan') { inner = plan(); vars = PLAN_VARS[m]; }
+  if (v === 'plangroen') { inner = plan(); vars = PLANGROEN_VARS[m]; }
   if (v === 'orto') { const o = orto(m); under = o.under; inner = o.svg; }
   const html = page(m, under, inner, vars);
   for (const s of [1, 2]) {
@@ -540,9 +619,11 @@ const afsnit = `<!-- kort_render:start -->
 ## Eget grundkort (\`scripts/kort_render.mjs\`)
 
 Renderet ${dato} med \`node scripts/kort_render.mjs\` (Playwright/Chromium; webp og avif med Pillow, da
-cwebp/avifenc ikke fandtes). Tre retninger, hver i lys og mørk udgave, i 1× (1400 × 1216) og 2× (2800 × 2432):
-\`kort_tegnet*\` (tegnet plan), \`kort_stille*\` (stille kort) og \`kort_orto*\` (dæmpet ortofoto; afdelinger
-tegnes kun af vektorlaget). \`afdelinger.svg\` er vektorlaget med de 19 trykflader (\`#afd-A\` …) og følger
+cwebp/avifenc ikke fandtes). Fem retninger, hver i lys og mørk udgave, i 1× (1400 × 1216) og 2× (2800 × 2432):
+\`kort_tegnet*\` (tegnet plan), \`kort_stille*\` (stille kort), \`kort_orto*\` (dæmpet ortofoto; afdelinger
+tegnes kun af vektorlaget) og \`kort_plan*\` (plan: skitse af syntesen i \`NOTAT-grundkort-design.md\`, uden teksturer,
+med stier som lyse mellemrum og afdelinger i tre-fire toner) og \`kort_plangroen*\` (plan, kortgrøn: samme opbygning
+med en lysere, mere mættet kortgrøn i KK's retning og hvide stier). \`afdelinger.svg\` er vektorlaget med de 19 trykflader (\`#afd-A\` …) og følger
 sidens CSS-variabler. Kun webp ligger i repoet; PNG og AVIF er målt lokalt.
 
 - **OSM:** ${OSM ? `hentet ${OSM.hentet || '?'} (${OSM.rows.length} elementer, © OpenStreetMap-bidragydere, ODbL); omrids fra ${OUTLINE_KILDE}.` : `**OSM-lag mangler** – renderingen er uden OSM-lag (ingen stier, mure, bygninger, låger eller gadenavne); omridset er ${OUTLINE_KILDE}, fordi firkanten mellem ankrene alene skærer G, N og O over. Kør \`scripts/osm_slank.mjs\` og derefter dette script igen.`}
