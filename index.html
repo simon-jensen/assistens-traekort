@@ -397,6 +397,20 @@ body.calib .stopdot{display:flex;align-items:center;justify-content:center}
 body.orto #orto{display:block}
 #ortoOp{width:90px;vertical-align:middle}
 #ortoOp[hidden]{display:none}
+/* — Eget grundkort (prototyper, issue #12, se NOTAT-grundkort.md): grundlag og afdelingspolygoner som lag, kun i kalibreringstilstand — */
+#grundkort{position:absolute;left:0;top:0;width:100%;height:100%;display:none;pointer-events:none;z-index:0;filter:none} /* filter:none: mørk-varianterne er allerede mørke og må ikke dæmpes igen */
+body.calib.gkort #grundkort{display:block}
+#afdlag{position:absolute;left:0;top:0;width:100%;height:100%;display:none;pointer-events:none;z-index:2}
+body.calib.afdlag #afdlag{display:block}
+body.calib.afdlag .hot{display:none} /* polygonen er trykfladen, SVG'ens bogstav etiketten */
+#afdlag .gk-afd:not(.gk-sub){pointer-events:auto;cursor:pointer}
+#afdlag .gk-afd:not(.gk-sub):hover{fill-opacity:.16}
+body.placing #afdlag .gk-afd{pointer-events:none} /* som .hot: mens et træ placeres, går trykket igennem til kortet */
+#afdlag .gk-afd.peek{stroke:var(--gold);stroke-width:2}
+#afdlag .gk-afd.active{stroke:var(--gold);stroke-width:3;fill-opacity:.22}
+#afdlag .gk-lbl.active{fill:var(--gold)}
+#afdlag .gk-done{display:none;fill:var(--gold);font-size:18px;font-weight:600;pointer-events:none}
+#afdlag .gk-done.done{display:inline}
 .kkdot{position:absolute;display:none;transform:translate(-50%,-50%);z-index:3;padding:0;border:0;cursor:pointer}
 .kkdot.reg{width:9px;height:9px;border-radius:2px;background:#1f6fd6;border:1px solid #fff}
 .kkdot.reg.anon{background:rgba(31,111,214,.25);border-color:#1f6fd6} /* registertræ uden art */
@@ -432,6 +446,8 @@ body.calib.kkl .kkdot.reg:hover{box-shadow:0 0 0 3px rgba(200,162,74,.7);z-index
     <button class="calbtn" id="calStopBtn">⏺ Stop</button>
     <button class="calbtn" id="calTurBtn" aria-pressed="false">🚶 Omvisning</button>
     <button class="calbtn" id="calOrtoBtn" aria-pressed="false" title="Luftfoto forår 2025 lagt oven på kortet">🛰 Ortofoto</button><input type="range" id="ortoOp" min="0" max="100" value="70" aria-label="Ortofotoets synlighed" hidden>
+    <button class="calbtn" id="calBaseBtn" title="Skift grundlag: KK's kort, tegnet plan, stille kort eller ortofoto (prototyper, issue #12)">🗺 Grundkort: KK</button>
+    <button class="calbtn" id="calAfdBtn" aria-pressed="false" title="Afdelingspolygoner fra kommunens data som trykflader oven på grundlaget">🔲 Afdelinger</button>
     <button class="calbtn" id="calKKBtn" aria-pressed="false" title="Kommunens træregister og LiDAR-detekterede træer som punkter">🌳 KK-træer</button>
     <span class="count" id="calcount" style="margin-left:auto"></span>
   </div>
@@ -457,6 +473,7 @@ body.calib.kkl .kkdot.reg:hover{box-shadow:0 0 0 3px rgba(200,162,74,.7);z-index
    <source srcset="kort.webp" type="image/webp">
    <img src="kort.png" width="1400" height="1216" decoding="async" fetchpriority="high" alt="Kort over Assistens Kirkegård" id="mapimg">
   </picture>
+  <img id="grundkort" alt="" decoding="async">
   <img id="orto" alt="" decoding="async">
   <div id="cross"></div><div id="focusdot"></div><div id="youdot" hidden aria-label="Din position"><i></i></div>
  </div>
@@ -649,7 +666,7 @@ function wikiName(v){ // "Slægt art" til opslag: dropper sorter i anførselsteg
   const g=w[0]||'',sp=w.slice(1).find(x=>/^[a-zæøå-]+$/i.test(x)&&!/^(x|sp|syn|var|ssp|cv|stk|pl|ca)$/i.test(x))||'';
   return (g+' '+sp).trim();
 }
-function clearPeek(){document.querySelectorAll('.hot.peek').forEach(el=>el.classList.remove('peek'));}
+function clearPeek(){document.querySelectorAll('.hot.peek').forEach(el=>el.classList.remove('peek'));afdSync();}
 function syncHash(){
   const p=new URLSearchParams();
   if(curSec)p.set('afd',curSec);
@@ -663,6 +680,7 @@ function selectSec(s){
   curSec=(curSec===s)?null:s;
   clearPeek();
   document.querySelectorAll('.hot').forEach(el=>{const a=el.dataset.s===curSec;el.classList.toggle('active',a);el.setAttribute('aria-pressed',a);});
+  afdSync();
   head.innerHTML=curSec?('Afdeling '+esc(curSec)+(META[curSec]?' · '+esc(META[curSec].desc):'')+' <button class="clearchip" id="clearSec">× vis alle</button>'):'Alle afdelinger';
   const cc=document.getElementById('clearSec');
   if(cc)cc.onclick=()=>selectSec(curSec);
@@ -729,6 +747,7 @@ function rowAction(e){
   const hot=document.querySelector('.hot[data-s="'+s+'"]');
   if(hot){clearPeek();
     if(s!==curSec)hot.classList.add('peek');
+    afdSync();
     if(hot.scrollIntoView)hot.scrollIntoView({behavior:SB,block:'center'});}
 }
 list.addEventListener('click',rowAction);
@@ -829,6 +848,7 @@ function buildDots(){
     wrap.appendChild(d);
   });
   document.querySelectorAll('.hot').forEach(h=>h.classList.toggle('done',!!done[h.dataset.s]));
+  afdSync();
   buildStopDots();
   updProgress();
 }
@@ -846,6 +866,7 @@ function setCalib(on){
   if(on)setTools(true,false);
   if(on&&navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{}); // bed browseren om ikke at rydde lageret med placeringerne // et #kal=1-link skal virke, selv om værktøjet er skjult — vis knappen uden at gemme valget
   document.body.classList.toggle('calib',on);
+  updGrundkort();updAfdlag(); // lagene vises kun i kalibreringstilstand; valget i localStorage bevares
   calBtn.classList.toggle('on',on);calBtn.setAttribute('aria-pressed',on);
   if(!on){ankArm=false;disarm();document.getElementById('anchorbox').classList.remove('open');document.body.classList.remove('placing');selectStop(null);setTur(false);setOrto(false);setKK(false);}
   syncHash();render();
@@ -879,15 +900,16 @@ function drawLoupe(){
   const ctx=loupe.getContext('2d');
   ctx.clearRect(0,0,120,120);
   if(!cand)return;
-  const img=document.getElementById('mapimg'),src=30; // 30 px af originalen = 4x zoom
+  const img=grundkortImg(),src=30; // 30 px af originalen = 4x zoom
+  const k=img.naturalWidth?img.naturalWidth/IMGW:1; // @2x-grundlag har 2800 px i bredden; kort.png 1400 (k=1)
   ctx.imageSmoothingEnabled=false;
-  ctx.drawImage(img,cand.fx*IMGW-src/2,cand.fy*IMGH-src/2,src,src,0,0,120,120);
+  ctx.drawImage(img,(cand.fx*IMGW-src/2)*k,(cand.fy*IMGH-src/2)*k,src*k,src*k,0,0,120,120);
   ctx.strokeStyle='#c8a24a';ctx.lineWidth=1.5;
   ctx.beginPath();ctx.moveTo(60,46);ctx.lineTo(60,74);ctx.moveTo(46,60);ctx.lineTo(74,60);ctx.stroke();
 }
 wrap.addEventListener('click',e=>{
   if(!document.body.classList.contains('calib'))return;
-  if(e.target.closest('.dot')||e.target.closest('.hot'))return;
+  if(e.target.closest('.dot')||e.target.closest('.hot')||e.target.closest('.gk-afd'))return;
   const r=document.getElementById('mapimg').getBoundingClientRect(); // billedets boks, ikke rammens — ellers forskyder 1px-borderen alt mod midten
   const fx=(e.clientX-r.left)/r.width,fy=(e.clientY-r.top)/r.height;
   if(ankArm){placeAnchor(fx,fy);return;}
@@ -1337,6 +1359,61 @@ function setOrto(on){
 }
 document.getElementById('calOrtoBtn').onclick=()=>setOrto(!document.body.classList.contains('orto'));
 ortoOp.oninput=()=>{ortoEl.style.opacity=ortoOp.value/100;};
+// ————— Eget grundkort (prototyper, issue #12; se NOTAT-grundkort.md): grundlag og afdelingspolygoner, kun i kalibreringstilstand —————
+// Alle filer i data/ ligger i kort.png's pixelnet (1400 × 1216, @2x = 2800 × 2432), så FRACS, ankre og positions.json gælder uændret.
+const GK_KEY='assistens_grundkort_v1',AFD_KEY='assistens_afdlag_v1',GK_RET=['kk','tegnet','stille','orto'],
+      GK_NAVN={kk:'KK',tegnet:'tegnet plan',stille:'stille kort',orto:'ortofoto'};
+const gkEl=document.getElementById('grundkort'),gkMoerk=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
+let grundkort='kk',afdPaa=false,afdHentes=false;
+try{const v=localStorage.getItem(GK_KEY);if(GK_RET.includes(v))grundkort=v;afdPaa=localStorage.getItem(AFD_KEY)==='1';}catch(e){}
+function updGrundkort(){
+  const on=document.body.classList.contains('calib')&&grundkort!=='kk';
+  if(on){const b='data/kort_'+grundkort+(gkMoerk&&gkMoerk.matches?'_moerk':''),src=b+'.webp';
+    if(gkEl.getAttribute('src')!==src){gkEl.srcset=src+' 1x, '+b+'@2x.webp 2x';gkEl.src=src;}} // hentes først, når laget vises: ingen netværkskald for besøgende
+  document.body.classList.toggle('gkort',on);
+  const btn=document.getElementById('calBaseBtn');btn.textContent='🗺 Grundkort: '+GK_NAVN[grundkort];btn.classList.toggle('on',grundkort!=='kk');
+  if(cand)drawLoupe();
+}
+function grundkortImg(){ // luppen tegner det grundlag, man ser (og kort.png, indtil det valgte er hentet)
+  return document.body.classList.contains('calib')&&grundkort!=='kk'&&gkEl.complete&&gkEl.naturalWidth>0?gkEl:document.getElementById('mapimg');}
+gkEl.addEventListener('load',()=>{if(cand)drawLoupe();});
+if(gkMoerk){if(gkMoerk.addEventListener)gkMoerk.addEventListener('change',updGrundkort);else if(gkMoerk.addListener)gkMoerk.addListener(updGrundkort);}
+document.getElementById('calBaseBtn').onclick=()=>{
+  grundkort=GK_RET[(GK_RET.indexOf(grundkort)+1)%GK_RET.length];
+  try{localStorage.setItem(GK_KEY,grundkort);}catch(e){}
+  updGrundkort();};
+function afdSync(){ // afdelingspolygonerne spejler .hot-markørernes tilstand: active (valgt), peek og done (✓ fuldført)
+  const svg=document.getElementById('afdlag');if(!svg)return;
+  document.querySelectorAll('.hot').forEach(h=>svg.querySelectorAll('[data-afd="'+h.dataset.s+'"]').forEach(el=>
+    ['active','peek','done'].forEach(c=>el.classList.toggle(c,h.classList.contains(c)))));
+}
+function updAfdlag(){
+  const on=document.body.classList.contains('calib')&&afdPaa,svg=document.getElementById('afdlag');
+  document.body.classList.toggle('afdlag',on&&!!svg); // .hot skjules først, når polygonerne er på plads
+  const b=document.getElementById('calAfdBtn');b.classList.toggle('on',afdPaa);b.setAttribute('aria-pressed',afdPaa);
+  if(on&&!svg&&!afdHentes)hentAfdlag();
+}
+function hentAfdlag(){ // SVG'en indsættes inline, så polygonerne kan være trykflader og følge sidens farvevariabler
+  afdHentes=true;
+  fetch('data/afdelinger.svg').then(r=>{if(!r.ok)throw new Error(r.status);return r.text();}).then(txt=>{
+    const svg=document.importNode(new DOMParser().parseFromString(txt,'image/svg+xml').documentElement,true);
+    if(svg.localName!=='svg')throw new Error('ugyldig SVG');
+    svg.id='afdlag';svg.setAttribute('preserveAspectRatio','none');
+    svg.querySelectorAll('.gk-afd:not(.gk-sub)').forEach(p=>{const s=p.dataset.afd;
+      if(TREESECS.includes(s))p.addEventListener('click',()=>selectSec(s));});
+    const g=svg.querySelector('#gk-lbl')||svg;
+    svg.querySelectorAll('text.gk-lbl[data-afd]').forEach(t=>{ // ✓ for fuldført afdeling, 22 px til højre for og 18 px over bogstavet
+      const d=document.createElementNS('http://www.w3.org/2000/svg','text');
+      d.setAttribute('class','gk-done');d.setAttribute('data-afd',t.getAttribute('data-afd'));
+      d.setAttribute('x',+t.getAttribute('x')+22);d.setAttribute('y',+t.getAttribute('y')-18);d.textContent='✓';g.appendChild(d);});
+    ortoEl.after(svg);afdSync();
+  }).catch(()=>{toast('⚠ Kunne ikke hente data/afdelinger.svg');afdPaa=false;})
+    .finally(()=>{afdHentes=false;updAfdlag();});
+}
+document.getElementById('calAfdBtn').onclick=()=>{
+  afdPaa=!afdPaa;try{localStorage.setItem(AFD_KEY,afdPaa?'1':'0');}catch(e){}
+  updAfdlag();};
+updGrundkort();updAfdlag();
 let KK=null; // {reg:[[id,traeart,dansk_navn,planteaar,kronediameter,lon,lat]…], det:[[lon,lat,hoejde,kroneareal]…]}
 function kkDots(){
   document.querySelectorAll('#mapwrap .kkdot').forEach(el=>el.remove());

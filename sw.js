@@ -3,7 +3,7 @@
 //
 // VIGTIGT: Bump VERSION ved hvert deploy, der ændrer index.html, kortet, fonte eller ikoner.
 // Ellers kan en gammel side hænge fast i cachen hos dem, der allerede har besøgt siden.
-const VERSION = '2026-10-05d';
+const VERSION = '2026-10-07';
 const CACHE = 'traekort-' + VERSION;
 const CORE = ['./', './index.html', './manifest.webmanifest'];
 
