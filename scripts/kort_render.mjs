@@ -227,10 +227,60 @@ if (OSM) {
     if (t.waterway) { O.vandlinje.push(line(o)); continue; }
     if (t.natural === 'wood' || t.natural === 'scrub' || t.landuse === 'grass' || t.landuse === 'forest' || t.leisure === 'park' || t.leisure === 'garden') O.fill.gron.push(...areas(o));
   }
-  // gadenavne: kun den længste strækning pr. navn; vendes, så teksten læses fra venstre
+  // gadenavne: strækninger med samme navn sammenføjes ved fælles endepunkter, klippes til rammen (10 px inde),
+  // og kun den længste del inden for rammen pr. navn beholdes; vendes, så teksten læses fra venstre.
+  // (Uden klipningen vandt Nørrebrogades og Kapelvejs længste strækninger uden for billedet, og navnene udeblev.)
+  const perNavn = {};
+  for (const n of O.navne) (perNavn[n.navn] = perNavn[n.navn] || []).push(n.L);
   const best = {};
-  for (const n of O.navne) { const l = plen(n.L); if (!best[n.navn] || l > best[n.navn].l) best[n.navn] = { ...n, l }; }
+  for (const [navn, dele] of Object.entries(perNavn)) for (const kaede of joinLines(dele)) for (const L of clipFrame(kaede, 10)) {
+    const l = plen(L); if (l > 0 && (!best[navn] || l > best[navn].l)) best[navn] = { navn, L, l };
+  }
   O.navne = Object.values(best).map(n => ({ ...n, L: n.L[0][0] > n.L[n.L.length - 1][0] ? n.L.slice().reverse() : n.L }));
+}
+// sammenføjer polylinjer ved fælles endepunkter (som joinRings i osm_slank.mjs, men åbne kæder)
+function joinLines(parts) {
+  const same = (a, b) => a[0] === b[0] && a[1] === b[1];
+  parts = parts.filter(p => p.length >= 2).map(p => p.slice());
+  const out = [];
+  while (parts.length) {
+    let L = parts.shift(), grown = true;
+    while (grown) {
+      grown = false;
+      for (let i = 0; i < parts.length; i++) {
+        const p = parts[i], a = L[0], b = L[L.length - 1];
+        if (same(b, p[0])) L = L.concat(p.slice(1));
+        else if (same(b, p[p.length - 1])) L = L.concat(p.slice(0, -1).reverse());
+        else if (same(a, p[p.length - 1])) L = p.slice(0, -1).concat(L);
+        else if (same(a, p[0])) L = p.slice(1).reverse().concat(L);
+        else continue;
+        parts.splice(i, 1); grown = true; break;
+      }
+    }
+    out.push(L);
+  }
+  return out;
+}
+// klipper en polylinje til rammen (indrykket m px) med Liang–Barsky pr. segment; giver de dele, der ligger inde
+function clipFrame(L, m) {
+  const x0 = m, y0 = m, x1 = IMGW - m, y1 = IMGH - m, pieces = [];
+  let cur = null;
+  for (let i = 1; i < L.length; i++) {
+    const [ax, ay] = L[i - 1], [bx, by] = L[i], dx = bx - ax, dy = by - ay;
+    let t0 = 0, t1 = 1, ok = true;
+    for (const [p, q] of [[-dx, ax - x0], [dx, x1 - ax], [-dy, ay - y0], [dy, y1 - ay]]) {
+      if (p === 0) { if (q < 0) { ok = false; break; } continue; }
+      const r = q / p;
+      if (p < 0) { if (r > t1) { ok = false; break; } if (r > t0) t0 = r; }
+      else { if (r < t0) { ok = false; break; } if (r < t1) t1 = r; }
+    }
+    if (!ok) { cur = null; continue; }
+    const a = [r1(ax + t0 * dx), r1(ay + t0 * dy)], b = [r1(ax + t1 * dx), r1(ay + t1 * dy)];
+    if (t0 > 0 || !cur) { cur = [a]; pieces.push(cur); }
+    cur.push(b);
+    if (t1 < 1) cur = null;
+  }
+  return pieces;
 }
 // låger: som åbning i den nærmeste mur (inden for 8 px), ellers en lille ring
 const murSeg = O.mur.concat(O.hegn).flatMap(L => L.slice(1).map((p, i) => [L[i], p]));

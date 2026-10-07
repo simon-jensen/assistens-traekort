@@ -15,10 +15,11 @@ dem ikke. Fremgangsmåde og vurdering: `KALIBRERING.md` og `NOTAT-kalibrering.md
 | `kk_detekterede.json` | 2.928 LiDAR-detekterede træer med højde og kroneareal | Københavns Kommune, WFS-lag `k101:automatisk_detekterede_traeer_kk_beta` | CC BY 4.0 *antaget* |
 | `orto_kort_2025.jpg` | Forårsortofoto 2025, 10 cm, forvrænget ind i `kort.png`'s pixelnet (2800 × 2432) | GeoDanmark / Klimadatastyrelsen via [Dataforsyningen](https://dataforsyningen.dk/data/981) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.da) ([GeoDanmarks vilkår](https://www.geodanmark.dk/)) |
 | `kk_gennemgang.md` | Træer, som `match_kk.py` ikke kunne placere sikkert | genereret | — |
-| `osm_assistens.json` | *(endnu ikke hentet; netadgang til OSM var blokeret)* Veje/stier, bygninger, mure, hegn, låger, natur og arealanvendelse på og omkring kirkegården samt kirkegårdens omrids (way 3099111), én række pr. element med tags og geometri; slankes med `scripts/osm_slank.mjs` fra `data/raw/osm_assistens.json` | OpenStreetMap-bidragydere via Overpass API (reserve: OSM API 0.6) | [ODbL 1.0](https://www.openstreetmap.org/copyright) · © OpenStreetMap-bidragydere |
+| `osm_assistens.json` | Veje/stier, bygninger, mure, hegn, låger, natur og arealanvendelse på og omkring kirkegården (bbox 55,687–55,695 N, 12,543–12,556 Ø) samt kirkegårdens omrids (way 3099111): 2.798 elementer, én række pr. element med tags og geometri, hentet 7. oktober 2026; slankes med `scripts/osm_slank.mjs` fra `data/raw/osm_assistens.json` | OpenStreetMap-bidragydere via Overpass API (reserve: OSM API 0.6) | [ODbL 1.0](https://www.openstreetmap.org/copyright) · © OpenStreetMap-bidragydere |
 | `afdelinger.svg`, `kort_*.webp` | Vektorlag med afdelinger og de tre grundlag i kort.png's pixelnet, genereret af `scripts/kort_render.mjs` (se afsnittet nedenfor) | afledt af filerne ovenfor | som kilderne, bearbejdet |
 
-Alle filer er hentet 5. oktober 2026 (feltet `hentet`) og er *bearbejdede*
+Kommunens og GeoDanmarks filer er hentet 5. oktober 2026 og OSM-udtrækket
+7. oktober (feltet `hentet`); alle er *bearbejdede*
 udgaver af kilderne (slanket til de felter, siden bruger; gravsteder
 reduceret til polygonernes midtpunkter; ortofotoet forvrænget). CC BY 4.0
 kræver, at det fremgår.
@@ -39,7 +40,7 @@ i Q) og afdeling U (skal aftegnes efter GeoDanmarks ortofoto) stadig
 kommunens hhv. GeoDanmarks data, bearbejdet; ingen af dem er taget fra
 Københavns Kirkegårdes tegnede kort.
 
-`osm_assistens.json` bliver et bearbejdet udtræk af OpenStreetMap og er
+`osm_assistens.json` er et bearbejdet udtræk af OpenStreetMap og er
 selv under ODbL. Den holdes adskilt fra kommunens filer og fra
 `positions.json` og flettes kun, når grundkortet renderes; træplaceringer
 og afdelingsgrænser må ikke afledes af OSM-koordinater (så skulle de ud
@@ -60,7 +61,7 @@ cwebp/avifenc ikke fandtes). Tre retninger, hver i lys og mørk udgave, i 1× (1
 tegnes kun af vektorlaget). `afdelinger.svg` er vektorlaget med de 19 trykflader (`#afd-A` …) og følger
 sidens CSS-variabler. Kun webp ligger i repoet; PNG og AVIF er målt lokalt.
 
-- **OSM:** **OSM-lag mangler** – renderingen er uden OSM-lag (ingen stier, mure, bygninger, låger eller gadenavne); omridset er det konvekse hylster af de fire GPS-ankre og afdelingspolygonerne, fordi firkanten mellem ankrene alene skærer G, N og O over. Kør `scripts/osm_slank.mjs` og derefter dette script igen.
+- **OSM:** hentet 2026-10-07 (2798 elementer, © OpenStreetMap-bidragydere, ODbL); omrids fra OSM way 3099111.
 - **Afdelinger:** 17 af 19 afdelinger er kommunens polygoner (D, K og L samlet af flere); **Q** er det konvekse hylster af 176 gravstedsmidtpunkter med afd="Q", bufret 3 m (`data-kilde="gravsteder"`); **U** er et skøn: en cirkel med radius 14 px (ca. 6,5 m) om skoens markør (`data-kilde="skoen"`). *Mangel:* U skal tegnes af efter ortofotoet.
 - **Vegetation:** svag kronetekstur fra `kk_detekterede.json` (radius = √(kroneareal/π)) i tegnet plan og stille kort; gravstedernes midtpunkter som fin tekstur i tegnet plan.
 
@@ -68,19 +69,19 @@ KB = 1024 byte. 1×-målet fra issuet: `kort.png` 215 KB, `kort.webp` 102 KB, `k
 
 | Fil | Pixel | PNG (KB) | WebP (KB) | AVIF (KB) |
 |---|---|--:|--:|--:|
-| `kort_tegnet.webp` | 1400 × 1216 | 564 | 83 | 63 |
-| `kort_tegnet@2x.webp` | 2800 × 2432 | 1306 | 209 | 139 |
-| `kort_tegnet_moerk.webp` | 1400 × 1216 | 543 | 78 | 55 |
-| `kort_tegnet_moerk@2x.webp` | 2800 × 2432 | 1244 | 203 | 127 |
-| `kort_stille.webp` | 1400 × 1216 | 477 | 46 | 34 |
-| `kort_stille@2x.webp` | 2800 × 2432 | 1074 | 113 | 71 |
-| `kort_stille_moerk.webp` | 1400 × 1216 | 436 | 36 | 27 |
-| `kort_stille_moerk@2x.webp` | 2800 × 2432 | 973 | 91 | 57 |
-| `kort_orto.webp` | 1400 × 1216 | 2639 | 291 | 207 |
-| `kort_orto@2x.webp` | 2800 × 2432 | 8991 | 811 | 634 |
-| `kort_orto_moerk.webp` | 1400 × 1216 | 2329 | 205 | 152 |
-| `kort_orto_moerk@2x.webp` | 2800 × 2432 | 8118 | 589 | 461 |
-| `afdelinger.svg` | viewBox 1400 × 1216 | | 24 (svg) | |
+| `kort_tegnet.webp` | 1400 × 1216 | 696 | 257 | 136 |
+| `kort_tegnet@2x.webp` | 2800 × 2432 | 1550 | 680 | 306 |
+| `kort_tegnet_moerk.webp` | 1400 × 1216 | 674 | 256 | 133 |
+| `kort_tegnet_moerk@2x.webp` | 2800 × 2432 | 1496 | 684 | 302 |
+| `kort_stille.webp` | 1400 × 1216 | 557 | 118 | 82 |
+| `kort_stille@2x.webp` | 2800 × 2432 | 1241 | 277 | 175 |
+| `kort_stille_moerk.webp` | 1400 × 1216 | 537 | 107 | 72 |
+| `kort_stille_moerk@2x.webp` | 2800 × 2432 | 1196 | 240 | 152 |
+| `kort_orto.webp` | 1400 × 1216 | 2682 | 297 | 211 |
+| `kort_orto@2x.webp` | 2800 × 2432 | 8972 | 840 | 645 |
+| `kort_orto_moerk.webp` | 1400 × 1216 | 2370 | 209 | 158 |
+| `kort_orto_moerk@2x.webp` | 2800 × 2432 | 8184 | 590 | 472 |
+| `afdelinger.svg` | viewBox 1400 × 1216 | | 129 (svg) | |
 <!-- kort_render:end -->
 
 ## Format

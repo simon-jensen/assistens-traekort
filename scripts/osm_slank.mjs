@@ -5,9 +5,11 @@
 // Kræver kun Node (22+), ingen npm-pakker.
 //
 // Den rå fil hentes fra en maskine med netadgang til OSM og lægges i data/raw/ (gitignored).
-// Først Overpass (overpass-api.de; svarer den ikke, så overpass.kumi.systems):
+// Først Overpass (overpass-api.de; svarer den ikke, så overpass.kumi.systems). overpass-api.de
+// svarer "406 Not Acceptable" på curls standard-User-Agent, derfor -A:
 //
-//   curl -sS -m 120 -o data/raw/osm_assistens.json https://overpass-api.de/api/interpreter \
+//   curl -sS -m 120 -A 'assistens-traekort (github.com/simon-jensen/assistens-traekort)' \
+//     -o data/raw/osm_assistens.json https://overpass-api.de/api/interpreter \
 //     --data-urlencode 'data=[out:json][timeout:90];
 //   ( way(3099111);
 //     nwr["highway"](55.687,12.543,55.695,12.556);
@@ -48,7 +50,7 @@ const KEEP = new Set(['highway', 'footway', 'building', 'barrier', 'entrance', '
   'access', 'service', 'wall', 'height', 'levels']);
 const COUNT = ['highway', 'building', 'barrier', 'entrance', 'natural', 'landuse', 'leisure',
   'amenity', 'waterway', 'historic', 'man_made'];
-const CURL = "curl -sS -m 120 -o data/raw/osm_assistens.json https://overpass-api.de/api/interpreter --data-urlencode 'data=…'  (hele forespørgslen står øverst i scripts/osm_slank.mjs)";
+const CURL = "curl -sS -m 120 -A 'assistens-traekort (github.com/simon-jensen/assistens-traekort)' -o data/raw/osm_assistens.json https://overpass-api.de/api/interpreter --data-urlencode 'data=…'  (hele forespørgslen står øverst i scripts/osm_slank.mjs)";
 
 const [inFile, outFile] = process.argv.slice(2);
 if (!inFile || !outFile) { console.error('brug: node scripts/osm_slank.mjs <rå.json> <ud.json>'); process.exit(2); }
