@@ -32,6 +32,38 @@ Kreditering (står i `README.md`): *Indeholder data fra Københavns Kommune
 GeoDanmark / Klimadatastyrelsen via Dataforsyningen (CC BY 4.0), hentet
 oktober 2026, bearbejdet.*
 
+<!-- kort_render:start -->
+## Eget grundkort (`scripts/kort_render.mjs`)
+
+Renderet 2026-10-07 med `node scripts/kort_render.mjs` (Playwright/Chromium; webp og avif med Pillow, da
+cwebp/avifenc ikke fandtes). Tre retninger, hver i lys og mørk udgave, i 1× (1400 × 1216) og 2× (2800 × 2432):
+`kort_tegnet*` (tegnet plan), `kort_stille*` (stille kort) og `kort_orto*` (dæmpet ortofoto; afdelinger
+tegnes kun af vektorlaget). `afdelinger.svg` er vektorlaget med de 19 trykflader (`#afd-A` …) og følger
+sidens CSS-variabler. Kun webp ligger i repoet; PNG og AVIF er målt lokalt.
+
+- **OSM:** **OSM-lag mangler** – renderingen er uden OSM-lag (ingen stier, mure, bygninger, låger eller gadenavne); omridset er det konvekse hylster af de fire GPS-ankre og afdelingspolygonerne, fordi firkanten mellem ankrene alene skærer G, N og O over. Kør `scripts/osm_slank.mjs` og derefter dette script igen.
+- **Afdelinger:** 17 af 19 afdelinger er kommunens polygoner (D, K og L samlet af flere); **Q** er det konvekse hylster af 176 gravstedsmidtpunkter med afd="Q", bufret 3 m (`data-kilde="gravsteder"`); **U** er et skøn: en cirkel med radius 14 px (ca. 6,5 m) om skoens markør (`data-kilde="skoen"`). *Mangel:* U skal tegnes af efter ortofotoet.
+- **Vegetation:** svag kronetekstur fra `kk_detekterede.json` (radius = √(kroneareal/π)) i tegnet plan og stille kort; gravstedernes midtpunkter som fin tekstur i tegnet plan.
+
+KB = 1024 byte. 1×-målet fra issuet: `kort.png` 215 KB, `kort.webp` 102 KB, `kort.avif` 76 KB.
+
+| Fil | Pixel | PNG (KB) | WebP (KB) | AVIF (KB) |
+|---|---|--:|--:|--:|
+| `kort_tegnet.webp` | 1400 × 1216 | 564 | 83 | 63 |
+| `kort_tegnet@2x.webp` | 2800 × 2432 | 1306 | 209 | 139 |
+| `kort_tegnet_moerk.webp` | 1400 × 1216 | 543 | 78 | 55 |
+| `kort_tegnet_moerk@2x.webp` | 2800 × 2432 | 1244 | 203 | 127 |
+| `kort_stille.webp` | 1400 × 1216 | 477 | 46 | 34 |
+| `kort_stille@2x.webp` | 2800 × 2432 | 1074 | 113 | 71 |
+| `kort_stille_moerk.webp` | 1400 × 1216 | 436 | 36 | 27 |
+| `kort_stille_moerk@2x.webp` | 2800 × 2432 | 973 | 91 | 57 |
+| `kort_orto.webp` | 1400 × 1216 | 2639 | 291 | 207 |
+| `kort_orto@2x.webp` | 2800 × 2432 | 8991 | 811 | 634 |
+| `kort_orto_moerk.webp` | 1400 × 1216 | 2329 | 205 | 152 |
+| `kort_orto_moerk@2x.webp` | 2800 × 2432 | 8118 | 589 | 461 |
+| `afdelinger.svg` | viewBox 1400 × 1216 | | 24 (svg) | |
+<!-- kort_render:end -->
+
 ## Format
 
 JSON-filerne er kompakte tabeller: `{"kilde", "lag", "hentet", "felter": [...],
