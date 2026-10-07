@@ -306,8 +306,94 @@ og ét ord om, hvad der generede.
 
 ## Tal
 
-TBD-TAL
+### Filstørrelser mod budgettet (kriterium 5)
+
+Målt af `scripts/kort_render.mjs` (tabellen står også i `data/README.md`;
+KB = 1024 byte; webp med Pillow quality 85, avif quality 62). Målet er
+`kort.png` 215 KB, `kort.webp` 102 KB, `kort.avif` 76 KB.
+
+| Grundlag (1×, 1400 × 1216) | PNG | WebP | AVIF | 2× WebP | 2× AVIF |
+|---|--:|--:|--:|--:|--:|
+| tegnet plan, lys | 564 | **83** | 63 | 209 | 139 |
+| tegnet plan, mørk | 543 | 78 | 55 | 203 | 127 |
+| stille kort, lys | 477 | **46** | 34 | 113 | 71 |
+| stille kort, mørk | 436 | 36 | 27 | 91 | 57 |
+| ortofoto, lys | 2639 | **291** | 207 | 811 | 634 |
+| ortofoto, mørk | 2329 | 205 | 152 | 589 | 461 |
+| `afdelinger.svg` | | 24 | | | |
+
+Tegnet plan og stille kort ligger under det nuværende `kort.webp` selv som
+1×-webp, og 2×-avif til skarpe skærme koster det samme som dagens png.
+Ortofotoet ligger 2–3 gange over budgettet i 1× og 6–8 gange i 2×; det kan
+være et lag, der hentes på forlangende (som i dag), ikke et standardgrundlag
+offline. Renderingerne er **uden OSM-lag** (se “Ikke gjort”); stier,
+bygninger og gadenavne vil lægge nogle få KB til tegnet plan og stille kort.
+
+### FRACS mod polygoncentroider (0,46 m pr. pixel)
+
+Egen måling i sessionen (arealvægtet centroide af afdelingens polygon(er)
+efter den affine omregning fra ankrene; samme mapping som i
+`kort_render.mjs`; Q = middel af de 176 gravstedsmidtpunkter):
+
+| Afd. | Polygoner | FRACS (px) | Centroide (px) | Afstand (m) |
+|---|---|---|---|---|
+| A | 1 | 815, 1069 | 865, 1047 | 25,4 |
+| B | 1 | 834, 827 | 818, 800 | 14,3 |
+| C | 1 | 990, 837 | 1036, 772 | 36,5 |
+| D | 5 | 795, 601 | 858, 606 | 29,2 |
+| E | 1 | 1009, 514 | 1044, 482 | 22,1 |
+| F | 1 | 1034, 290 | 1101, 302 | 31,5 |
+| G | 1 | 1049, 123 | 1063, 122 | 6,6 |
+| H | 1 | 606, 1006 | 620, 1055 | 23,8 |
+| J | 1 | 606, 809 | 627, 843 | 18,2 |
+| K | 17 | 606, 662 | 632, 619 | 22,9 |
+| L | 39 | 785, 481 | 808, 430 | 25,7 |
+| M | 2 | 683, 350 | 637, 374 | 24,1 |
+| O | 3 | 645, 151 | 636, 150 | 3,9 |
+| P | 1 | 376, 1069 | 423, 1064 | 21,7 |
+| Q | 176 gravsteder | 428, 819 | 434, 837 | 8,5 |
+| R | 1 | 486, 552 | 435, 611 | 35,5 |
+| S | 1 | 494, 340 | 466, 365 | 17,2 |
+| T | 1 | 361, 393 | 378, 392 | 7,9 |
+| U | ingen kilde | 362, 428 | – | – |
+
+Median 22,9 m, største 36,5 m (C), mindste 3,9 m (O), 18 af 19 målt. Alle
+19 markører ligger inde i den polygon, der bærer deres bogstav (A i A, …,
+U i UU, L i Malus), så mærkningen stemmer med kommunens data; afstandene
+skyldes, at markørerne står, hvor KK's kort har sit bogstav. Konklusion:
+`FRACS` kan udgå som trykflader for de 18, polygonen overtager; U beholder
+markøren, indtil grænsen er tegnet.
+
+### Afdelinger: dækning i kommunens data
+
+| | Antal | Kilde |
+|---|---|---|
+| Afdelinger med træer (TREESECS) | 19 | `index.html` |
+| … med egen polygon hos kommunen | 17 | `data/kk_afdelinger.json` (D, K, L samlet af 5, 17 og 39 polygoner) |
+| … afledt af gravsteder (Q) | 1 | `data/kk_gravsteder.json`, 176 punkter |
+| … uden kilde (U) | 1 | skøn, cirkel om `FRACS["U"]`, radius 14 px |
+| Kommunepolygoner i alt | 115 | 53 forskellige `afd`-koder |
+
+TBD-DESIGNMÅL
 
 ## Ikke gjort herfra, og hvorfor
 
-TBD-IKKE-GJORT
+- **OSM-udtrækket.** Sessionens netværkspolitik tillod kun GitHub og
+  websøgning; Overpass (begge servere), OSM's API og WebFetch mod dem gav
+  alle “CONNECT tunnel failed, 403”. Derfor findes `data/osm_assistens.json`
+  ikke, og renderingerne er uden stier, mure, bygninger, låger og
+  gadenavne. Det, der skal gøres: fra en maskine med net, kør
+  curl-kommandoen øverst i `scripts/osm_slank.mjs` (den gemmer svaret som
+  `data/raw/osm_assistens.json`), derefter
+  `node scripts/osm_slank.mjs data/raw/osm_assistens.json data/osm_assistens.json`
+  og `node scripts/kort_render.mjs`. Scriptet læser både Overpass-svar og
+  OSM-API-svar; OSM-tegningen er kun prøvet på et syntetisk fixture.
+- **Dækning og pasning af OSM** (kriterium 4) kunne af samme grund ikke
+  måles mod ortofotoet. Pasningen af *kommunens* polygoner mod ortofotoet
+  er målt i stedet (afsnit “Tal”).
+- **Licensen på afdelingslaget** kunne ikke bekræftes (opendata.dk og
+  kk.dk var blokeret); mail-udkast i afsnit 3.
+- **Afdeling U** har ingen åben datakilde; grænsen skal tegnes af efter
+  ortofotoet (felttest punkt 7) eller hentes hos kommunen.
+- **KK's tilladelse til det nuværende kort** er stadig udokumenteret; den
+  bortfalder først ved skiftet.
