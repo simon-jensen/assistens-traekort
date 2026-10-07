@@ -3,7 +3,7 @@
 //
 // VIGTIGT: Bump VERSION ved hvert deploy, der ændrer index.html, kortet, fonte eller ikoner.
 // Ellers kan en gammel side hænge fast i cachen hos dem, der allerede har besøgt siden.
-const VERSION = '2026-10-05c';
+const VERSION = '2026-10-05d';
 const CACHE = 'traekort-' + VERSION;
 const CORE = ['./', './index.html', './manifest.webmanifest'];
 
@@ -38,6 +38,15 @@ self.addEventListener('fetch', e => {
           const h = new Headers(hit.headers); h.set('X-Offline-Cache', '1');
           return hit.text().then(t => new Response(t, { status: 200, headers: h }));
         }))
+    );
+    return;
+  }
+
+  // Kommunens data (data/): netværk først, så en genskabt fil ikke vises gammel; offline gives sidst kendte kopi.
+  if (key.includes('/data/')) {
+    e.respondWith(
+      fetch(req).then(r => { if (r.ok) caches.open(CACHE).then(c => c.put(key, r.clone())); return r; })
+        .catch(() => caches.match(key).then(hit => hit || Promise.reject(new Error('offline'))))
     );
     return;
   }

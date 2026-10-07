@@ -31,7 +31,10 @@ python3 scripts/check_positions.py
 ```
 
 Det validerer datablokkene i `index.html` og `positions.json`. Ubuntu-CI
-kører det samme ved push og pull request.
+kører det samme ved push og pull request. Headless-tjek af omvisningen,
+kommunedata-laget og `match_kk.py`'s fletning ligger i `tests/` (kræver
+Playwright og en lokal server; se kommentaren øverst i hver fil) og køres
+ikke i CI.
 
 ## 3. Data ligger inline i `index.html` på én linje hver
 
@@ -74,7 +77,30 @@ Format og merge-regler står i `KALIBRERING.md`. Kort: nøglen er træ-id'et,
 `{"del": 1, "ts": …}`. Filen committes af medarbejdere efter feltarbejde;
 `scripts/check_positions.py` skal være grøn.
 
-## 6. Lokal test
+## 6. Kommunens data i `data/`
+
+`data/kk_*.json` og `data/orto_kort_2025.jpg` er slankede udgaver af
+Københavns Kommunes åbne data og GeoDanmarks ortofoto (begge CC BY 4.0, se
+`data/README.md` for kilder, genskabelse og kreditering). De bruges kun af
+kalibreringsværktøjet og af `scripts/match_kk.py`, som skriver forslag med
+`src: "kk"` til `positions.json`; kør scriptet igen, hvis `TREES` eller data
+ændres. Regler, der skal holde:
+
+- Scriptet rører kun sine egne poster (`src: "kk"` + note “KK høj:”/“KK
+  middel:”). Menneskers placeringer (`kort`/`gps`), et kommunepunkt valgt i
+  værktøjet (gemmes som `kort`) og sletninger bevares altid.
+- Et `kk`-forslag må aldrig blive “nyere” end feltarbejde: uændrede forslag
+  beholder `ts`, nye/ændrede får datafilens `hentet`-dato kl. 00:00Z. Siden
+  behandler desuden et `kk`-forslag i filen som et forslag, ikke en
+  publicering: det sletter aldrig en lokal menneskelig post, og en
+  menneskelig post vinder over `kk` uanset `ts` (`erKK()` i `index.html`).
+- Flyttes et `kk`-forslag i værktøjet (pile eller kort-tryk), gemmes det som
+  `kort` uden scriptets `lat`/`lon`/`note`.
+
+Ingen af filerne udløser et bump af `VERSION` i `sw.js`; service workeren
+henter `data/` netværk-først.
+
+## 7. Lokal test
 
 ```
 python3 -m http.server 8000     # åbn http://localhost:8000/
@@ -84,7 +110,7 @@ Service workeren cacher også lokalt. Ser du ikke dine ændringer: bump
 `VERSION`, eller afregistrér workeren og ryd cachen i DevTools → Application.
 GPS, udklipsholder og service worker kræver HTTPS eller localhost.
 
-## 7. Deploy
+## 8. Deploy
 
 GitHub Pages udgiver `main` direkte. Pages sender `cache-control:
 max-age=600`, så ændringer kan være op til 10 minutter om at slå igennem.

@@ -96,8 +96,16 @@ if os.path.exists(pp):
                 for c in ("fx", "fy"):
                     if not isinstance(v.get(c), (int, float)) or not 0 <= v[c] <= 1:
                         errors.append(f"positions.json: '{k}': {c} skal være et tal i 0-1")
-                if v.get("src") not in (None, "kort", "gps"):
-                    errors.append(f"positions.json: '{k}': src skal være 'kort' eller 'gps'")
+                if v.get("src") not in (None, "kort", "gps", "kk"):
+                    errors.append(f"positions.json: '{k}': src skal være 'kort', 'gps' eller 'kk'")
+                if v.get("src") == "kk" and not (all(isinstance(v.get(c), (int, float)) for c in ("lat", "lon")) and isinstance(v.get("note"), str)):
+                    errors.append(f"positions.json: '{k}': en kk-post skal have lat, lon og note")
+            if "acc" in v and not (isinstance(v["acc"], (int, float)) and v["acc"] > 0):
+                errors.append(f"positions.json: '{k}': acc skal være et positivt tal (meter)")
+            if "note" in v and not isinstance(v["note"], str):
+                errors.append(f"positions.json: '{k}': note skal være en tekst")
+            if v.get("del") and any(c in v for c in ("fx", "fy", "lat", "lon", "src")):
+                errors.append(f"positions.json: '{k}': en sletning må kun have del og ts")
             if "ts" in v and not (isinstance(v["ts"], str) and TS.match(v["ts"])):
                 errors.append(f"positions.json: '{k}': ts skal være YYYY-MM-DD eller ISO-tidsstempel")
             if "lat" in v or "lon" in v:
@@ -132,7 +140,8 @@ if os.path.exists(pp):
                 ok = all(isinstance(s.get(c), (int, float)) for c in ("lat", "lon"))
                 if not ok or not (LAT[0] <= s["lat"] <= LAT[1] and LON[0] <= s["lon"] <= LON[1]):
                     errors.append(f"positions.json: stop {i} ({s['ts']}): lat/lon skal være tal inden for Assistens Kirkegård")
-        notes.append(f"positions.json: {n_pos} placeringer, {n_del} sletninger, {len(anchors)} ankre")
+        n_kk = sum(1 for v in trees.values() if isinstance(v, dict) and v.get("src") == "kk" and not v.get("del"))
+        notes.append(f"positions.json: {n_pos} placeringer ({n_kk} fra kommunens data), {n_del} sletninger, {len(anchors)} ankre")
         if stops:
             notes.append(f"positions.json: {len(stops)} uparrede stop — parres i kalibreringstilstand (⏺ Stop), før filen committes")
 else:
