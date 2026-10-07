@@ -53,7 +53,7 @@ testes mod feltplaceringer.
 | Lag | Form | Hvorfor |
 |---|---|---|
 | Grundlag (OSM-rendering eller ortofoto) | bitmap, webp + avif, 1× og 2× | luppen (`drawImage` af `#mapimg`) og mobilbeskæringen regner med et billede i 1400 × 1216; `<picture>` vælger format, `srcset` 2× til skarpe skærme |
-| Det særlige (afdelinger, mure, bygninger, låger) | SVG inline i `#mapinner`, `viewBox 0 0 1400 1216`, klasser med præfiks `gk-`, farver som CSS-variabler | skarp ved zoom, følger lys/mørk uden ny fil, polygonerne er trykflader med `pointer-events`, ~19 + 96 paths |
+| Det særlige (afdelinger, mure, bygninger, låger) | SVG inline i `#mapinner`, `viewBox 0 0 1400 1216`, klasser med præfiks `gk-`, farver som CSS-variabler | skarp ved zoom, følger lys/mørk uden ny fil, polygonerne er trykflader med `pointer-events`; 41 paths (19 trykflader + 22 underafdelinger) |
 | Data (træprikker, hotspots, KK-træer, “Hvor er jeg?”) | som i dag (absolut positionerede elementer i `%`) | uændret; de ligger i `.mapinner` og følger beskæring og forstørrelse |
 
 Vektorlaget indlejres inline (ikke `<img src=…svg>`), fordi polygonerne skal
@@ -331,9 +331,14 @@ bygninger og gadenavne vil lægge nogle få KB til tegnet plan og stille kort.
 
 ### FRACS mod polygoncentroider (0,46 m pr. pixel)
 
-Egen måling i sessionen (arealvægtet centroide af afdelingens polygon(er)
-efter den affine omregning fra ankrene; samme mapping som i
-`kort_render.mjs`; Q = middel af de 176 gravstedsmidtpunkter):
+Målt i integrationsarbejdet (`/tmp/fracs_afstande.md`, scriptet
+`fracs_afstande.py`): arealvægtet centroide af afdelingens polygon(er) med
+huller fratrukket, efter den affine omregning fra ankrene; samme mapping og
+samme centroider som etiketterne i `kort_render.mjs`; Q = middel af de 176
+gravstedsmidtpunkter. En uafhængig måling tidligt i sessionen uden
+hul-fradrag gav samme tal for 15 afdelinger og 1–4,5 m anderledes for J, K,
+M og O (K: 22,9 m), hvilket viser, hvor meget hullerne i K's og M's polygoner
+flytter centroiden.
 
 | Afd. | Polygoner | FRACS (px) | Centroide (px) | Afstand (m) |
 |---|---|---|---|---|
@@ -345,11 +350,11 @@ efter den affine omregning fra ankrene; samme mapping som i
 | F | 1 | 1034, 290 | 1101, 302 | 31,5 |
 | G | 1 | 1049, 123 | 1063, 122 | 6,6 |
 | H | 1 | 606, 1006 | 620, 1055 | 23,8 |
-| J | 1 | 606, 809 | 627, 843 | 18,2 |
-| K | 17 | 606, 662 | 632, 619 | 22,9 |
+| J | 1 | 606, 809 | 627, 844 | 18,5 |
+| K | 17 | 606, 662 | 631, 630 | 18,4 |
 | L | 39 | 785, 481 | 808, 430 | 25,7 |
-| M | 2 | 683, 350 | 637, 374 | 24,1 |
-| O | 3 | 645, 151 | 636, 150 | 3,9 |
+| M | 2 | 683, 350 | 636, 365 | 22,7 |
+| O | 3 | 645, 151 | 636, 147 | 4,2 |
 | P | 1 | 376, 1069 | 423, 1064 | 21,7 |
 | Q | 176 gravsteder | 428, 819 | 434, 837 | 8,5 |
 | R | 1 | 486, 552 | 435, 611 | 35,5 |
@@ -357,9 +362,7 @@ efter den affine omregning fra ankrene; samme mapping som i
 | T | 1 | 361, 393 | 378, 392 | 7,9 |
 | U | ingen kilde | 362, 428 | – | – |
 
-Median 21,9 m, største 36,5 m (C), mindste 3,9 m (O), 18 af 19 målt (en
-uafhængig beregning i integrationsarbejdet, `/tmp/fracs_afstande.md`, gav
-samme tal inden for 0,5 m pr. afdeling). Alle
+Median 21,9 m, største 36,5 m (C), mindste 4,2 m (O), 18 af 19 målt. Alle
 19 markører ligger inde i den polygon, der bærer deres bogstav (A i A, …,
 U i UU, L i Malus), så mærkningen stemmer med kommunens data; afstandene
 skyldes, at markørerne står, hvor KK's kort har sit bogstav. Konklusion:
@@ -375,6 +378,16 @@ markøren, indtil grænsen er tegnet.
 | … afledt af gravsteder (Q) | 1 | `data/kk_gravsteder.json`, 176 punkter |
 | … uden kilde (U) | 1 | skøn, cirkel om `FRACS["U"]`, radius 14 px |
 | Kommunepolygoner i alt | 115 | 53 forskellige `afd`-koder |
+
+### Farver: intet fra kort.png
+
+Verifikationen (`/tmp/verifikation_1.md`, punkt 5) dekodede renderingerne og
+`kort.png` og sammenlignede de ti hyppigste farver: renderingernes
+hyppigste farve er sidens papir (`#f4f1e7` i lys, `#1c1f19` i mørk, afstand
+1,0 fra CSS-variablen), mens `kort.png`'s grønne (`#cee2b8`, `#aec881`) og
+blå (`#99b8cb`) ikke går igen i nogen rendering (nærmeste match er nær-hvid
+eller grå med afstand 8,6 eller mere). `scripts/kort_render.mjs` åbner
+aldrig `kort.png` (grep: filnavnet står kun i kommentarer).
 
 TBD-DESIGNMÅL
 
