@@ -36,15 +36,18 @@ GPS-ankre (hjørnerne fra OSM's polygon way 3099111), som `orto_warp.mjs` og
 peger stadig på samme fysiske sted, ortofoto-varianten er gratis, og selve
 skiftet er bagefter ét billede plus afledte filer plus `VERSION`.
 
-Udsnittet er ikke ideelt: kortet har 280 px park/signatur til venstre, som
-mobilbeskæringen i dag skærer væk med ren CSS (x 280–1290). Et tættere
-udsnit eller en højere opløsning ville give ca. 25 % mere kort på telefonen,
-men koster: et omregningsscript, der skalerer `fx`/`fy` i `positions.json`
-(302 poster), `FRACS` (38 markører), de fire `SEED_ANCHORS`, ankrene i
+Udsnittet er ikke ideelt: kortet har park og signatur til venstre og højre,
+som mobilbeskæringen i dag skærer væk med ren CSS (x 280–1290, dvs. 390 af
+1400 px eller 28 %). Lodret er der lidt at hente (afdelingspolygonernes bbox
+fylder y 41–1189 af 1216 px), så et tættere udsnit giver reelt kun det, CSS
+allerede giver, plus en højere opløsning i samme filstørrelse. Det koster:
+et omregningsscript, der skalerer `fx`/`fy` i `positions.json` (302
+poster), `FRACS` (38 markører), de fire `SEED_ANCHORS`, ankrene i
 `positions.json`, `orto_warp.mjs`'s konstanter og ortofotoet, kørt i ét
-commit, plus ny `kort.*`, nyt `VERSION` og nye tests. Det er en dags arbejde
-og en risiko for stille forskydninger, mod en gevinst, som 2-finger-zoom
-allerede giver. Anbefaling: behold nettet nu; tag udsnittet op igen, når
+commit, plus ny `kort.*`, nyt `VERSION` og nye tests. Det er en dags
+arbejde og en risiko for stille forskydninger, mod en gevinst, som
+2-finger-zoom og 2×-filerne allerede giver.
+Anbefaling: behold nettet nu; tag udsnittet op igen, når
 grundkortet er skiftet og kalibreringen er færdig, hvor en omregning kan
 testes mod feltplaceringer.
 
@@ -366,7 +369,8 @@ KB = 1024 byte; webp med Pillow quality 85, avif quality 62). Målet er
 | `afdelinger.svg` | | 24 | | | |
 
 Tegnet plan og stille kort ligger under det nuværende `kort.webp` selv som
-1×-webp, og 2×-avif til skarpe skærme koster det samme som dagens png.
+1×-webp, og selv 2×-avif til skarpe skærme (127–139 KB for tegnet plan,
+57–71 KB for stille kort) er mindre end dagens png.
 Ortofotoet ligger 2–3 gange over budgettet i 1× og 6–8 gange i 2×; det kan
 være et lag, der hentes på forlangende (som i dag), ikke et standardgrundlag
 offline. Renderingerne er **uden OSM-lag** (se “Ikke gjort”); stier,
@@ -379,8 +383,8 @@ Målt i integrationsarbejdet (`/tmp/fracs_afstande.md`, scriptet
 huller fratrukket, efter den affine omregning fra ankrene; samme mapping og
 samme centroider som etiketterne i `kort_render.mjs`; Q = middel af de 176
 gravstedsmidtpunkter. En uafhængig måling tidligt i sessionen uden
-hul-fradrag gav samme tal for 15 afdelinger og 1–4,5 m anderledes for J, K,
-M og O (K: 22,9 m), hvilket viser, hvor meget hullerne i K's og M's polygoner
+hul-fradrag gav samme tal for 14 af de 18 målte og 0,3–4,5 m anderledes for J, K,
+M og O (K: 22,9 mod 18,4 m), hvilket viser, hvor meget hullerne i K's og M's polygoner
 flytter centroiden.
 
 | Afd. | Polygoner | FRACS (px) | Centroide (px) | Afstand (m) |
