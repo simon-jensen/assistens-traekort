@@ -31,33 +31,71 @@ GPS-koordinater, tidsstempler og noter i den fil bliver offentlige.
 
 ## Data og rettigheder
 
+Kort fortalt: grundkortet er på vej fra Københavns Kirkegårdes tegnede kort
+til projektets eget kort, renderet af et script ud fra åbne data
+(OpenStreetMap, Københavns Kommune, GeoDanmark). Plan og prototyper:
+[NOTAT-grundkort.md](NOTAT-grundkort.md) og issue #12. Intet her er juridisk
+rådgivning.
+
 - Træfortegnelsen bygger på *Liste over mere specielle træer og buske på
   Assistens Kirkegård*, Morten Scheller Jensen, 2015. Åbenlyse stavefejl i
   artsnavnene rettes i visningen; kildens stavning står ved træet.
-- Grundkortet `kort.png` er Københavns Kirkegårdes officielle oversigtskort
-  (© Københavns Kirkegårde).
-- Skrifttyperne Fraunces, Outfit og Spline Sans Mono er selv-hostede under
-  SIL Open Font License 1.1 (se `fonts/OFL-*.txt`).
-- Artsbeskrivelser og sæsondata (`DESC`/`SEASON` i `index.html`) samt
-  `positions.json` er projektets egne data.
+- **Københavns Kirkegårdes kort er på vej ud.** Grundkortet `kort.png` er
+  indtil videre Københavns Kirkegårdes officielle oversigtskort (© Københavns
+  Kirkegårde); tilladelsen til at gengive det er ikke dokumenteret og gælder,
+  indtil kortet er udskiftet. Det nye kort gengiver intet af KK's tegning
+  (streger, farver, symboler, skrift, layout). Afdelingsbogstaver,
+  afdelingernes beliggenhed og stiers og bygningers placering er fakta og
+  hentes fra kommunens åbne data og OpenStreetMap, ikke fra tegningen; et
+  script tegner dem, intet er kalkeret. KK's kort bruges kun til at
+  kontrollere, at ingen afdeling mangler. Afdelingsmarkørerne (`FRACS`) blev
+  aflæst på KK's kort og erstattes af kommunens polygoner ved skiftet.
+- **OpenStreetMap:** kortdata © OpenStreetMap-bidragydere, under
+  [Open Database License (ODbL)](https://www.openstreetmap.org/copyright).
+  Det renderede grundkort er et “Produced Work” og krediteres synligt under
+  kortet, når det tages i brug. `data/osm_assistens.json` er et slanket
+  udtræk (`scripts/osm_slank.mjs`) og er selv under ODbL. OSM-data,
+  kommunens afdelinger og `positions.json` ligger i hver sin fil, henviser
+  ikke til hinanden og flettes kun i renderingen; samlingen er en
+  “Collective Database” (ODbL § 4.5), så share-alike omfatter hverken
+  `positions.json` eller afdelingsgrænserne. **Hent derfor aldrig
+  træplaceringer eller afdelingsgrænser fra OSM-koordinater ind i projektets
+  egne filer.** De fire GPS-ankre (hjørner fra OSM way 3099111) er en
+  ubetydelig mængde og udløser ikke share-alike.
 - Trædata, gravsteder, afdelingsgrænser og LiDAR-detekterede træer i
   `data/`: indeholder data fra Københavns Kommune, hentet 5. oktober 2026 fra
   kommunens WFS (wfs-kbhkort.kk.dk), bearbejdet (slanket til de felter, siden
-  bruger, og gravsteder reduceret til midtpunkter). Licens
+  bruger, gravsteder reduceret til midtpunkter, afdeling Q's grænse afledt af
+  gravstederne). Licens
   [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.da) ifølge
   datasætsiden for [Træ basis på opendata.dk](https://www.opendata.dk/city-of-copenhagen/trae-basis-kommunale-traeer);
-  for de tre øvrige lag er samme licens *antaget* som for kommunens øvrige
-  åbne data, da de ikke har en fundbar datasætside (se `data/README.md`).
+  for de tre øvrige lag er licensen *ikke bekræftet* (ingen datasætside,
+  intet i WFS'ens GetCapabilities) og skal bekræftes hos kommunen (se
+  `data/README.md`).
 - Ortofoto forår 2025 (`data/orto_kort_2025.jpg`): indeholder data fra
   GeoDanmark / Klimadatastyrelsen, hentet 5. oktober 2026 via
   [Dataforsyningen](https://dataforsyningen.dk/data/981), bearbejdet
   (forvrænget ind i kortets pixelnet). Licens
   [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.da). Se
   `data/README.md`.
+- Skrifttyperne Fraunces, Outfit og Spline Sans Mono er selv-hostede under
+  SIL Open Font License 1.1 (se `fonts/OFL-*.txt`).
+- Artsbeskrivelser og sæsondata (`DESC`/`SEASON` i `index.html`) samt
+  `positions.json` er projektets egne data. **Forslag til licens** (ikke
+  besluttet): koden (`index.html`'s HTML/CSS/JavaScript, `sw.js`,
+  `scripts/`, `tests/`) under MIT, projektets egne data og det renderede
+  grundkort under CC BY 4.0, samme licens som kommunens og GeoDanmarks data.
+  Undtaget er `kk`-forslagene i `positions.json` (indeholder data fra
+  Københavns Kommune), `data/osm_assistens.json` (ODbL), træfortegnelsen og
+  `kort.png`, som ikke er projektets.
 
-*Til opfølgning:* dokumentér tilladelsen til at gengive kortet og
-træfortegnelsen, og vælg licens for koden (fx MIT) og for projektets egne
-data (fx CC BY 4.0). Indtil da gælder almindelig ophavsret.
+*Til opfølgning:* (1) dokumentér Københavns Kirkegårdes tilladelse til det
+nuværende `kort.png`, indtil det er udskiftet; (2) dokumentér tilladelsen til
+træfortegnelsen; (3) få kommunens bekræftelse af licensen for
+`kirkegd_afdelingsgr_1`, `kirkegd_gravsteder` og
+`automatisk_detekterede_traeer_kk_beta` (mail-udkast i NOTAT-grundkort.md);
+(4) vælg licens for koden og projektets egne data (forslaget ovenfor) og læg
+en `LICENSE`-fil i roden. Indtil da gælder almindelig ophavsret.
 
 ## Udvikling
 

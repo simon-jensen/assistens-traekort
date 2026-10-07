@@ -150,7 +150,118 @@ TBD-ÆSTETIK
 
 ## 3. Rettigheder
 
-TBD-RETTIGHEDER
+*Ikke juridisk rådgivning. Kilderne til dette afsnit er samlet i rettigheds-
+rapporten fra sessionen (ODbL 1.0 og CC BY 4.0 læst i kopier på GitHub;
+OSMF's retningslinjer, ophavsretsloven og opendata.dk's vilkår kun som
+søgeuddrag, fordi siderne var blokeret). Alt, der kun hviler på søgeuddrag,
+bør tjekkes mod originalen, før det citeres i en pitch.*
+
+### Hvad der er taget fra KK's kort, og hvad der bevidst ikke er
+
+- **Taget (fakta, ikke ophavsret):** at afdelingerne hedder A–U, hvor de
+  ligger, og at der skal være 19 af dem med træer. Det bruges kun som
+  facitliste: KK's kort kontrollerer, at ingen afdeling mangler eller er
+  mærket forkert. Selve grænserne kommer fra kommunens polygoner
+  (`data/kk_afdelinger.json`), Q's fra kommunens gravsteder, U's fra et skøn,
+  der skal tegnes af efter ortofotoet (ikke efter KK's tegning).
+- **Ikke taget (beskyttet udtryk):** tegningen, stregføringen, farvevalget,
+  signaturer og symboler, typografien, etiketternes placering, layoutet og
+  generaliseringen. Renderingsscriptet åbner ikke `kort.png`, og
+  verifikationen sammenligner de hyppigste farver i hver rendering med
+  `kort.png`'s for at bevise det (afsnit “Tal”).
+- **Kort er nævnt udtrykkeligt i ophavsretslovens § 1, stk. 2** (“Kort samt
+  tegninger … af beskrivende art”), så KK's kort er efter alt at dømme et
+  værk. EU-Domstolen (C-490/14, Esterbauer) har fastslået, at oplysninger
+  trukket ud af et kort kan være en database; systematisk aflæsning af KK's
+  tegning kunne altså ramme § 71 (katalogbeskyttelse). Det nye kort undgår
+  det, fordi intet tal i det stammer fra tegningen: grænserne er kommunens,
+  stier og bygninger OSM's, og et script tegner dem.
+- **Løs ende:** `FRACS` (afdelingsmarkørerne) og de fire ankres pixelside er
+  aflæst på `kort.png`. Det er få punktvise fakta, efter alt at dømme ikke en
+  væsentlig del, men til en ren pitch bør `FRACS` udgå til fordel for
+  polygonerne (afsnit 1), og ankrene bør om muligt genmåles mod ortofotoet.
+
+### OSM og ODbL
+
+- Et statisk billede renderet af OSM-data er et **Produced Work** (ODbL
+  § 4.5 b). Det kræver en synlig notits (§ 4.3): “Kortdata ©
+  OpenStreetMap-bidragydere (ODbL)” med link til
+  openstreetmap.org/copyright, placeret ved kortet for den besøgende, ikke
+  kun i README. Undtagelsen for små udsnit (under 10.000 m² eller under 100
+  objekter) gælder ikke for kirkegården.
+- **Samling, ikke afledt database:** `data/osm_assistens.json` (ODbL),
+  `data/kk_afdelinger.json` (CC BY 4.0) og `positions.json` (projektets) er
+  tre filer, der ikke henviser til hinanden, og med adskilte objekttyper
+  (veje/bygninger fra OSM; afdelingsgrænser fra kommunen; træpunkter fra
+  projektet og kommunen). Det er en Collective Database (§ 4.5 a), og
+  renderingen er et Produced Work; share-alike når hverken `positions.json`
+  eller afdelingerne. `osm_assistens.json` er selv et udtræk under ODbL og
+  bærer licensen i feltet `licens`.
+- **Undtagelsen:** afledes træplaceringer eller afdelingsgrænser (fx U) af
+  OSM-koordinater og lægges i projektets egne filer, bliver de filer
+  afledte databaser under ODbL. Derfor må U's grænse tegnes efter ortofotoet,
+  ikke bygges af OSM's stier, og `natural=tree`-noder må aldrig kopieres til
+  `positions.json`.
+- **De fire GPS-ankre** (hjørner fra OSM way 3099111) er fire punkter fra ét
+  objekt, langt under OSMF's tærskel på 100 objekter, og dermed en
+  ubetydelig mængde.
+- Stavemåde: projektet skriver “bidragydere” (Retskrivningsordbogens form);
+  OSM's egen danske oversættelse bruger “bidragsydere”. Én form overalt.
+
+### Kommunens data og GeoDanmark
+
+- `trae_basis` har en datasætside på opendata.dk med licens CC BY 4.0. For
+  `kirkegd_afdelingsgr_1`, `kirkegd_gravsteder` og
+  `automatisk_detekterede_traeer_kk_beta` findes ingen datasætside, og
+  GetCapabilities oplyser ingen licens. Open Data DK's vilkår lader
+  dataejeren sætte licensen pr. datasæt, og kommunen bruger mindst ét andet
+  vilkårssæt (“Legepladser”), så “kommunens standardlicens” er en svagere
+  antagelse, end `data/README.md` lader forstå. **Forbehold:** CC BY 4.0 er
+  ikke bekræftet; spørg Københavns Kommune (Klima-, Miljø- og
+  Teknikforvaltningen, enheden bag kbhkort/WFS; kontaktpunktet står på
+  datasætsiden for Træ basis). Mail-udkast:
+
+  > **Emne:** Licens for WFS-lagene kirkegd_afdelingsgr_1 og kirkegd_gravsteder
+  >
+  > Jeg laver et frivilligt, ikke-kommercielt trækort over Assistens
+  > Kirkegård (https://simon-jensen.github.io/assistens-traekort/) og bruger
+  > lagene k101:kirkegd_afdelingsgr_1, k101:kirkegd_gravsteder og
+  > k101:automatisk_detekterede_traeer_kk_beta fra wfs-kbhkort.kk.dk. Lagene
+  > har ingen datasætside på opendata.dk, og GetCapabilities angiver ingen
+  > licens. Kan I bekræfte, at de er udgivet under CC BY 4.0 ligesom “Træ
+  > basis”, og hvilken krediteringstekst I ønsker? På forhånd tak.
+
+- Q (afledt af kommunens gravsteder) og U (aftegnet efter GeoDanmarks
+  ortofoto) ændrer intet: det er stadig kommunens hhv. GeoDanmarks data,
+  bearbejdet, og CC BY 4.0 kræver blot, at bearbejdningen fremgår (§ 3 a).
+- GeoDanmark/Klimadatastyrelsen: CC BY 4.0; krediteringen “indeholder data
+  fra GeoDanmark / Klimadatastyrelsen, hentet …, bearbejdet” står allerede i
+  `data/README.md`.
+
+### Forslag til licens for projektets eget
+
+- **Kode** (`index.html`'s HTML/CSS/JS, `sw.js`, `scripts/`, `tests/`):
+  **MIT**. Den korteste tilladende licens; en kommune eller et lokaludvalg
+  kan drive siden videre uden andet krav end copyright-linjen.
+- **Egne data** (`positions.json`, `DESC`/`SEASON`, det renderede grundkort):
+  **CC BY 4.0**, samme licens som kommunens og GeoDanmarks data, så en
+  offentlig part kan bruge det hele under ét kendt vilkår. Undtagelser:
+  `kk`-forslagene i `positions.json` indeholder kommunens data og krediteres
+  som sådan; det renderede kort beholder OSM-notitsen; `osm_assistens.json`
+  forbliver ODbL; `TREES` og `kort.png` er ikke projektets.
+- **README skal have**, før en pitch: krediteringslinjen under kortet,
+  `LICENSE`-fil (MIT, “Copyright (c) 2026 Simon Jensen”, med forord om at
+  data og skrifter har egne licenser), “bearbejdet” ved hver CC BY-kilde, og
+  de tre åbne punkter nævnt eksplicit: KK's tilladelse til det nuværende
+  kort (bortfalder ved skiftet), tilladelsen til træfortegnelsen (Morten
+  Scheller Jensen, 2015; listen kan være omfattet af § 71 til udgangen af
+  2030), og kommunens bekræftelse af licensen på de tre lag.
+
+Krediteringslinje til visning under kortet, når det nye kort er i brug (erstatter “Kort © Københavns Kirkegårde …”):
+
+```
+Kortdata © OpenStreetMap-bidragydere (ODbL) · afdelinger og gravsteder: Københavns Kommune (CC BY 4.0, bearbejdet) · ortofoto: GeoDanmark/Klimadatastyrelsen (CC BY 4.0, bearbejdet) · træliste: M. Scheller Jensen 2015
+```
 
 ## 4. Hvad en pitch skal kunne vise
 
