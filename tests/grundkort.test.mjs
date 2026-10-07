@@ -67,6 +67,12 @@ async function open({hash='#kal=1',positions=FILE,colorScheme='light',local={},c
   const l=await t.page.evaluate(()=>{const d=loupe.getContext('2d').getImageData(0,0,120,120).data;let a=0;for(let i=3;i<d.length;i+=4)a+=d[i];
     return {alpha:a,img:grundkortImg().id,cand:!!cand};});
   ok(l.cand&&l.alpha>0&&l.img==='grundkort','luppen tegner fra #grundkort, og lærredet er ikke tomt',l);await t.ctx.close();
+  // på en telefon (DPR ≥ 2) vælger srcset @2x-filen; naturalWidth siger stadig 1400, så skalaen skal komme fra currentSrc
+  const ctx2=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:2});
+  const t2=await open({local:{assistens_grundkort_v1:'tegnet'},ctx:ctx2});
+  await t2.page.waitForFunction(()=>{const g=document.getElementById('grundkort');return g.complete&&g.naturalWidth>0;});
+  const s=await t2.page.evaluate(()=>{const g=document.getElementById('grundkort');return {src:g.currentSrc,nat:g.naturalWidth,k:gkSkala(g),k1:gkSkala(document.getElementById('mapimg'))};});
+  ok(/@2x\./.test(s.src)&&s.k===2&&s.k1===1,'luppen skalerer @2x-grundlaget med 2 på en DPR 2-skærm (kort.png med 1)',s);await t2.ctx.close();
 }
 // (f) FRACS og ankrene er uændrede
 {

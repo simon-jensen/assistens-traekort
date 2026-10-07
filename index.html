@@ -901,7 +901,7 @@ function drawLoupe(){
   ctx.clearRect(0,0,120,120);
   if(!cand)return;
   const img=grundkortImg(),src=30; // 30 px af originalen = 4x zoom
-  const k=img.naturalWidth?img.naturalWidth/IMGW:1; // @2x-grundlag har 2800 px i bredden; kort.png 1400 (k=1)
+  const k=gkSkala(img); // @2x-grundlag har 2800 rå pixel i bredden (naturalWidth er tæthedskorrigeret og siger stadig 1400); kort.png: 1
   ctx.imageSmoothingEnabled=false;
   ctx.drawImage(img,(cand.fx*IMGW-src/2)*k,(cand.fy*IMGH-src/2)*k,src*k,src*k,0,0,120,120);
   ctx.strokeStyle='#c8a24a';ctx.lineWidth=1.5;
@@ -1374,6 +1374,7 @@ function updGrundkort(){
   const btn=document.getElementById('calBaseBtn');btn.textContent='🗺 Grundkort: '+GK_NAVN[grundkort];btn.classList.toggle('on',grundkort!=='kk');
   if(cand)drawLoupe();
 }
+function gkSkala(img){return /@2x\./.test(img.currentSrc||'')?2:1;} // rå pixel pr. kortpixel: srcset-valget afgør det, ikke naturalWidth
 function grundkortImg(){ // luppen tegner det grundlag, man ser (og kort.png, indtil det valgte er hentet)
   return document.body.classList.contains('calib')&&grundkort!=='kk'&&gkEl.complete&&gkEl.naturalWidth>0?gkEl:document.getElementById('mapimg');}
 gkEl.addEventListener('load',()=>{if(cand)drawLoupe();});
