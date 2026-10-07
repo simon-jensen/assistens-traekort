@@ -5,7 +5,7 @@
 // Kræver Playwright (npm i playwright) og python3 med Pillow. Sæt CHROME=/sti/til/chrome, hvis Playwright
 // ikke selv finder en browser, og URL=http://…/ hvis siden ikke kører på http://localhost:8000/.
 //
-// Telefon 390 × 844 CSS-px, DPR 3, kalibrering tændt (#kal=1). For hvert grundlag (kk, tegnet, stille, orto, plan)
+// Telefon 390 × 844 CSS-px, DPR 3, kalibrering tændt (#kal=1). For hvert grundlag (kk, tegnet, stille, orto, plan, plangroen)
 // i lys og mørk tilstand, med og uden 🔲 Afdelinger, tages et skærmbillede af #mapwrap, halveres (1,5×) og
 // gemmes som <grundlag>_<lys|moerk>_<lag|uden>.webp. sol_<grundlag>.webp er lys+lag med kontrast 0,45 og
 // lysstyrke 1,25 (sol-simuleringen i notatet). lup_<grundlag>.webp er luppen (4×) om et punkt i afdeling F.
@@ -23,7 +23,7 @@ const UD = path.join(ROOT, 'docs', 'grundkort');
 const BASE = process.env.URL || 'http://localhost:8000/';
 const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'grundkort_sb_'));
 const GK_KEY = 'assistens_grundkort_v1', AFD_KEY = 'assistens_afdlag_v1';
-const RET = ['kk', 'tegnet', 'stille', 'orto', 'plan'];
+const RET = ['kk', 'tegnet', 'stille', 'orto', 'plan', 'plangroen'];
 fs.mkdirSync(UD, { recursive: true });
 
 const browser = await chromium.launch(process.env.CHROME ? { executablePath: process.env.CHROME } : {});
@@ -52,7 +52,7 @@ for (const ret of RET) for (const dark of [false, true]) for (const lag of [fals
   await ctx.close();
   console.log('skærmbillede', navn);
 }
-for (const ret of ['tegnet', 'stille', 'orto', 'plan']) { // luppen: som tests/grundkort.test.mjs (e)
+for (const ret of ['tegnet', 'stille', 'orto', 'plan', 'plangroen']) { // luppen: som tests/grundkort.test.mjs (e)
   const { ctx, page } = await open({ ret, dark: false, lag: false });
   await page.evaluate(() => armTree(TREES.findIndex(x => x.sec === 'F')));
   const r = await page.evaluate(() => document.getElementById('mapimg').getBoundingClientRect().toJSON());

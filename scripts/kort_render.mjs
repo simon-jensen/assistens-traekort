@@ -36,9 +36,9 @@ const P = (...a) => path.join(ROOT, ...a);
 const rel = f => (f.startsWith(ROOT + path.sep) ? path.relative(ROOT, f) : f);
 const args = process.argv.slice(2);
 const kunIdx = args.indexOf('--kun');
-const ALLE = ['tegnet', 'stille', 'orto', 'plan'];
+const ALLE = ['tegnet', 'stille', 'orto', 'plan', 'plangroen'];
 const KUN = kunIdx >= 0 ? (args[kunIdx + 1] || '').split(',').filter(Boolean) : ALLE;
-if (KUN.some(k => !ALLE.includes(k))) { console.error('brug: node scripts/kort_render.mjs [--kun tegnet,stille,orto,plan]'); process.exit(2); }
+if (KUN.some(k => !ALLE.includes(k))) { console.error('brug: node scripts/kort_render.mjs [--kun tegnet,stille,orto,plan,plangroen]'); process.exit(2); }
 
 const OSM_STD = P('data', 'osm_assistens.json');
 const OSM_FIL = process.env.OSM ? path.resolve(process.env.OSM) : OSM_STD;
@@ -476,13 +476,13 @@ const stiPlan = () => O.sti.map(v => `<path class="sti" stroke-width="${r1(v.w *
 function plan() {
   return `<style>
   .bg{fill:var(--paper)}
-  .karre{fill:color-mix(in srgb,var(--ink) 7%,var(--paper))}
-  .park{fill:color-mix(in srgb,var(--moss) 8%,var(--paper))}
+  .karre{fill:var(--karre,color-mix(in srgb,var(--ink) 7%,var(--paper)))}
+  .park{fill:var(--park,color-mix(in srgb,var(--moss) 8%,var(--paper)))}
   .vand{fill:color-mix(in srgb,${VAND} 20%,var(--paper))}
   .vej{fill:none;stroke:var(--paper);stroke-linecap:round;stroke-linejoin:round}
-  .cem{fill:color-mix(in srgb,var(--moss) 12%,var(--paper))}
+  .cem{fill:var(--cem,color-mix(in srgb,var(--moss) 12%,var(--paper)))}
   .afd{stroke:none} .t1{fill:var(--t1)} .t2{fill:var(--t2)} .t3{fill:var(--t3)} .t4{fill:var(--t4)}
-  .afdk{fill:none;stroke:var(--ink);stroke-opacity:.3;stroke-width:.8;stroke-linejoin:round}
+  .afdk{fill:none;stroke:var(--afdk,var(--ink));stroke-opacity:.3;stroke-width:.8;stroke-linejoin:round}
   .subk{fill:none;stroke:var(--paper);stroke-opacity:.6;stroke-width:.6}
   .sti{fill:none;stroke:var(--stic);stroke-linecap:round;stroke-linejoin:round}
   .trappe{fill:none;stroke:var(--stic);stroke-width:4} .trappek{fill:none;stroke:var(--ink);stroke-width:1;stroke-dasharray:1 2.5}
@@ -509,6 +509,14 @@ function plan() {
   ${LAAGER.map(l => laageSvg(l, 'l')).join('')}
   ${labels('lbl')}${gadenavne('gade')}`;
 }
+// 5. plan, kortgrøn: samme opbygning og samme funktion som plan, men med en egentlig kortgrøn (lysere og mere
+//    mættet end UI-mossen, i KK-kortets retning: mellemtone omkring (200, 220, 176)), hvide stier og lysere karréer.
+//    Svar på spørgsmålet i PR #14, om plan blot ligner tegnet plan: plans flader var UI-mos i 16–40 % papir,
+//    altså gråoliven med halvt så meget mætning som KK's bladgrøn. UI-mossen er her forbeholdt tekst og knapper.
+const PLANGROEN_VARS = {
+  lys: '--t1:#d8e7c6;--t2:#c8dcb0;--t3:#b7d09b;--t4:#a6c487;--stic:#fbfbf4;--cem:#e2edd3;--karre:#ebe9df;--park:#e9eedb;--afdk:#3f5a37',
+  moerk: '--t1:#2c3f2d;--t2:#344b35;--t3:#3d573d;--t4:#476346;--stic:#7b8275;--cem:#243424;--karre:#272a25;--park:#232b22;--afdk:#9bbb8c',
+};
 const PLAN_VARS = {
   lys: '--t1:color-mix(in srgb,var(--moss) 16%,var(--paper));--t2:color-mix(in srgb,var(--moss) 24%,var(--paper));--t3:color-mix(in srgb,var(--moss) 32%,var(--paper));--t4:color-mix(in srgb,var(--moss) 40%,var(--paper));--stic:var(--paper)',
   moerk: '--t1:color-mix(in srgb,var(--moss) 18%,var(--paper));--t2:color-mix(in srgb,var(--moss) 26%,var(--paper));--t3:color-mix(in srgb,var(--moss) 34%,var(--paper));--t4:color-mix(in srgb,var(--moss) 42%,var(--paper));--stic:color-mix(in srgb,var(--ink) 30%,var(--paper))',
@@ -575,6 +583,7 @@ for (const v of KUN) for (const m of ['lys', 'moerk']) {
   if (v === 'tegnet') inner = tegnet();
   if (v === 'stille') { inner = stille(); vars = STILLE_VARS[m]; }
   if (v === 'plan') { inner = plan(); vars = PLAN_VARS[m]; }
+  if (v === 'plangroen') { inner = plan(); vars = PLANGROEN_VARS[m]; }
   if (v === 'orto') { const o = orto(m); under = o.under; inner = o.svg; }
   const html = page(m, under, inner, vars);
   for (const s of [1, 2]) {
@@ -610,10 +619,11 @@ const afsnit = `<!-- kort_render:start -->
 ## Eget grundkort (\`scripts/kort_render.mjs\`)
 
 Renderet ${dato} med \`node scripts/kort_render.mjs\` (Playwright/Chromium; webp og avif med Pillow, da
-cwebp/avifenc ikke fandtes). Fire retninger, hver i lys og mørk udgave, i 1× (1400 × 1216) og 2× (2800 × 2432):
+cwebp/avifenc ikke fandtes). Fem retninger, hver i lys og mørk udgave, i 1× (1400 × 1216) og 2× (2800 × 2432):
 \`kort_tegnet*\` (tegnet plan), \`kort_stille*\` (stille kort), \`kort_orto*\` (dæmpet ortofoto; afdelinger
 tegnes kun af vektorlaget) og \`kort_plan*\` (plan: skitse af syntesen i \`NOTAT-grundkort-design.md\`, uden teksturer,
-med stier som lyse mellemrum og afdelinger i tre-fire toner). \`afdelinger.svg\` er vektorlaget med de 19 trykflader (\`#afd-A\` …) og følger
+med stier som lyse mellemrum og afdelinger i tre-fire toner) og \`kort_plangroen*\` (plan, kortgrøn: samme opbygning
+med en lysere, mere mættet kortgrøn i KK's retning og hvide stier). \`afdelinger.svg\` er vektorlaget med de 19 trykflader (\`#afd-A\` …) og følger
 sidens CSS-variabler. Kun webp ligger i repoet; PNG og AVIF er målt lokalt.
 
 - **OSM:** ${OSM ? `hentet ${OSM.hentet || '?'} (${OSM.rows.length} elementer, © OpenStreetMap-bidragydere, ODbL); omrids fra ${OUTLINE_KILDE}.` : `**OSM-lag mangler** – renderingen er uden OSM-lag (ingen stier, mure, bygninger, låger eller gadenavne); omridset er ${OUTLINE_KILDE}, fordi firkanten mellem ankrene alene skærer G, N og O over. Kør \`scripts/osm_slank.mjs\` og derefter dette script igen.`}

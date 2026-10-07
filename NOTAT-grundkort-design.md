@@ -322,9 +322,10 @@ og om bogstaverne kan læses. Det består alle retninger. Tilføj:
 1. **Lagdelingen:** stregværk og tekst ud af bitmap'en og ind i SVG'en; ret
    dobbelttegningen af bogstaver i `index.html` (`--gk-lbl-op`, eller bedre:
    bitmap uden bogstaver). Luppen på ortofotoet altid.
-2. **"Plan" er renderet som skitse** (afsnit 8) og kan ses med 🗺 Grundkort.
-   Næste skridt på den: stihierarki (gravrækkernes stier smallere), L's øer
-   samlet, kapellet dæmpet i mørk, og tonefordelingen justeret.
+2. **"Plan" er renderet som skitse i to paletter** (afsnit 8 og 8.1) og kan ses
+   med 🗺 Grundkort; den kortgrønne er udgangspunktet. Næste skridt på den:
+   stihierarki (gravrækkernes stier smallere), to-tre toner med små spring,
+   L's øer samlet, kapellet dæmpet i mørk, træprikkernes ring op på 2 px.
 3. **Afprøv ren SVG** (anbefaling A) på den ældste telefon; fald tilbage til B,
    hvis den hakker ved zoom.
 4. **Trykmål:** `.hot` som usynligt 44 px-mål i centroiden; polygon som sekundært.
@@ -389,6 +390,50 @@ dæmpet grøn, grå stier, lys mur og lyse bogstaver.
 Sol-simuleringen (`sol_plan.webp` mod `sol_stille.webp` og `sol_tegnet.webp`)
 viser det, afsnit 2.8 forudsiger: fladerne og de brede stier overlever som
 struktur, hvor stille kort blev hvidt og tegnet plan beholdt bogstaverne alene.
+
+### 8.1 "Plan, kortgrøn": paletten rettet
+
+Simons indvending til den første skitse var, at den "ligner ret meget bare den
+anden tegnede". Det var rigtigt, og målingen viste hvorfor: skitsens flader var
+UI-mossen (`#5a7a4f`) blandet 16–40 % i papir, altså en gråoliven med halvt så
+meget mætning som KK's bladgrøn ((195, 203, 182) mod (206, 226, 184); mætning
+0,10 mod 0,19). Stier og figur/grund var målbart bedre end i tegnet plan
+(1,49:1 og 1,40:1 mod 1,21:1 og 1,02:1), men det er lysstyrke, og det, øjet
+læser i telefonstørrelse, er kulør. Dertil deler alle renderingerne det samme
+skelet (omrids, mur, bogstaver, karréer), så fyldet er det eneste, der kan
+skille dem.
+
+`plangroen` (🗺 "plan, kortgrøn") er samme funktion med fem variabler ændret
+(`PLANGROEN_VARS` i `kort_render.mjs`): en egentlig kortgrøn i fire toner
+(`#d8e7c6`, `#c8dcb0`, `#b7d09b`, `#a6c487`; mørk `#2c3f2d` … `#476346`), stier
+i hvid (`#fbfbf4`; mørk `#7b8275`), kirkegårdens grund `#e2edd3`, karréer
+`#ebe9df` og parker `#e9eedb`, alle lysere end før. UI-mossen bruges kun til
+tekst og knapper.
+
+| B/C/D-området | KK | plan (grå) | plan, kortgrøn |
+|---|---|---|---|
+| fladens farve | (206, 226, 184) | (195, 203, 182) | (183, 208, 156) |
+| sti mod flade, lyseste mod mørkeste | 1,28:1 | 1,49:1 | 2,02:1 |
+| kirkegård mod karré | 1,23:1 | 1,40:1 | 1,41:1 |
+| træprik `moss-d` mod fladen | 5,65:1 | 4,61:1 | 4,64:1 |
+| webp / avif, 1× | 102 / 76 (budget) | 82 / 50 | 101 / 54 |
+
+Skærmbilleder: `docs/grundkort/plangroen_*.webp`, `sol_plangroen.webp`,
+`lup_plangroen.webp`. Den koster 19 KB mere som webp end den grå skitse (flere
+farveflader), men ligger på budgettet, og som avif langt under.
+
+Det, der kom frem med den stærkere palet, og som skal rettes i næste runde:
+
+1. **Tonerne må ikke læses som betydning.** Med fire toner og 10 %-spring bliver
+   F mørkere end E og D mørkere end B, og en besøgende vil spørge, hvad det
+   betyder. KK bruger tonerne semantisk (underafdelinger mørkere). Brug derfor
+   kun to-tre toner med 6–8 %-spring, så naboer kan skelnes uden at én afdeling
+   ser "særlig" ud, eller giv tonerne en betydning (fx de ældste afdelinger
+   mørkest).
+2. **Stihierarkiet** (afsnit 8, punkt 1) er endnu tydeligere her: gravrækkerne i
+   K, J og N bliver en hvid kam.
+3. **Træprikkerne** ligger på 4,6:1; ringen op på 2 px eller prikken i `ink`.
+4. **Kapellet** i mørk tilstand er stadig for lyst.
 
 ## Tal brugt i notatet
 
