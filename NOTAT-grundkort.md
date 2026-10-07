@@ -74,7 +74,11 @@ dens størrelse er inden for budgettet.
 Luppen tegner i dag `#mapimg` (kort.png) 4× forstørret. Med vælgeren tegner
 den det element, der er det valgte grundlag (`grundkortImg()`), så det, man
 finjusterer efter, er det, man ser. Vektorlaget tegnes ikke i luppen (den
-viser grundlaget, og krydset er det, der skal rammes).
+viser grundlaget, og krydset er det, der skal rammes). En fælde, fundet i
+design-reviewet: på en telefon vælger `srcset` 2×-filen, men `naturalWidth`
+er tæthedskorrigeret og siger stadig 1400, mens `drawImage` læser rå pixel;
+skalaen tages derfor fra `currentSrc` (`gkSkala()`), og
+`tests/grundkort.test.mjs` tjekker det ved DPR 2.
 
 ### Mobilbeskæringen
 
@@ -144,9 +148,48 @@ står øverst i scriptet). Ingen af filerne i `data/` kræver et `VERSION`-bump.
 
 ## 2. Æstetik: de tre retninger
 
-*(Skærmbilleder: PR'ens sammenligningstavle; filerne ligger i `data/kort_*.webp`.)*
+*Skærmbilleder fra headless Chromium på en 390 × 844-telefon (DPR 3) med
+kalibrering tændt ligger i `docs/grundkort/` (`<grundlag>_<lys|moerk>_<lag|uden>.webp`,
+`sol_*.webp` er sol-simuleringen, `lup_*.webp` luppen) og i PR'ens
+sammenligningstavle. Målinger: design-rapporten `/tmp/design/rapport.md`
+fra sessionen; tallene står i afsnit “Tal”. Alle renderinger er uden
+OSM-lag, så stier, mure, bygninger og gadenavne mangler i alle tre.*
 
-TBD-ÆSTETIK
+| | tegnet plan | stille kort | ortofoto med lag |
+|---|---|---|---|
+| **Idé** | streg og flade som en klassisk kirkegårdsplan: papir, blæk-konturer, Fraunces 600-bogstaver, svag kronetekstur og gravstedsprikker | flade, dæmpede mos-toner uden konturer, stier som lyse mellemrum, Outfit-bogstaver | GeoDanmarks forårsfoto dæmpet (lys: papirslør; mørk: nedtonet), så vektorlaget bærer bogstaver og grænser |
+| **For** | gentager headerens udtryk (Fraunces, papir/blæk); højeste kontrast (11:1 lys, 10:1 mørk); holder bedst i sol; en rigtig mørk udgave | roligst som baggrund for prikkerne; mindste fil (46 KB); markørerne træder tydeligst frem | viser det, man ser i felten (kroner, stier, tage); passer kommunens grænser inden for ca. 0,5 m; luppen får noget at sigte efter |
+| **Imod** | uden OSM fattigere end KK (ingen stier/låger); underafdelingsnavne 3 CSS-px på telefon; luppen viser kun tekstur | grænser og tekstur forsvinder helt i sol; bogstaver kun 4,9–5,3:1; Outfit-bogstaver bryder med headerens Fraunces | lys tilstand 3,3–3,5:1 for bogstav mod foto (haloen redder det); tungest (291 KB / 811 KB 2×); gråt foto mod papir/mos-paletten |
+| **Telefon i sol** | bedst: bogstaver 2,4:1 efter simuleringen, kontur og mur overlever | dårligst: fladen bliver hvid, kun bogstaverne står | bogstaverne holder via haloen; tynde grænser forsvinder først |
+| **Mørk tilstand** | 9,7–10,9:1, blænder ikke | 5,1–5,3:1, lidt gråt | 4,9–5,3:1 med SVG-laget; fotoet er dæmpet nok |
+
+Fælles iagttagelser:
+
+- **Bogstaverne** er ca. 10 CSS-px høje på telefonen uden zoom (30 fysiske
+  px ved DPR 3) og 18 CSS-px med 🔍 Forstør; det er læseligt. Sidens
+  `.hot`-knapper (12 px Fraunces i en 30 px-cirkel) er stadig større.
+- **Underafdelingsnavne** (UK, Ny Russisk, Iris …) er 3,2 CSS-px uden zoom
+  og 5,7 med: ulæselige. De skal mindst fordobles eller kun vises ved zoom.
+- **Dobbelte bogstaver**: uden vektorlaget står bitmap-bogstavet (i
+  centroiden) og `.hot`-cirklen (på `FRACS`) ved siden af hinanden; med
+  laget skjules `.hot`. Ved skiftet skal bitmap'en renderes uden bogstaver
+  (vektorlaget bærer dem), eller `.hot` flyttes til centroiderne.
+- **SVG-laget på KK's kort** virker i lys tilstand (5,1:1) men ikke i mørk
+  (1,13:1, fordi KK's kort forbliver lyst); det er endnu et argument for
+  at skifte.
+- **Luppen** viser på tegnet/stille kun tekstur, på ortofotoet kroner; i
+  kalibreringen er ortofotoet derfor det rigtige grundlag.
+
+**Anbefaling:** *tegnet plan* som standardgrundlag for besøgende, med
+vektorlaget som bærer af afdelingerne, og ortofotoet som grundlag i
+kalibreringen (og eventuelt som “Luftfoto”-omskifter for besøgende, hvis
+størrelsen tillader det). Begrundelsen er sol og mørke: tegnet plan er den
+eneste retning, der både holder bogstaverne læselige i sol og har en mørk
+udgave i sidens egne skrifter og farver. To forudsætninger: stier, mure,
+låger og bygninger skal ind (OSM-udtrækket, ellers tegnes de af efter
+ortofotoet), og underafdelingsnavnene skal gøres større. Stille kort
+frarådes som standard på grund af sol. Valget bekræftes i felttesten
+(afsnit 5), ikke på skærmen.
 
 ## 3. Rettigheder
 
@@ -389,7 +432,43 @@ blå (`#99b8cb`) ikke går igen i nogen rendering (nærmeste match er nær-hvid
 eller grå med afstand 8,6 eller mere). `scripts/kort_render.mjs` åbner
 aldrig `kort.png` (grep: filnavnet står kun i kommentarer).
 
-TBD-DESIGNMÅL
+### Kontrast, skrifthøjde og sol (design-rapporten)
+
+WCAG-kontrast mellem afdelingsbogstav og flade (AA kræver 4,5:1), målt i
+kildebillederne og i telefon-skærmbillederne (DPR 3), tre til seks
+bogstaver pr. variant:
+
+| Grundlag | Lys | Mørk |
+|---|---|---|
+| tegnet plan, bogstav i bitmap | 11,1–11,9 | 9,7–10,9 |
+| stille kort, bogstav i bitmap | 4,9–5,3 | 5,1–5,3 |
+| SVG-lag på tegnet plan | 5,1–5,2 | 5,4–5,6 |
+| SVG-lag på stille kort | 4,4–4,6 | 4,6–4,7 |
+| SVG-lag på ortofoto | 3,3–3,5 (bogstav mod halo 6,8) | 4,9–5,3 |
+| SVG-lag på KK's kort | 5,1 | 1,13 (kun haloen bærer) |
+
+Skrifthøjde på en 390 px-telefon: afdelingsbogstav 27–28 billedpx = 9,9
+CSS-px (29,6 fysiske px ved DPR 3) uden zoom, 17,8 CSS-px med 🔍 Forstør;
+underafdelingsnavne 9 billedpx = 3,2 CSS-px uden zoom, 5,7 med.
+
+Sol-simulering (kontrast 0,45, lysstyrke 1,25 på de lyse skærmbilleder):
+bogstav mod flade falder til 2,42 (tegnet), 1,9 (stille), 1,7 (ortofoto);
+stille korts kronetekstur falder fra std 0,052 til 0,001 (væk), tegnet plans
+fra 0,107 til 0,069, ortofotoets fra 0,105 til 0,080.
+
+### Pasning: kommunens polygoner mod ortofotoet
+
+OSM kunne ikke hentes, så pasningen er målt for kommunens afdelingsgrænser
+mod ortofotoet i 14 udsnit på 120 × 120 px (`/tmp/design/pasning_*.png`,
+øjemål ±1 px). 11 kunne aflæses: median 1 px = 0,46 m, største 5 px =
+2,3 m (ydermurens hjørne i A, hvor polygonen skærer hjørnet af); inde i
+parken følger grænserne hække og stier inden for ca. 0,5 m. Tre punkter
+(nordkanten langs Jagtvej, stikrydset ved Ny Russisk, R's vestkant) var
+dækket af kroner eller skygge. Det, OSM skal levere (eller som tegnes af
+efter ortofotoet, hvis OSM er tynd): stierne inde i afdelingerne, murene,
+lågerne, kapellerne og bygningerne, gadenavnene og Runddelen; de brede
+grusstier, tagene og teglmuren langs Nørrebrogade ses skarpt på fotoet,
+nordmuren ved Jagtvej gør ikke.
 
 ## Ikke gjort herfra, og hvorfor
 

@@ -1,7 +1,8 @@
 # data/ — kommunens data og ortofoto til kalibreringen
 
-Filerne her bruges kun af kalibreringsværktøjet (**🛰 Ortofoto** og **🌳 KK-træer**
-i kalibreringsbjælken) og af `scripts/match_kk.py`. Almindelige besøgende henter
+Filerne her bruges kun af kalibreringsværktøjet (**🛰 Ortofoto**, **🌳 KK-træer**,
+**🗺 Grundkort** og **🔲 Afdelinger** i kalibreringsbjælken), af `scripts/match_kk.py`
+og af `scripts/kort_render.mjs` (eget grundkort, issue #12). Almindelige besøgende henter
 dem ikke. Fremgangsmåde og vurdering: `KALIBRERING.md` og `NOTAT-kalibrering.md`.
 
 ## Kilder og licenser
@@ -14,6 +15,8 @@ dem ikke. Fremgangsmåde og vurdering: `KALIBRERING.md` og `NOTAT-kalibrering.md
 | `kk_detekterede.json` | 2.928 LiDAR-detekterede træer med højde og kroneareal | Københavns Kommune, WFS-lag `k101:automatisk_detekterede_traeer_kk_beta` | CC BY 4.0 *antaget* |
 | `orto_kort_2025.jpg` | Forårsortofoto 2025, 10 cm, forvrænget ind i `kort.png`'s pixelnet (2800 × 2432) | GeoDanmark / Klimadatastyrelsen via [Dataforsyningen](https://dataforsyningen.dk/data/981) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.da) ([GeoDanmarks vilkår](https://www.geodanmark.dk/)) |
 | `kk_gennemgang.md` | Træer, som `match_kk.py` ikke kunne placere sikkert | genereret | — |
+| `osm_assistens.json` | *(endnu ikke hentet; netadgang til OSM var blokeret)* Veje/stier, bygninger, mure, hegn, låger, natur og arealanvendelse på og omkring kirkegården samt kirkegårdens omrids (way 3099111), én række pr. element med tags og geometri; slankes med `scripts/osm_slank.mjs` fra `data/raw/osm_assistens.json` | OpenStreetMap-bidragydere via Overpass API (reserve: OSM API 0.6) | [ODbL 1.0](https://www.openstreetmap.org/copyright) · © OpenStreetMap-bidragydere |
+| `afdelinger.svg`, `kort_*.webp` | Vektorlag med afdelinger og de tre grundlag i kort.png's pixelnet, genereret af `scripts/kort_render.mjs` (se afsnittet nedenfor) | afledt af filerne ovenfor | som kilderne, bearbejdet |
 
 Alle filer er hentet 5. oktober 2026 (feltet `hentet`) og er *bearbejdede*
 udgaver af kilderne (slanket til de felter, siden bruger; gravsteder
@@ -23,11 +26,27 @@ kræver, at det fremgår.
 **Licens-forbehold:** kun `trae_basis` har en fundbar datasætside på
 opendata.dk (licensfeltet “CC_BY”). For gravsteder, afdelingsgrænser og de
 detekterede træer oplyser hverken WFS'ens GetCapabilities eller opendata.dk
-en licens; CC BY 4.0 er antaget, fordi det er kommunens standardlicens for
-åbne data. Bekræft gerne hos Københavns Kommune (Teknik- og
-Miljøforvaltningen, åbne data), før projektet gøres mere synligt.
+en licens. Licensen sættes pr. datasæt af dataejeren (Open Data DK's
+vilkår), og kommunen bruger ikke én licens til alt (fx har “Legepladser”
+egne vilkår), så CC BY 4.0 er en *antagelse*, ikke bekræftet. Spørg
+Københavns Kommune (Klima-, Miljø- og Teknikforvaltningen, åbne data /
+kbhkort; mail-udkast i `NOTAT-grundkort.md`, afsnit 3), og notér svaret
+her. Indtil da krediteres lagene som CC BY 4.0, og de bruges kun som data
+(grænser og midtpunkter), ikke som kort.
 
-Kreditering (står i `README.md`): *Indeholder data fra Københavns Kommune
+Rettighedsmæssigt er afdeling Q (grænse afledt af kommunens 176 gravsteder
+i Q) og afdeling U (skal aftegnes efter GeoDanmarks ortofoto) stadig
+kommunens hhv. GeoDanmarks data, bearbejdet; ingen af dem er taget fra
+Københavns Kirkegårdes tegnede kort.
+
+`osm_assistens.json` bliver et bearbejdet udtræk af OpenStreetMap og er
+selv under ODbL. Den holdes adskilt fra kommunens filer og fra
+`positions.json` og flettes kun, når grundkortet renderes; træplaceringer
+og afdelingsgrænser må ikke afledes af OSM-koordinater (så skulle de ud
+under ODbL).
+
+Kreditering (står i `README.md`): *Kortdata © OpenStreetMap-bidragydere (ODbL), når
+OSM-laget er i brug. Indeholder data fra Københavns Kommune
 (CC BY 4.0), hentet oktober 2026, bearbejdet. Ortofoto: indeholder data fra
 GeoDanmark / Klimadatastyrelsen via Dataforsyningen (CC BY 4.0), hentet
 oktober 2026, bearbejdet.*
