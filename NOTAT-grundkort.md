@@ -88,7 +88,7 @@ bbox er x 297–1274, y 41–1189) ligger inden for udsnittet.
 Når vektorlaget er tændt, skjules `.hot`-knapperne, og `#afd-X`-polygonerne
 får samme adfærd (`selectSec`, peek, `done`). Afstanden fra hver
 `FRACS`-markør til polygonens arealvægtede centroide (0,46 m/px) står i
-afsnit “Tal”: medianen er omkring 23 m og den største omkring 37 m (C), fordi
+afsnit “Tal”: medianen er omkring 22 m og den største omkring 37 m (C), fordi
 `FRACS` er placeret, hvor bogstavet står på KK's kort, ikke i afdelingens
 midte. Det bekræfter, at `FRACS` kan udgå for de 18 afdelinger med en polygon
 (bogstavet sættes i centroiden eller i et manuelt punkt i scriptet), mens U
@@ -357,7 +357,9 @@ efter den affine omregning fra ankrene; samme mapping som i
 | T | 1 | 361, 393 | 378, 392 | 7,9 |
 | U | ingen kilde | 362, 428 | – | – |
 
-Median 22,9 m, største 36,5 m (C), mindste 3,9 m (O), 18 af 19 målt. Alle
+Median 21,9 m, største 36,5 m (C), mindste 3,9 m (O), 18 af 19 målt (en
+uafhængig beregning i integrationsarbejdet, `/tmp/fracs_afstande.md`, gav
+samme tal inden for 0,5 m pr. afdeling). Alle
 19 markører ligger inde i den polygon, der bærer deres bogstav (A i A, …,
 U i UU, L i Malus), så mærkningen stemmer med kommunens data; afstandene
 skyldes, at markørerne står, hvor KK's kort har sit bogstav. Konklusion:
